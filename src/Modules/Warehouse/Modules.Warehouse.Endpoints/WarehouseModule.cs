@@ -14,6 +14,7 @@ public static class WarehouseModule
 
     public static async Task UseWarehouseModule(this WebApplication app)
     {
+        // TODO: Refactor to up.ps1
         if (app.Environment.IsDevelopment())
         {
             // Initialise and seed database
