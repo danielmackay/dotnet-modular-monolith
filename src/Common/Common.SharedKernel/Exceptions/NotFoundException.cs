@@ -1,4 +1,4 @@
-﻿namespace Modules.Warehouse.Application.Common.Exceptions;
+﻿namespace Common.SharedKernel.Exceptions;
 
 public class NotFoundException : Exception
 {

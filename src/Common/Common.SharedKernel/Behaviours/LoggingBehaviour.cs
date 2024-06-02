@@ -1,7 +1,7 @@
 ﻿using MediatR.Pipeline;
 using Microsoft.Extensions.Logging;
 
-namespace Modules.Warehouse.Application.Common.Behaviours;
+namespace Common.SharedKernel.Behaviours;
 
 public class LoggingBehaviour<TRequest>(ILogger<TRequest> logger)
     : IRequestPreProcessor<TRequest>

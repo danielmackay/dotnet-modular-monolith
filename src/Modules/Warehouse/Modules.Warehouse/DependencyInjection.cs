@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Modules.Warehouse.Application.Common.Behaviours;
+﻿using Common.SharedKernel.Behaviours;
+using Microsoft.Extensions.DependencyInjection;
 using Modules.Warehouse.Domain.Products;
 using Modules.Warehouse.Features.Products;
 

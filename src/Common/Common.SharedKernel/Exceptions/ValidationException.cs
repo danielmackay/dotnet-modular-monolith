@@ -1,6 +1,6 @@
 ﻿using FluentValidation.Results;
 
-namespace Modules.Warehouse.Application.Common.Exceptions;
+namespace Common.SharedKernel.Exceptions;
 
 public class ValidationException() : Exception("One or more validation failures have occurred.")
 {

@@ -1,4 +1,7 @@
-﻿namespace Modules.Warehouse.Application.Common.Behaviours;
+﻿using FluentValidation;
+using MediatR;
+
+namespace Common.SharedKernel.Behaviours;
 
 public class ValidationBehaviour<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators)
     : IPipelineBehavior<TRequest, TResponse>

@@ -1,7 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using MediatR;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 
-namespace Modules.Warehouse.Application.Common.Behaviours;
+namespace Common.SharedKernel.Behaviours;
 
 public class PerformanceBehaviour<TRequest, TResponse>(ILogger<TRequest> logger)
     : IPipelineBehavior<TRequest, TResponse>
