@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Modules.Warehouse.Common.Interfaces;
+using Modules.Warehouse.Common.Persistence;
 using Modules.Warehouse.Features.Products.Domain;
 
 namespace Modules.Warehouse.Features.Products;
 
 public class ProductRepository : IProductRepository
 {
-    private readonly IWarehouseDbContext _dbContext;
+    private readonly WarehouseDbContext _dbContext;
 
-    public ProductRepository(IWarehouseDbContext dbContext)
+    public ProductRepository(WarehouseDbContext dbContext)
     {
         _dbContext = dbContext;
     }

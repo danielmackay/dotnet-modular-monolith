@@ -1,10 +1,10 @@
-﻿using Common.SharedKernel.Domain.Entities;
-using Common.SharedKernel.Domain.Identifiers;
+﻿using Common.SharedKernel.Domain.Identifiers;
+using Common.SharedKernel.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Modules.Warehouse.Domain.Products;
+using Modules.Warehouse.Features.Products.Domain;
 
-namespace Modules.Warehouse.Infrastructure.Persistence.Configurations;
+namespace Modules.Warehouse.Features.Products.Persistence;
 
 internal class ProductConfiguration : IEntityTypeConfiguration<Product>
 {

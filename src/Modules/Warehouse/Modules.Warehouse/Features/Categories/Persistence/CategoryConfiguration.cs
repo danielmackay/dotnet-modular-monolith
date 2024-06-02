@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Modules.Warehouse.Domain.Categories;
+using Modules.Warehouse.Features.Categories.Domain;
 
-namespace Modules.Warehouse.Infrastructure.Persistence.Configurations;
+namespace Modules.Warehouse.Features.Categories.Persistence;
 
 internal class CategoryConfiguration : IEntityTypeConfiguration<Category>
 {

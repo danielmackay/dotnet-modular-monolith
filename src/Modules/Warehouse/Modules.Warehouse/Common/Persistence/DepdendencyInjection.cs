@@ -1,29 +1,26 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Modules.Warehouse.Application.Common.Interfaces;
-using Modules.Warehouse.Infrastructure.Persistence;
 
-namespace Modules.Warehouse.Infrastructure;
+namespace Modules.Warehouse.Common.Persistence;
 
-public static class DependencyInjection
+internal static class DepdendencyInjection
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config)
+    internal static void AddPersistence(this IServiceCollection services, IConfiguration config)
     {
         var connectionString = config.GetConnectionString("DefaultConnection");
-        services.AddDbContext<IWarehouseDbContext, WarehouseDbContext>(options =>
+        services.AddDbContext<WarehouseDbContext>(options =>
             options.UseSqlServer(connectionString, builder =>
             {
-                builder.MigrationsAssembly(typeof(DependencyInjection).Assembly.FullName);
+                builder.MigrationsAssembly(typeof(WarehouseModule).Assembly.FullName);
                 builder.EnableRetryOnFailure();
             }));
 
         //services.AddSingleton<IDateTime, DateTimeService>();
+        // TODO: Consider moving to up.ps1
         services.AddScoped<WarehouseDbContextInitializer>();
         // services.AddScoped<EntitySaveChangesInterceptor>();
         // services.AddScoped<DispatchDomainEventsInterceptor>();
         // services.AddScoped<OutboxInterceptor>();
-
-        return services;
     }
 }

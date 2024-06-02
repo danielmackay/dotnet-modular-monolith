@@ -2,23 +2,32 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Modules.Warehouse.Application;
+using Modules.Warehouse.Common.Persistence;
 using Modules.Warehouse.Features.Products;
 using Modules.Warehouse.Features.Products.Domain;
-using Modules.Warehouse.Infrastructure;
-using Modules.Warehouse.Infrastructure.Persistence;
+using Modules.Warehouse.Features.Products.Endpoints;
 
-namespace Modules.Warehouse.Endpoints;
+namespace Modules.Warehouse;
 
 public static class WarehouseModule
 {
-    public static void AddWarehouseServices(this IServiceCollection services, IConfiguration configuration)
+    public static void AddWarehouse(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddApplication();
-        services.AddInfrastructure(configuration);
+        var applicationAssembly = typeof(WarehouseModule).Assembly;
+
+        services.AddValidatorsFromAssembly(applicationAssembly);
+
+        // TODO: Check we can call this multiple times
+        services.AddMediatR(config =>
+        {
+            config.RegisterServicesFromAssembly(applicationAssembly);
+        });
+
+        // Todo: Move to feature DI
+        services.AddTransient<IProductRepository, ProductRepository>();
     }
 
-    public static async Task UseWarehouseModule(this WebApplication app)
+    public static async Task UseWarehouse(this WebApplication app)
     {
         // TODO: Refactor to up.ps1
         if (app.Environment.IsDevelopment())
@@ -30,23 +39,7 @@ public static class WarehouseModule
             await initializer.SeedAsync();
         }
 
+        // TODO: Move to feature DI
         app.MapProductEndpoints();
-    }
-
-    private static IServiceCollection AddApplication(this IServiceCollection services)
-    {
-        var applicationAssembly = typeof(DependencyInjection).Assembly;
-
-        services.AddValidatorsFromAssembly(applicationAssembly);
-
-        // TODO: Check we can call this multiple times
-        services.AddMediatR(config =>
-        {
-            config.RegisterServicesFromAssembly(applicationAssembly);
-        });
-
-        services.AddTransient<IProductRepository, ProductRepository>();
-
-        return services;
     }
 }

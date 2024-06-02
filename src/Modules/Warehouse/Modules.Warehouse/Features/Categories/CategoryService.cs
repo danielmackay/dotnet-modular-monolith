@@ -1,13 +1,13 @@
-﻿using Modules.Warehouse.Common.Interfaces;
+﻿using Modules.Warehouse.Common.Persistence;
 using Modules.Warehouse.Features.Categories.Domain;
 
 namespace Modules.Warehouse.Features.Categories;
 
 public class CategoryRepository : ICategoryRepository
 {
-    private readonly IWarehouseDbContext _dbContext;
+    private readonly WarehouseDbContext _dbContext;
 
-    public CategoryRepository(IWarehouseDbContext dbContext)
+    public CategoryRepository(WarehouseDbContext dbContext)
     {
         _dbContext = dbContext;
     }

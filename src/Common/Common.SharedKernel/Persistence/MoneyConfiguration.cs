@@ -1,11 +1,11 @@
 ﻿using Common.SharedKernel.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Modules.Warehouse.Infrastructure.Persistence.Configurations;
+namespace Common.SharedKernel.Persistence;
 
-internal static class MoneyConfiguration
+public static class MoneyConfiguration
 {
-    internal static void BuildAction(ComplexPropertyBuilder<Money> priceBuilder)
+    public static void BuildAction(ComplexPropertyBuilder<Money> priceBuilder)
     {
         priceBuilder.Property(m => m.Currency)
             .HasConversion(currency => currency.Symbol, value => new Currency(value))

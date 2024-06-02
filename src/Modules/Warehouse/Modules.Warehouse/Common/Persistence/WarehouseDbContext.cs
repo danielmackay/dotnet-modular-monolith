@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Modules.Warehouse.Application.Common.Interfaces;
-using Modules.Warehouse.Domain.Categories;
-using Modules.Warehouse.Domain.Products;
+using Modules.Warehouse.Features.Categories.Domain;
+using Modules.Warehouse.Features.Products.Domain;
 
-namespace Modules.Warehouse.Infrastructure.Persistence;
+namespace Modules.Warehouse.Common.Persistence;
 
-public class WarehouseDbContext : DbContext, IWarehouseDbContext
+public class WarehouseDbContext : DbContext
 {
     // private readonly EntitySaveChangesInterceptor _saveChangesInterceptor;
     // private readonly OutboxInterceptor _outboxInterceptor;

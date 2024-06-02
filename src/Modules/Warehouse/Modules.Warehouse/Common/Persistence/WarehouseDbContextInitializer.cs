@@ -2,12 +2,12 @@ using Bogus;
 using Common.SharedKernel.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Modules.Warehouse.Application.Categories;
-using Modules.Warehouse.Application.Products;
-using Modules.Warehouse.Domain.Categories;
-using Modules.Warehouse.Domain.Products;
+using Modules.Warehouse.Features.Categories;
+using Modules.Warehouse.Features.Categories.Domain;
+using Modules.Warehouse.Features.Products;
+using Modules.Warehouse.Features.Products.Domain;
 
-namespace Modules.Warehouse.Infrastructure.Persistence;
+namespace Modules.Warehouse.Common.Persistence;
 
 public class WarehouseDbContextInitializer
 {

@@ -1,6 +1,6 @@
 using Common.SharedKernel.Behaviours;
 using Modules.Orders.Endpoints;
-using Modules.Warehouse.Endpoints;
+using Modules.Warehouse;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +20,7 @@ builder.Services.AddMediatR(config =>
 
 
 builder.Services.AddOrdersServices();
-builder.Services.AddWarehouseServices(builder.Configuration);
+builder.Services.AddWarehouse(builder.Configuration);
 
 var app = builder.Build();
 
@@ -34,6 +34,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseOrdersModule();
-await app.UseWarehouseModule();
+await app.UseWarehouse();
 
 app.Run();

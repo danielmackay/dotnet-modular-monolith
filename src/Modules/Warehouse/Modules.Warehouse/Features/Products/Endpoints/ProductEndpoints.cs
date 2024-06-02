@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Modules.Warehouse.Features.Products.Commands.CreateProduct;
 using Modules.Warehouse.Features.Products.Queries.GetProducts;
 
-namespace Modules.Warehouse.Endpoints;
+namespace Modules.Warehouse.Features.Products.Endpoints;
 
 public static class ProductEndpoints
 {
