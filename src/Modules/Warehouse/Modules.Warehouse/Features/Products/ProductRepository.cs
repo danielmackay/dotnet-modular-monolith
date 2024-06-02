@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Modules.Warehouse.Application.Common.Interfaces;
+using Modules.Warehouse.Common.Interfaces;
 using Modules.Warehouse.Domain.Products;
 
-namespace Modules.Warehouse.Application.Products;
+namespace Modules.Warehouse.Features.Products;
 
 public class ProductRepository : IProductRepository
 {

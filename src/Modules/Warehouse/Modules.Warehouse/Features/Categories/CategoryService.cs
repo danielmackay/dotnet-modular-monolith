@@ -1,7 +1,7 @@
-﻿using Modules.Warehouse.Application.Common.Interfaces;
+﻿using Modules.Warehouse.Common.Interfaces;
 using Modules.Warehouse.Domain.Categories;
 
-namespace Modules.Warehouse.Application.Categories;
+namespace Modules.Warehouse.Features.Categories;
 
 public class CategoryRepository : ICategoryRepository
 {

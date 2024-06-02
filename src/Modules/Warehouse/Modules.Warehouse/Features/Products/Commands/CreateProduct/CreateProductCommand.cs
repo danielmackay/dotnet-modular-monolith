@@ -1,9 +1,9 @@
 ﻿using Common.SharedKernel.Domain.Entities;
-using Modules.Warehouse.Application.Common.Interfaces;
+using Modules.Warehouse.Common.Interfaces;
 using Modules.Warehouse.Domain.Categories;
 using Modules.Warehouse.Domain.Products;
 
-namespace Modules.Warehouse.Application.Products.Commands.CreateProduct;
+namespace Modules.Warehouse.Features.Products.Commands.CreateProduct;
 
 public record CreateProductCommand(string Name, decimal Amount, string Sku, Guid CategoryId)
     : IRequest;

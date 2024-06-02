@@ -2,8 +2,9 @@
 using Modules.Warehouse.Domain.Categories;
 using Modules.Warehouse.Domain.Products;
 
-namespace Modules.Warehouse.Application.Common.Interfaces;
+namespace Modules.Warehouse.Common.Interfaces;
 
+// TODO: Consider removing
 public interface IWarehouseDbContext
 {
     public DbSet<Category> Categories { get; }

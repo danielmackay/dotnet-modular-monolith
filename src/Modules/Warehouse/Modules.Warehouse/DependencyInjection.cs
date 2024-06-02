@@ -1,10 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Modules.Warehouse.Application.Common.Behaviours;
-using Modules.Warehouse.Application.Products;
 using Modules.Warehouse.Domain.Products;
+using Modules.Warehouse.Features.Products;
 
-namespace Modules.Warehouse.Application;
+namespace Modules.Warehouse;
 
 public static class DependencyInjection
 {

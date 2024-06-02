@@ -21,9 +21,5 @@
 <!--        <PackageReference Include="Hangfire.AspNetCore" Version="1.8.*" />-->
 <!--        <PackageReference Include="Microsoft.Data.SqlClient" Version="*" />-->
     </ItemGroup>
-    
-    <ItemGroup>
-      <ProjectReference Include="..\Modules.Warehouse.Application\Modules.Warehouse.Application.csproj" />
-    </ItemGroup>
 
 </Project>

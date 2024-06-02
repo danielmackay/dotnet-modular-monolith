@@ -1,8 +1,7 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Modules.Warehouse.Application.Common.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using Modules.Warehouse.Common.Interfaces;
 
-namespace Modules.Warehouse.Application.Products.Queries.GetProducts;
+namespace Modules.Warehouse.Features.Products.Queries.GetProducts;
 
 public record GetProductsQuery : IRequest<IEnumerable<ProductDto>>;
 
