@@ -1,4 +1,7 @@
-﻿namespace Modules.Warehouse.Endpoints.Extensions;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+
+namespace Common.SharedKernel;
 
 public static class EndpointRouteBuilderExt
 {

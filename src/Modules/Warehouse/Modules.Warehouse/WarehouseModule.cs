@@ -1,4 +1,10 @@
-﻿using Modules.Warehouse.Application;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Modules.Warehouse.Application;
+using Modules.Warehouse.Features.Products;
+using Modules.Warehouse.Features.Products.Domain;
 using Modules.Warehouse.Infrastructure;
 using Modules.Warehouse.Infrastructure.Persistence;
 
@@ -25,5 +31,22 @@ public static class WarehouseModule
         }
 
         app.MapProductEndpoints();
+    }
+
+    private static IServiceCollection AddApplication(this IServiceCollection services)
+    {
+        var applicationAssembly = typeof(DependencyInjection).Assembly;
+
+        services.AddValidatorsFromAssembly(applicationAssembly);
+
+        // TODO: Check we can call this multiple times
+        services.AddMediatR(config =>
+        {
+            config.RegisterServicesFromAssembly(applicationAssembly);
+        });
+
+        services.AddTransient<IProductRepository, ProductRepository>();
+
+        return services;
     }
 }

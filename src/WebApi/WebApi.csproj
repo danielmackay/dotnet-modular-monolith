@@ -16,7 +16,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Modules\Orders\Modules.Orders.Endpoints\Modules.Orders.Endpoints.csproj" />
-      <ProjectReference Include="..\Modules\Warehouse\Modules.Warehouse.Endpoints\Modules.Warehouse.Endpoints.csproj" />
     </ItemGroup>
 
 </Project>

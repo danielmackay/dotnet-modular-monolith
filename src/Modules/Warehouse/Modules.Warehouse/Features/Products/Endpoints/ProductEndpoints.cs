@@ -1,7 +1,8 @@
-﻿using MediatR;
-using Modules.Warehouse.Application.Products.Commands.CreateProduct;
-using Modules.Warehouse.Application.Products.Queries.GetProducts;
-using Modules.Warehouse.Endpoints.Extensions;
+﻿using Common.SharedKernel;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Modules.Warehouse.Features.Products.Commands.CreateProduct;
+using Modules.Warehouse.Features.Products.Queries.GetProducts;
 
 namespace Modules.Warehouse.Endpoints;
 
