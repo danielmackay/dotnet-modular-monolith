@@ -1,4 +1,4 @@
-﻿namespace Modules.Warehouse.Domain.Categories;
+﻿namespace Modules.Warehouse.Features.Categories.Domain;
 
 public interface ICategoryRepository
 {

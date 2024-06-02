@@ -1,5 +1,5 @@
 ﻿using Modules.Warehouse.Common.Interfaces;
-using Modules.Warehouse.Domain.Categories;
+using Modules.Warehouse.Features.Categories.Domain;
 
 namespace Modules.Warehouse.Features.Categories;
 

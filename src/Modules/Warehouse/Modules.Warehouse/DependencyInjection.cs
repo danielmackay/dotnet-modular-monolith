@@ -1,7 +1,6 @@
-﻿using Common.SharedKernel.Behaviours;
-using Microsoft.Extensions.DependencyInjection;
-using Modules.Warehouse.Domain.Products;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Modules.Warehouse.Features.Products;
+using Modules.Warehouse.Features.Products.Domain;
 
 namespace Modules.Warehouse;
 
@@ -13,12 +12,10 @@ public static class DependencyInjection
 
         services.AddValidatorsFromAssembly(applicationAssembly);
 
+        // TODO: Check we can call this multiple times
         services.AddMediatR(config =>
         {
             config.RegisterServicesFromAssembly(applicationAssembly);
-            config.AddOpenBehavior(typeof(UnhandledExceptionBehaviour<,>));
-            config.AddOpenBehavior(typeof(ValidationBehaviour<,>));
-            config.AddOpenBehavior(typeof(PerformanceBehaviour<,>));
         });
 
         services.AddTransient<IProductRepository, ProductRepository>();

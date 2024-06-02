@@ -1,3 +1,4 @@
+using Common.SharedKernel.Behaviours;
 using Modules.Orders.Endpoints;
 using Modules.Warehouse.Endpoints;
 
@@ -7,6 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Common MediatR behaviors across all modules
+builder.Services.AddMediatR(config =>
+{
+    config.AddOpenBehavior(typeof(UnhandledExceptionBehaviour<,>));
+    config.AddOpenBehavior(typeof(ValidationBehaviour<,>));
+    config.AddOpenBehavior(typeof(PerformanceBehaviour<,>));
+});
+
+
 
 builder.Services.AddOrdersServices();
 builder.Services.AddWarehouseServices(builder.Configuration);

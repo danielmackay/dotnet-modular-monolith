@@ -1,4 +1,4 @@
-﻿namespace Modules.Warehouse.Domain.Products;
+﻿namespace Modules.Warehouse.Features.Products.Domain;
 
 public record Sku
 {

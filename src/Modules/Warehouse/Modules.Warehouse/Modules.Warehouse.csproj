@@ -16,12 +16,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Modules.Warehouse.Domain\Modules.Warehouse.Domain.csproj" />
+      <Folder Include="Common\" />
+      <Folder Include="Features\" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Common\" />
-      <Folder Include="Features\" />
+      <ProjectReference Include="..\..\..\Common\Common.SharedKernel\Common.SharedKernel.csproj" />
     </ItemGroup>
 
 </Project>

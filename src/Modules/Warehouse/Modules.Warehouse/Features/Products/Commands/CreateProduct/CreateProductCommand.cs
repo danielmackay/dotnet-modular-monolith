@@ -1,7 +1,7 @@
 ﻿using Common.SharedKernel.Domain.Entities;
 using Modules.Warehouse.Common.Interfaces;
-using Modules.Warehouse.Domain.Categories;
-using Modules.Warehouse.Domain.Products;
+using Modules.Warehouse.Features.Categories.Domain;
+using Modules.Warehouse.Features.Products.Domain;
 
 namespace Modules.Warehouse.Features.Products.Commands.CreateProduct;
 

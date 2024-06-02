@@ -2,7 +2,7 @@
 using Common.SharedKernel.Domain.Base;
 using Common.SharedKernel.Domain.Exceptions;
 
-namespace Modules.Warehouse.Domain.Categories;
+namespace Modules.Warehouse.Features.Categories.Domain;
 
 public class Category : AggregateRoot<CategoryId>
 {

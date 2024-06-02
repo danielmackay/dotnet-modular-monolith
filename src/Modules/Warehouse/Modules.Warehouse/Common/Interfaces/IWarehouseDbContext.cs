@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Modules.Warehouse.Domain.Categories;
-using Modules.Warehouse.Domain.Products;
+using Modules.Warehouse.Features.Categories.Domain;
+using Modules.Warehouse.Features.Products.Domain;
 
 namespace Modules.Warehouse.Common.Interfaces;
 

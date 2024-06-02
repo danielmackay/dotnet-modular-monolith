@@ -3,9 +3,9 @@ using Common.SharedKernel.Domain.Base;
 using Common.SharedKernel.Domain.Entities;
 using Common.SharedKernel.Domain.Exceptions;
 using Common.SharedKernel.Domain.Identifiers;
-using Modules.Warehouse.Domain.Categories;
+using Modules.Warehouse.Features.Categories.Domain;
 
-namespace Modules.Warehouse.Domain.Products;
+namespace Modules.Warehouse.Features.Products.Domain;
 
 public class Product : AggregateRoot<ProductId>
 {

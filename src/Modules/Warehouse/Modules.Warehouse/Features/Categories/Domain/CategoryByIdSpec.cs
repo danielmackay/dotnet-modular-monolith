@@ -1,6 +1,6 @@
 ﻿using Ardalis.Specification;
 
-namespace Modules.Warehouse.Domain.Categories;
+namespace Modules.Warehouse.Features.Categories.Domain;
 
 public class CategoryByIdSpec : Specification<Category>, ISingleResultSpecification<Category>
 {
