@@ -1,6 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 
-namespace Modules.Orders.Domain.Customers;
+namespace Module.Orders.Features.Customers;
 
 public record Address
 {

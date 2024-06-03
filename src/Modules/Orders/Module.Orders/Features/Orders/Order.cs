@@ -3,9 +3,9 @@ using Common.SharedKernel.Domain.Base;
 using Common.SharedKernel.Domain.Entities;
 using Common.SharedKernel.Domain.Exceptions;
 using Common.SharedKernel.Domain.Identifiers;
-using Modules.Orders.Domain.Customers;
+using Module.Orders.Features.Customers;
 
-namespace Modules.Orders.Domain.Orders;
+namespace Module.Orders.Features.Orders;
 
 public class Order : AggregateRoot<OrderId>
 {

@@ -1,7 +1,7 @@
 ﻿using Common.SharedKernel.Domain.Base;
-using Modules.Orders.Domain.Customers;
+using Module.Orders.Features.Customers;
 
-namespace Modules.Orders.Domain.Orders;
+namespace Module.Orders.Features.Orders;
 
 public record OrderCreatedEvent(OrderId OrderId, CustomerId CustomerId) : DomainEvent
 {

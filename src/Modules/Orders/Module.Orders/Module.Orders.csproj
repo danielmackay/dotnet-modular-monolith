@@ -14,5 +14,9 @@
         <PackageReference Include="Ardalis.GuardClauses" Version="4.3.0"/>
         <PackageReference Include="Ardalis.Specification" Version="6.1.0"/>
     </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Features\" />
+    </ItemGroup>
 
 </Project>

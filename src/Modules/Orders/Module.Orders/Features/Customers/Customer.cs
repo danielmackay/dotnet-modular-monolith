@@ -1,7 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using Common.SharedKernel.Domain.Base;
 
-namespace Modules.Orders.Domain.Customers;
+namespace Module.Orders.Features.Customers;
 
 public class Customer : AggregateRoot<CustomerId>
 {

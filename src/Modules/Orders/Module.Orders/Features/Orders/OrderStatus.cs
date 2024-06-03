@@ -1,4 +1,4 @@
-﻿namespace Modules.Orders.Domain.Orders;
+﻿namespace Module.Orders.Features.Orders;
 
 public enum OrderStatus
 {

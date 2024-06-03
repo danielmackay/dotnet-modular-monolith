@@ -4,7 +4,7 @@ using Common.SharedKernel.Domain.Entities;
 using Common.SharedKernel.Domain.Exceptions;
 using Common.SharedKernel.Domain.Identifiers;
 
-namespace Modules.Orders.Domain.Orders;
+namespace Module.Orders.Features.Orders;
 
 public class LineItem : Entity<LineItemId>
 {
