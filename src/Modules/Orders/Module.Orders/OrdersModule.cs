@@ -1,12 +1,16 @@
-﻿namespace Modules.Orders.Endpoints;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Module.Orders;
 
 public static class OrdersModule
 {
-    public static void AddOrdersServices(this IServiceCollection services)
+    public static void AddOrders(this IServiceCollection services)
     {
     }
 
-    public static void UseOrdersModule(this WebApplication app)
+    public static void UseOrders(this WebApplication app)
     {
         app.MapGet("/api/orders", () =>
             {
