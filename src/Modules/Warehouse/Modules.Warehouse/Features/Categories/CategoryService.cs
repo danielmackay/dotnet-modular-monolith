@@ -3,7 +3,7 @@ using Modules.Warehouse.Features.Categories.Domain;
 
 namespace Modules.Warehouse.Features.Categories;
 
-public class CategoryRepository : ICategoryRepository
+internal class CategoryRepository : ICategoryRepository
 {
     private readonly WarehouseDbContext _dbContext;
 

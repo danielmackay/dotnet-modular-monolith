@@ -1,6 +1,6 @@
 ﻿namespace Modules.Warehouse.Features.Products.Domain;
 
-public interface IProductRepository
+internal interface IProductRepository
 {
     public Task<bool> SkuExistsAsync(Sku sku);
 

@@ -2,7 +2,7 @@
 
 namespace Module.Orders.Features.Orders;
 
-public class OrderByIdSpec : OrderSpec, ISingleResultSpecification<Order>
+internal class OrderByIdSpec : OrderSpec, ISingleResultSpecification<Order>
 {
     public OrderByIdSpec(OrderId id) : base()
     {

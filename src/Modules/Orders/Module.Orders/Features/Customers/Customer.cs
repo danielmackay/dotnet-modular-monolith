@@ -3,7 +3,7 @@ using Common.SharedKernel.Domain.Base;
 
 namespace Module.Orders.Features.Customers;
 
-public class Customer : AggregateRoot<CustomerId>
+internal class Customer : AggregateRoot<CustomerId>
 {
     public string Email { get; private set; } = null!;
 
@@ -15,7 +15,7 @@ public class Customer : AggregateRoot<CustomerId>
 
     private Customer() { }
 
-    public static Customer Create(string email, string firstName, string lastName)
+    internal static Customer Create(string email, string firstName, string lastName)
     {
         Guard.Against.NullOrWhiteSpace(email);
 

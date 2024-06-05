@@ -1,6 +1,6 @@
 ﻿namespace Module.Orders.Features.Orders;
 
-public enum OrderStatus
+internal enum OrderStatus
 {
     None = 0,
     PendingPayment = 1,

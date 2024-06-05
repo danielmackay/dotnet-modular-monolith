@@ -2,7 +2,7 @@
 
 namespace Module.Orders.Features.Orders;
 
-public record LineItemCreatedEvent(LineItemId LineItemId, OrderId Order) : DomainEvent
+internal record LineItemCreatedEvent(LineItemId LineItemId, OrderId Order) : DomainEvent
 {
     public LineItemCreatedEvent(LineItem lineItem) : this(lineItem.Id, lineItem.OrderId) { }
 

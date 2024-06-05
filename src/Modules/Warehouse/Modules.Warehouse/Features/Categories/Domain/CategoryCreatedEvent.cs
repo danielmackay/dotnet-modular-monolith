@@ -2,4 +2,4 @@
 
 namespace Modules.Warehouse.Features.Categories.Domain;
 
-public record CategoryCreatedEvent(CategoryId Id, string Name) : DomainEvent;
+internal record CategoryCreatedEvent(CategoryId Id, string Name) : DomainEvent;

@@ -3,4 +3,4 @@ using Common.SharedKernel.Domain.Identifiers;
 
 namespace Modules.Warehouse.Features.Products.Domain;
 
-public record LowStockEvent(ProductId ProductId) : DomainEvent;
+internal record LowStockEvent(ProductId ProductId) : DomainEvent;

@@ -1,6 +1,6 @@
 ﻿namespace Modules.Warehouse.Features.Products.Domain;
 
-public record Sku
+internal record Sku
 {
     private const int DefaultLength = 8;
 

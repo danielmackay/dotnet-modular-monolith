@@ -4,7 +4,7 @@ using Modules.Warehouse.Features.Products.Domain;
 
 namespace Modules.Warehouse.Common.Persistence;
 
-public class WarehouseDbContext : DbContext
+internal class WarehouseDbContext : DbContext
 {
     // private readonly EntitySaveChangesInterceptor _saveChangesInterceptor;
     // private readonly OutboxInterceptor _outboxInterceptor;

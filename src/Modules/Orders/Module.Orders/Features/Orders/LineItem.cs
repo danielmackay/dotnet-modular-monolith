@@ -6,7 +6,7 @@ using Common.SharedKernel.Domain.Identifiers;
 
 namespace Module.Orders.Features.Orders;
 
-public class LineItem : Entity<LineItemId>
+internal class LineItem : Entity<LineItemId>
 {
     public required OrderId OrderId { get; init; }
 

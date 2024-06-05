@@ -5,10 +5,10 @@ using Modules.Warehouse.Features.Products.Domain;
 
 namespace Modules.Warehouse.Features.Products.Commands.CreateProduct;
 
-public record CreateProductCommand(string Name, decimal Amount, string Sku, Guid CategoryId)
+internal record CreateProductCommand(string Name, decimal Amount, string Sku, Guid CategoryId)
     : IRequest;
 
-public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand>
+internal class CreateProductCommandHandler : IRequestHandler<CreateProductCommand>
 {
     private readonly WarehouseDbContext _dbContext;
     private readonly IProductRepository _productRepository;

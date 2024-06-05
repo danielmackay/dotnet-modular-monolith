@@ -1,6 +1,6 @@
 ﻿namespace Modules.Warehouse.Features.Categories.Domain;
 
-public interface ICategoryRepository
+internal interface ICategoryRepository
 {
     bool CategoryExists(string categoryName);
 }

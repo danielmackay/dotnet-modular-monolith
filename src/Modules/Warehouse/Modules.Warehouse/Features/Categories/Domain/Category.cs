@@ -4,7 +4,7 @@ using Common.SharedKernel.Domain.Exceptions;
 
 namespace Modules.Warehouse.Features.Categories.Domain;
 
-public class Category : AggregateRoot<CategoryId>
+internal class Category : AggregateRoot<CategoryId>
 {
     public string Name { get; private set; } = default!;
 

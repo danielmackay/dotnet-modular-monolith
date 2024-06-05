@@ -1,3 +1,3 @@
 ﻿namespace Module.Orders.Features.Customers;
 
-public record CustomerId(Guid Value);
+internal record CustomerId(Guid Value);

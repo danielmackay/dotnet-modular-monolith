@@ -7,7 +7,7 @@ using Module.Orders.Features.Customers;
 
 namespace Module.Orders.Features.Orders;
 
-public class Order : AggregateRoot<OrderId>
+internal class Order : AggregateRoot<OrderId>
 {
     private readonly List<LineItem> _lineItems = new();
 

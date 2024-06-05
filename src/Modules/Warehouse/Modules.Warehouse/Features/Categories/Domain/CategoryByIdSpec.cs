@@ -2,7 +2,7 @@
 
 namespace Modules.Warehouse.Features.Categories.Domain;
 
-public class CategoryByIdSpec : Specification<Category>, ISingleResultSpecification<Category>
+internal class CategoryByIdSpec : Specification<Category>, ISingleResultSpecification<Category>
 {
     public CategoryByIdSpec(CategoryId id) : base()
     {

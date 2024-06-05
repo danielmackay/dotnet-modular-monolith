@@ -6,7 +6,7 @@ using Modules.Warehouse.Features.Products.Queries.GetProducts;
 
 namespace Modules.Warehouse.Features.Products.Endpoints;
 
-public static class ProductEndpoints
+internal static class ProductEndpoints
 {
     public static void MapProductEndpoints(this WebApplication app)
     {

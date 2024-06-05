@@ -1,3 +1,3 @@
 ﻿namespace Module.Orders.Features.Orders;
 
-public record LineItemId(Guid Value);
+internal record LineItemId(Guid Value);

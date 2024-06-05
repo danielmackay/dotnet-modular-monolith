@@ -7,7 +7,7 @@ using Modules.Warehouse.Features.Categories.Domain;
 
 namespace Modules.Warehouse.Features.Products.Domain;
 
-public class Product : AggregateRoot<ProductId>
+internal class Product : AggregateRoot<ProductId>
 {
     private const int LowStockThreshold = 5;
 

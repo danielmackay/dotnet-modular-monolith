@@ -2,16 +2,16 @@
 
 namespace Module.Orders.Features.Customers;
 
-public record Address
+internal record Address
 {
-    public string Line1 { get; }
-    public string? Line2 { get; }
-    public string City { get; }
+    internal string Line1 { get; }
+    internal string? Line2 { get; }
+    internal string City { get; }
     public string State { get; }
     public string ZipCode { get; }
     public string Country { get; }
 
-    public Address(string line1, string? line2, string city, string state, string zipCode, string country)
+    internal Address(string line1, string? line2, string city, string state, string zipCode, string country)
     {
         Guard.Against.NullOrWhiteSpace(line1);
         Guard.Against.NullOrWhiteSpace(city);

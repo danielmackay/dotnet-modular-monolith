@@ -2,7 +2,7 @@
 
 namespace Module.Orders.Features.Orders;
 
-public class OrderSpec : Specification<Order>
+internal class OrderSpec : Specification<Order>
 {
     public OrderSpec()
     {

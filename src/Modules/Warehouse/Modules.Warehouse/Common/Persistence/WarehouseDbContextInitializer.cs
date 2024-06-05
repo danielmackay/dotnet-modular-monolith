@@ -9,7 +9,7 @@ using Modules.Warehouse.Features.Products.Domain;
 
 namespace Modules.Warehouse.Common.Persistence;
 
-public class WarehouseDbContextInitializer
+internal class WarehouseDbContextInitializer
 {
     private readonly ILogger<WarehouseDbContextInitializer> _logger;
     private readonly WarehouseDbContext _dbContext;

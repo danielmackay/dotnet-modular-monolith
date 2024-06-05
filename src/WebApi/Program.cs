@@ -17,8 +17,6 @@ builder.Services.AddMediatR(config =>
     config.AddOpenBehavior(typeof(PerformanceBehaviour<,>));
 });
 
-
-
 builder.Services.AddOrders();
 builder.Services.AddWarehouse(builder.Configuration);
 

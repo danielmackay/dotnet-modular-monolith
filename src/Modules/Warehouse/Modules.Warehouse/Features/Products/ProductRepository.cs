@@ -4,7 +4,7 @@ using Modules.Warehouse.Features.Products.Domain;
 
 namespace Modules.Warehouse.Features.Products;
 
-public class ProductRepository : IProductRepository
+internal class ProductRepository : IProductRepository
 {
     private readonly WarehouseDbContext _dbContext;
 

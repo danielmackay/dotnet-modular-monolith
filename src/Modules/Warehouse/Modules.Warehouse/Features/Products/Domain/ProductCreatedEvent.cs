@@ -3,7 +3,7 @@ using Common.SharedKernel.Domain.Identifiers;
 
 namespace Modules.Warehouse.Features.Products.Domain;
 
-public record ProductCreatedEvent(ProductId Product, string ProductName) : DomainEvent
+internal record ProductCreatedEvent(ProductId Product, string ProductName) : DomainEvent
 {
     public static ProductCreatedEvent Create(Product product) => new(product.Id, product.Name);
 }
