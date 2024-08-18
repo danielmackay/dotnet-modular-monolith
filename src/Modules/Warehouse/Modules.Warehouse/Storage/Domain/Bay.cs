@@ -17,7 +17,8 @@ internal class Bay : Entity<int>
 
     public static Bay Create(int id, int numShelves)
     {
-        numShelves.Throw().IfNegativeOrZero();
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(id);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(numShelves);
 
         var bay = new Bay
         {
@@ -25,9 +26,9 @@ internal class Bay : Entity<int>
             Name = $"Bay {id}"
         };
 
-        for (var j = 0; j < numShelves; j++)
+        for (var i = 1; i <= numShelves; i++)
         {
-            var shelf = Shelf.Create(j);
+            var shelf = Shelf.Create(i);
             bay._shelves.Add(shelf);
         }
 

@@ -14,9 +14,9 @@ internal class Shelf : Entity<int>
 
     public static Shelf Create(int number)
     {
-        number.Throw().IfNegativeOrZero();
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(number);
 
-        return new Shelf()
+        return new Shelf
         {
             Id = number,
             Name = $"Shelf {number}"

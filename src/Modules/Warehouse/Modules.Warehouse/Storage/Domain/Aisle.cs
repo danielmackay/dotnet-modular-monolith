@@ -21,7 +21,7 @@ internal class Aisle : AggregateRoot<AisleId>
 
     public static Aisle Create(string name, int numBays, int numShelves)
     {
-        numBays.Throw().IfNegativeOrZero();
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(numBays);
 
         var aisle = new Aisle
         {
@@ -29,9 +29,9 @@ internal class Aisle : AggregateRoot<AisleId>
             Name = name
         };
 
-        for (var i = 0; i < numBays; i++)
+        for (var i = 1; i <= numBays; i++)
         {
-            var bay = Bay.Create(i + 1, numShelves);
+            var bay = Bay.Create(i, numShelves);
             aisle._bays.Add(bay);
         }
 
