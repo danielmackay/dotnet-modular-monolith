@@ -29,9 +29,9 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore -c Release
+      run: dotnet build --no-restore -c Debug
     - name: Test
-      run: dotnet test --no-build --verbosity normal -c Release --logger "trx;LogFileName=test-results.trx"
+      run: dotnet test --no-build --verbosity normal -c Debug --logger "trx;LogFileName=test-results.trx"
     - name: Smoke Test Report
       uses: dorny/test-reporter@v1
       if: success() || failure()
