@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Respawn;
 using Xunit;
 using Xunit.Abstractions;
@@ -22,12 +23,16 @@ public class TestingDatabaseFixture<TDbContext> : IAsyncLifetime where TDbContex
 
     public async Task InitializeAsync()
     {
-        // Initialize DB Container
-        await Factory.Database.InitializeAsync();
         ScopeFactory = Factory.Services.GetRequiredService<IServiceScopeFactory>();
+        using var scope = ScopeFactory.CreateScope();
+
+        // Initialize DB Container
+        var provider = scope.ServiceProvider.GetRequiredService<ILoggerProvider>();
+        await Factory.Database.InitializeAsync(provider.CreateLogger("xunit logger"));
+
+        Console.WriteLine("FOO");
 
         // Create and seed database
-        using var scope = ScopeFactory.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<TDbContext>();
         await dbContext.Database.EnsureCreatedAsync();
 

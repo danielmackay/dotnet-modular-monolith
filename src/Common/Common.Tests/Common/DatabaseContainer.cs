@@ -1,9 +1,10 @@
+using Microsoft.Extensions.Logging;
 using Testcontainers.MsSql;
 
 namespace Common.Tests.Common;
 
 /// <summary>
-/// Wrapper for SQL edge container
+/// Wrapper for MSSQL container
 /// </summary>
 public class DatabaseContainer : IAsyncDisposable
 {
@@ -17,10 +18,20 @@ public class DatabaseContainer : IAsyncDisposable
 
     public string? ConnectionString { get; private set; }
 
-    public async Task InitializeAsync()
+    public async Task InitializeAsync(ILogger logger)
     {
-        await _container.StartAsync();
-        ConnectionString = _container.GetConnectionString();
+        logger.LogInformation("Starting SQL edge container");
+
+        try
+        {
+            await _container.StartAsync();
+            ConnectionString = _container.GetConnectionString();
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Failed to start SQL edge container");
+            throw;
+        }
     }
 
     public async ValueTask DisposeAsync()
