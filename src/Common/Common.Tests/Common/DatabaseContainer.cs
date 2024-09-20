@@ -5,7 +5,7 @@ namespace Common.Tests.Common;
 /// <summary>
 /// Wrapper for SQL edge container
 /// </summary>
-public class DatabaseContainer
+public class DatabaseContainer : IAsyncDisposable
 {
     private readonly MsSqlContainer _container = new MsSqlBuilder()
         .WithImage("mcr.microsoft.com/mssql/server:2022-CU14-ubuntu-22.04")
@@ -23,7 +23,7 @@ public class DatabaseContainer
         ConnectionString = _container.GetConnectionString();
     }
 
-    public async Task DisposeAsync()
+    public async ValueTask DisposeAsync()
     {
         await _container.StopAsync();
         await _container.DisposeAsync();
