@@ -9,7 +9,19 @@ public static class OpenApiExt
 
     private static void AddMicrosoftOpenApi(this IServiceCollection services)
     {
-        services.AddOpenApi();
+        services.AddOpenApi(options =>
+        {
+            // Schema transformer to set the format of decimal to 'decimal'
+            options.AddSchemaTransformer((schema, context, cancellationToken) =>
+            {
+                // schema.Reference = new OpenApiReference();
+                // schema.Reference.Id = Guid.NewGuid().ToString();
+                // schema.Title = Guid.NewGuid().ToString();
+                // schema.Reference = new OpenApiReference();
+                // schema.Reference.Type = ReferenceType.;
+                return Task.CompletedTask;
+            });
+        });
     }
 
     private static void AddNswagOpenApi(this IServiceCollection services)
@@ -26,38 +38,5 @@ public static class OpenApiExt
         //     // Needed to support nested types in the schema
         //     setup.CustomSchemaIds(x => x.FullName?.Replace("+", ".", StringComparison.Ordinal));
         // });
-    }
-}
-
-public static class ScalarExtensions
-{
-    public static IEndpointConventionBuilder MapScalarUi(this IEndpointRouteBuilder endpoints)
-    {
-        return endpoints.MapGet("/scalar/{documentName}", (string documentName) => Results.Content($$"""
-              <!doctype html>
-              <html>
-              <head>
-                  <title>Scalar API Reference -- {{documentName}}</title>
-                  <meta charset="utf-8" />
-                  <meta
-                  name="viewport"
-                  content="width=device-width, initial-scale=1" />
-              </head>
-              <body>
-                  <script
-                  id="api-reference"
-                  data-url="/openapi/{{documentName}}.json"></script>
-                  <script>
-                  var configuration = {
-                      theme: 'purple',
-                  }
-              
-                  document.getElementById('api-reference').dataset.configuration =
-                      JSON.stringify(configuration)
-                  </script>
-                  <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference"></script>
-              </body>
-              </html>
-              """, "text/html")).ExcludeFromDescription();
     }
 }
