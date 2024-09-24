@@ -2,6 +2,7 @@ using Common.SharedKernel;
 using Modules.Catalog;
 using Modules.Orders;
 using Modules.Warehouse;
+using Scalar.AspNetCore;
 using WebApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,11 +22,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
 {
+    app.MapOpenApi();
+
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {
-        app.UseSwagger();
-        app.UseSwaggerUI();
+        // app.UseSwagger();
+        // app.UseSwaggerUI();
+        // app.MapScalarUi();
+        app.MapScalarApiReference();
     }
 
     app.UseHttpsRedirection();
