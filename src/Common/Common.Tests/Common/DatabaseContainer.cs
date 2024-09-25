@@ -29,10 +29,24 @@ public class DatabaseContainer : IAsyncDisposable
     private async Task StartWithRetry()
     {
         // NOTE: For some reason the container sometimes fails to start up.  Add in a retry to protect against this
-        var policy = Policy.Handle<Exception>()
-            .WaitAndRetry(MaxRetries, _ => TimeSpan.FromMilliseconds(2000));
+        var policy = Policy.Handle<InvalidOperationException>()
+            .WaitAndRetryAsync(MaxRetries, _ => TimeSpan.FromSeconds(5));
 
-        await policy.Execute(async () => { await _container.StartAsync(); });
+        await policy.ExecuteAsync(async () => { await _container.StartAsync(); });
+
+        // var ready = false;
+        // while (!ready)
+        // {
+        //     try
+        //     {
+        //         await _container.StartAsync();
+        //         ready = true;
+        //     }
+        //     catch (Exception)
+        //     {
+        //         await Task.Delay(2000);
+        //     }
+        // }
     }
 
     public async ValueTask DisposeAsync()
