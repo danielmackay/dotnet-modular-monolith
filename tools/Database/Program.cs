@@ -14,6 +14,8 @@ builder.ConfigureServices((context, services) =>
 {
     services.AddSingleton(TimeProvider.System);
 
+    var conn = context.Configuration.GetConnectionString("Warehouse");
+
     services.AddDbContext<WarehouseDbContext>(options =>
     {
         options.UseSqlServer(context.Configuration.GetConnectionString("Warehouse"), opt =>
@@ -39,10 +41,14 @@ app.Start();
 
 // Initialise and seed database
 using var scope = app.Services.CreateScope();
+
+Console.WriteLine("Waiting for SQL Server...");
+await Task.Delay(5000);
+
 var warehouse = scope.ServiceProvider.GetRequiredService<WarehouseDbContextInitialiser>();
 await warehouse.InitializeAsync();
 var warehouseProducts = await warehouse.SeedAsync();
 
-var catalog = scope.ServiceProvider.GetRequiredService<CatalogDbContextInitialiser>();
-await catalog.InitializeAsync();
-await catalog.SeedAsync(warehouseProducts);
+// var catalog = scope.ServiceProvider.GetRequiredService<CatalogDbContextInitialiser>();
+// await catalog.InitializeAsync();
+// await catalog.SeedAsync(warehouseProducts);

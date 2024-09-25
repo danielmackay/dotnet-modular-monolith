@@ -30,9 +30,7 @@ internal class WarehouseDbContextInitialiser
         {
             if (_dbContext.Database.IsSqlServer())
             {
-                // TODO: Move to migrations
-                await _dbContext.Database.EnsureDeletedAsync();
-                await _dbContext.Database.EnsureCreatedAsync();
+                await _dbContext.Database.MigrateAsync();
             }
         }
         catch (Exception e)

@@ -14,4 +14,10 @@
       <ProjectReference Include="..\..\src\Modules\Warehouse\Modules.Warehouse\Modules.Warehouse.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="appsettings.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
