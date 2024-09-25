@@ -49,6 +49,6 @@ var warehouse = scope.ServiceProvider.GetRequiredService<WarehouseDbContextIniti
 await warehouse.InitializeAsync();
 var warehouseProducts = await warehouse.SeedAsync();
 
-// var catalog = scope.ServiceProvider.GetRequiredService<CatalogDbContextInitialiser>();
-// await catalog.InitializeAsync();
-// await catalog.SeedAsync(warehouseProducts);
+var catalog = scope.ServiceProvider.GetRequiredService<CatalogDbContextInitialiser>();
+await catalog.InitializeAsync();
+await catalog.SeedAsync(warehouseProducts);
