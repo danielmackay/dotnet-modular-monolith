@@ -1,5 +1,4 @@
-using Common.SharedKernel.Domain.Entities;
-using Modules.Orders.Orders;
+using Modules.Orders.Common;
 using Modules.Orders.Orders.Order;
 
 namespace Modules.Orders.Tests.Orders
@@ -10,8 +9,8 @@ namespace Modules.Orders.Tests.Orders
         public void AddLineItem_ShouldAddNewItem_WhenProductDoesNotExist()
         {
             // Arrange
-            var order = Order.Create(new CustomerId(Guid.NewGuid()));
-            var productId = new ProductId(Guid.NewGuid());
+            var order = Order.Create(new CustomerId(Uuid.Create()));
+            var productId = new ProductId();
             var price = new Money(Currency.USD, 100);
             var quantity = 1;
 
@@ -28,8 +27,8 @@ namespace Modules.Orders.Tests.Orders
         public void AddLineItem_ShouldIncreaseQuantity_WhenProductExists()
         {
             // Arrange
-            var order = Order.Create(new CustomerId(Guid.NewGuid()));
-            var productId = new ProductId(Guid.NewGuid());
+            var order = Order.Create(new CustomerId(Uuid.Create()));
+            var productId = new ProductId();
             var price = new Money(Currency.USD, 100);
             var quantity = 1;
             order.AddLineItem(productId, price, quantity);
@@ -47,8 +46,8 @@ namespace Modules.Orders.Tests.Orders
         public void RemoveLineItem_ShouldRemoveItem_WhenProductExists()
         {
             // Arrange
-            var order = Order.Create(new CustomerId(Guid.NewGuid()));
-            var productId = new ProductId(Guid.NewGuid());
+            var order = Order.Create(new CustomerId(Uuid.Create()));
+            var productId = new ProductId();
             var price = new Money(Currency.USD, 100);
             var quantity = 1;
             order.AddLineItem(productId, price, quantity);
@@ -65,8 +64,8 @@ namespace Modules.Orders.Tests.Orders
         public void AddPayment_ShouldUpdateAmountPaid_WhenPaymentIsValid()
         {
             // Arrange
-            var order = Order.Create(new CustomerId(Guid.NewGuid()));
-            var productId = new ProductId(Guid.NewGuid());
+            var order = Order.Create(new CustomerId(Uuid.Create()));
+            var productId = new ProductId();
             var price = new Money(Currency.USD, 100);
             var quantity = 1;
             order.AddLineItem(productId, price, quantity);
@@ -85,8 +84,8 @@ namespace Modules.Orders.Tests.Orders
         public void ShipOrder_ShouldUpdateStatusAndShippingDate_WhenOrderIsReadyForShipping()
         {
             // Arrange
-            var order = Order.Create(new CustomerId(Guid.NewGuid()));
-            var productId = new ProductId(Guid.NewGuid());
+            var order = Order.Create(new CustomerId(Uuid.Create()));
+            var productId = new ProductId();
             var price = new Money(Currency.USD, 100);
             var quantity = 1;
             order.AddLineItem(productId, price, quantity);

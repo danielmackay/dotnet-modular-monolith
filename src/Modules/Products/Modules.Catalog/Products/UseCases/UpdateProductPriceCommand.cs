@@ -1,7 +1,6 @@
 using Ardalis.Specification.EntityFrameworkCore;
 using Common.SharedKernel;
 using Common.SharedKernel.Api;
-using Common.SharedKernel.Domain.Entities;
 using ErrorOr;
 using FluentValidation;
 using MediatR;

@@ -1,10 +1,10 @@
-using Microsoft.Extensions.Logging;
+using Polly;
 using Testcontainers.MsSql;
 
 namespace Common.Tests.Common;
 
 /// <summary>
-/// Wrapper for MSSQL container
+/// Wrapper for MS SQL container
 /// </summary>
 public class DatabaseContainer : IAsyncDisposable
 {
@@ -16,28 +16,28 @@ public class DatabaseContainer : IAsyncDisposable
         .WithAutoRemove(true)
         .Build();
 
+    private const int MaxRetries = 5;
+
     public string? ConnectionString { get; private set; }
 
-    public async Task InitializeAsync(ILogger logger)
+    public async Task InitializeAsync()
     {
-        logger.LogInformation("Starting SQL edge container");
+        await StartWithRetry();
+        ConnectionString = _container.GetConnectionString();
+    }
 
-        try
-        {
-            await _container.StartAsync();
-            ConnectionString = _container.GetConnectionString();
-        }
-        catch (Exception e)
-        {
-            logger.LogError(e, "Failed to start SQL edge container");
-            throw;
-        }
+    private async Task StartWithRetry()
+    {
+        // NOTE: For some reason the container sometimes fails to start up.  Add in a retry to protect against this
+        var policy = Policy.Handle<Exception>()
+            .WaitAndRetry(MaxRetries, _ => TimeSpan.FromMilliseconds(2000));
+
+        await policy.Execute(async () => { await _container.StartAsync(); });
     }
 
     public async ValueTask DisposeAsync()
     {
         await _container.StopAsync();
         await _container.DisposeAsync();
-        GC.SuppressFinalize(this);
     }
 }

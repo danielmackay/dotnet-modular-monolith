@@ -1,6 +1,4 @@
-using Common.SharedKernel.Domain.Base;
-using Common.SharedKernel.Domain.Entities;
-using Modules.Orders.Orders;
+using Modules.Orders.Common;
 
 namespace Modules.Orders.Carts;
 
@@ -24,7 +22,7 @@ internal class CartItem : Entity<CartItemId>
 
         var cartItem = new CartItem
         {
-            Id = new CartItemId(Guid.NewGuid()),
+            Id = new CartItemId(Uuid.Create()),
             ProductId = productId,
             Quantity = quantity,
             UnitPrice = unitPrice,

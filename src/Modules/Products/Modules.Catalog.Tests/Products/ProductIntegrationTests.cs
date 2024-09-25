@@ -1,4 +1,5 @@
 using Ardalis.Specification.EntityFrameworkCore;
+using Common.SharedKernel.Domain;
 using FluentAssertions;
 using Modules.Catalog.Categories.Domain;
 using Modules.Catalog.Products.Domain;
@@ -91,7 +92,7 @@ public class ProductIntegrationTests(CatalogDatabaseFixture fixture, ITestOutput
         var client = GetAnonymousClient();
 
         // Act
-        var response = await client.GetAsync($"/api/products/{Guid.NewGuid()}");
+        var response = await client.GetAsync($"/api/products/{Uuid.Create()}");
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);

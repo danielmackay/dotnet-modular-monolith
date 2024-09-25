@@ -1,4 +1,3 @@
-using FluentAssertions;
 using Modules.Warehouse.Products.Domain;
 using Modules.Warehouse.Storage.Domain;
 
@@ -10,7 +9,7 @@ public class StorageAllocationServiceTests
     public void AllocateStorage_ShouldAssignProductToFirstEmptyShelf()
     {
         // Arrange
-        var productId = new ProductId(Guid.NewGuid());
+        var productId = new ProductId();
         var aisles = new List<Aisle>
         {
             Aisle.Create("name", 2, 2)
@@ -28,7 +27,7 @@ public class StorageAllocationServiceTests
     public void AllocateStorage_ShouldThrowException_WhenNoEmptyShelfIsAvailable()
     {
         // Arrange
-        var productId = new ProductId(Guid.NewGuid());
+        var productId = new ProductId();
         var aisles = new List<Aisle>
         {
             Aisle.Create("name", 1, 1)
@@ -51,7 +50,7 @@ public class StorageAllocationServiceTests
         var numBays = 2;
         var numShelves = 3;
         var aisle = Aisle.Create("Aisle 1", numBays, numShelves);
-        var productId = new ProductId(Guid.NewGuid());
+        var productId = new ProductId();
 
         // Act
         for (var i = 0; i < numBays * numShelves; i++)
@@ -72,7 +71,7 @@ public class StorageAllocationServiceTests
         var numBays = 2;
         var numShelves = 3;
         var aisle = Aisle.Create("Aisle 1", numBays, numShelves);
-        var productId = new ProductId(Guid.NewGuid());
+        var productId = new ProductId();
 
         // Act
         for (var i = 0; i < numBays * numShelves; i++)

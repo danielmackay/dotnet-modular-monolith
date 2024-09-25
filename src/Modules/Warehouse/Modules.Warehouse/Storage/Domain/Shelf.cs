@@ -1,9 +1,14 @@
-using Common.SharedKernel.Domain.Base;
+using Common.SharedKernel.Domain.Interfaces;
 using Modules.Warehouse.Products.Domain;
 
 namespace Modules.Warehouse.Storage.Domain;
 
-internal record ShelfId(Guid Value) : IStronglyTypedId<Guid>;
+internal record ShelfId(Guid Value) : IStronglyTypedId<Guid>
+{
+    internal ShelfId() : this(Uuid.Create())
+    {
+    }
+}
 
 internal class Shelf : Entity<ShelfId>
 {
@@ -19,7 +24,7 @@ internal class Shelf : Entity<ShelfId>
 
         return new Shelf
         {
-            Id = new ShelfId(Guid.NewGuid()),
+            Id = new ShelfId(),
             Name = name
         };
     }

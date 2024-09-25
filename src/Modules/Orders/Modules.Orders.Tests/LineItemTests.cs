@@ -1,5 +1,4 @@
-using Common.SharedKernel.Domain.Entities;
-using Modules.Orders.Orders;
+using Modules.Orders.Common;
 using Modules.Orders.Orders.LineItem;
 using Modules.Orders.Orders.Order;
 
@@ -11,8 +10,8 @@ public class LineItemTests
     public void Create_ValidParameters_ShouldCreateLineItem()
     {
         // Arrange
-        var orderId = new OrderId(Guid.NewGuid());
-        var productId = new ProductId(Guid.NewGuid());
+        var orderId = new OrderId(Uuid.Create());
+        var productId = new ProductId();
         var price = Money.Create(100m);
         var quantity = 2;
 
@@ -30,8 +29,8 @@ public class LineItemTests
     public void Create_NegativePrice_ShouldThrow()
     {
         // Arrange
-        var orderId = new OrderId(Guid.NewGuid());
-        var productId = new ProductId(Guid.NewGuid());
+        var orderId = new OrderId(Uuid.Create());
+        var productId = new ProductId();
         var price = Money.Create(-100m);
         var quantity = 2;
 
@@ -46,8 +45,8 @@ public class LineItemTests
     public void Create_ZeroQuantity_ShouldThrow()
     {
         // Arrange
-        var orderId = new OrderId(Guid.NewGuid());
-        var productId = new ProductId(Guid.NewGuid());
+        var orderId = new OrderId(Uuid.Create());
+        var productId = new ProductId();
         var price = Money.Create(100m);
         var quantity = 0;
 
@@ -62,8 +61,8 @@ public class LineItemTests
     public void Total_ShouldReturnCorrectAmount()
     {
         // Arrange
-        var orderId = new OrderId(Guid.NewGuid());
-        var productId = new ProductId(Guid.NewGuid());
+        var orderId = new OrderId(Uuid.Create());
+        var productId = new ProductId();
         var price = Money.Create(100m);
         var quantity = 2;
 
@@ -78,8 +77,8 @@ public class LineItemTests
     public void Tax_ShouldReturnCorrectAmount()
     {
         // Arrange
-        var orderId = new OrderId(Guid.NewGuid());
-        var productId = new ProductId(Guid.NewGuid());
+        var orderId = new OrderId(Uuid.Create());
+        var productId = new ProductId();
         var price = Money.Create(100m);
         var quantity = 2;
 
@@ -94,8 +93,8 @@ public class LineItemTests
     public void TotalIncludingTax_ShouldReturnCorrectAmount()
     {
         // Arrange
-        var orderId = new OrderId(Guid.NewGuid());
-        var productId = new ProductId(Guid.NewGuid());
+        var orderId = new OrderId(Uuid.Create());
+        var productId = new ProductId();
         var price = Money.Create(100m);
         var quantity = 2;
 
@@ -110,8 +109,8 @@ public class LineItemTests
     public void AddQuantity_ShouldIncreaseQuantity()
     {
         // Arrange
-        var orderId = new OrderId(Guid.NewGuid());
-        var productId = new ProductId(Guid.NewGuid());
+        var orderId = new OrderId(Uuid.Create());
+        var productId = new ProductId();
         var price = Money.Create(100m);
         var quantity = 2;
         var lineItem = LineItem.Create(orderId, productId, price, quantity);
@@ -127,8 +126,8 @@ public class LineItemTests
     public void RemoveQuantity_ShouldDecreaseQuantity()
     {
         // Arrange
-        var orderId = new OrderId(Guid.NewGuid());
-        var productId = new ProductId(Guid.NewGuid());
+        var orderId = new OrderId(Uuid.Create());
+        var productId = new ProductId();
         var price = Money.Create(100m);
         var quantity = 5;
         var lineItem = LineItem.Create(orderId, productId, price, quantity);
@@ -144,8 +143,8 @@ public class LineItemTests
     public void RemoveQuantity_TooMany_ShouldThrow()
     {
         // Arrange
-        var orderId = new OrderId(Guid.NewGuid());
-        var productId = new ProductId(Guid.NewGuid());
+        var orderId = new OrderId(Uuid.Create());
+        var productId = new ProductId();
         var price = Money.Create(100m);
         var quantity = 2;
         var lineItem = LineItem.Create(orderId, productId, price, quantity);

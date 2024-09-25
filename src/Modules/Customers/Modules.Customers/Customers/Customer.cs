@@ -1,6 +1,4 @@
-﻿using Common.SharedKernel.Domain.Base;
-
-namespace Modules.Customers.Customers;
+﻿namespace Modules.Customers.Customers;
 
 /* Invariants:
  * - Must have a unique email address (handled by application)
@@ -20,7 +18,7 @@ internal class Customer : AggregateRoot<CustomerId>
 
     internal static Customer Create(string email, string firstName, string lastName)
     {
-        var customer = new Customer { Id = new CustomerId(Guid.NewGuid()) };
+        var customer = new Customer { Id = new CustomerId(Uuid.Create()) };
         customer.UpdateEmail(email);
         customer.UpdateName(firstName, lastName);
         customer.AddDomainEvent(CustomerCreatedEvent.Create(customer));

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EntityFramework.Exceptions.SqlServer;
+using Microsoft.EntityFrameworkCore;
 using Modules.Catalog.Categories.Domain;
 using Modules.Catalog.Products.Domain;
 
@@ -20,5 +21,13 @@ public class CatalogDbContext : DbContext
         modelBuilder.HasDefaultSchema("catalog");
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogDbContext).Assembly);
         base.OnModelCreating(modelBuilder);
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        // Produces easy to read exceptions
+        optionsBuilder.UseExceptionProcessor();
+
+        base.OnConfiguring(optionsBuilder);
     }
 }

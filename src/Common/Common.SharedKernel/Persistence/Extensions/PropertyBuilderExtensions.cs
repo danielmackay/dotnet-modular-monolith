@@ -1,4 +1,4 @@
-using Common.SharedKernel.Domain.Base;
+using Common.SharedKernel.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Common.SharedKernel.Persistence.Extensions;

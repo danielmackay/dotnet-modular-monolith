@@ -1,4 +1,3 @@
-using FluentAssertions;
 using Modules.Warehouse.Products.Domain;
 using Modules.Warehouse.Storage.Domain;
 using Modules.Warehouse.Storage.UseCases;

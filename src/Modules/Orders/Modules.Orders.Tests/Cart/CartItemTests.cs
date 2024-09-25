@@ -1,6 +1,5 @@
-using Common.SharedKernel.Domain.Entities;
 using Modules.Orders.Carts;
-using Modules.Orders.Orders;
+using Modules.Orders.Common;
 
 namespace Modules.Orders.Tests.Cart;
 
@@ -10,7 +9,7 @@ public class CartItemTests
     public void Create_ValidParameters_ShouldCreateCartItem()
     {
         // Arrange
-        var productId = new ProductId(Guid.NewGuid());
+        var productId = new ProductId();
         var quantity = 2;
         var unitPrice = Money.Create(100m);
 
@@ -28,7 +27,7 @@ public class CartItemTests
     public void Create_NegativeQuantity_ShouldThrow()
     {
         // Arrange
-        var productId = new ProductId(Guid.NewGuid());
+        var productId = new ProductId();
         var quantity = -1;
         var unitPrice = Money.Create(100m);
 
@@ -43,7 +42,7 @@ public class CartItemTests
     public void Create_NegativeUnitPrice_ShouldThrow()
     {
         // Arrange
-        var productId = new ProductId(Guid.NewGuid());
+        var productId = new ProductId();
         var quantity = 2;
         var unitPrice = Money.Create(-100m);
 
@@ -58,7 +57,7 @@ public class CartItemTests
     public void IncreaseQuantity_ShouldIncreaseQuantity()
     {
         // Arrange
-        var productId = new ProductId(Guid.NewGuid());
+        var productId = new ProductId();
         var quantity = 2;
         var unitPrice = Money.Create(100m);
         var cartItem = CartItem.Create(productId, quantity, unitPrice);
@@ -75,7 +74,7 @@ public class CartItemTests
     public void DecreaseQuantity_ShouldDecreaseQuantity()
     {
         // Arrange
-        var productId = new ProductId(Guid.NewGuid());
+        var productId = new ProductId();
         var quantity = 5;
         var unitPrice = Money.Create(100m);
         var cartItem = CartItem.Create(productId, quantity, unitPrice);
@@ -92,7 +91,7 @@ public class CartItemTests
     public void DecreaseQuantity_TooMany_ShouldThrow()
     {
         // Arrange
-        var productId = new ProductId(Guid.NewGuid());
+        var productId = new ProductId();
         var quantity = 2;
         var unitPrice = Money.Create(100m);
         var cartItem = CartItem.Create(productId, quantity, unitPrice);

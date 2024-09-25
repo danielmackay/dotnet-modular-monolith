@@ -1,10 +1,15 @@
-using Common.SharedKernel.Domain.Base;
+using Common.SharedKernel.Domain.Interfaces;
 using ErrorOr;
 using Modules.Warehouse.Products.Domain;
 
 namespace Modules.Warehouse.Storage.Domain;
 
-internal record AisleId(Guid Value) : IStronglyTypedId<Guid>;
+internal record AisleId(Guid Value) : IStronglyTypedId<Guid>
+{
+    internal AisleId() : this(Uuid.Create())
+    {
+    }
+}
 
 internal class Aisle : AggregateRoot<AisleId>
 {
@@ -26,7 +31,7 @@ internal class Aisle : AggregateRoot<AisleId>
 
         var aisle = new Aisle
         {
-            Id = new AisleId(Guid.NewGuid()),
+            Id = new AisleId(),
             Name = name
         };
 

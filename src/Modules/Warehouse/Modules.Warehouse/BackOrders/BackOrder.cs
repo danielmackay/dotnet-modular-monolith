@@ -1,5 +1,4 @@
 using Ardalis.SmartEnum;
-using Common.SharedKernel.Domain.Base;
 
 namespace Modules.Warehouse.BackOrders;
 
@@ -23,7 +22,7 @@ internal class BackOrder : AggregateRoot<BackOrderId>
     {
         var backOrder = new BackOrder
         {
-            Id = new BackOrderId(Guid.NewGuid()),
+            Id = new BackOrderId(Uuid.Create()),
             // _productId = productId,
             // _quantityOrdered = quantityOrdered,
             // _quantityReceived = 0,

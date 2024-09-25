@@ -1,5 +1,4 @@
-﻿using Common.SharedKernel.Domain.Base;
-using Common.SharedKernel.Domain.Entities;
+﻿using Modules.Orders.Common;
 using Modules.Orders.Orders.Order;
 using Throw;
 
@@ -35,7 +34,7 @@ internal class LineItem : Entity<LineItemId>
 
         var lineItem = new LineItem()
         {
-            Id = new LineItemId(Guid.NewGuid()),
+            Id = new LineItemId(Uuid.Create()),
             OrderId = orderId,
             ProductId = productId,
             Price = price,

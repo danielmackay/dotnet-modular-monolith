@@ -1,3 +1,8 @@
-namespace Modules.Orders.Orders;
+namespace Modules.Orders.Common;
 
-internal record ProductId(Guid Value);
+internal record ProductId(Guid Value)
+{
+    internal ProductId() : this(Uuid.Create())
+    {
+    }
+}

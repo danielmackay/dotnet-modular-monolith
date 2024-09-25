@@ -1,4 +1,3 @@
-using FluentAssertions;
 using Modules.Warehouse.Products.Domain;
 using Modules.Warehouse.Storage.Domain;
 using Xunit.Abstractions;
@@ -18,8 +17,8 @@ public class AisleTests
     public void LookingUpProduct_ReturnsAisleBayAndShelf()
     {
         // Exploratory
-        var productA = new ProductId(Guid.NewGuid());
-        var productB = new ProductId(Guid.NewGuid());
+        var productA = new ProductId();
+        var productB = new ProductId();
         var aisle = Aisle.Create("Aisle 1", 2, 3);
 
         StorageAllocationService.AllocateStorage(new List<Aisle> { aisle }, productA);
@@ -95,7 +94,7 @@ public class AisleTests
     public void AssignProduct_WithAvailableStorage_AssignsProductToShelf()
     {
         // Arrange
-        var productId = new ProductId(Guid.NewGuid());
+        var productId = new ProductId();
         var sut = Aisle.Create("Aisle 1", 1, 1);
 
         // Act
@@ -113,7 +112,7 @@ public class AisleTests
     public void AssignProduct_WithNoAvailableStorage_ReturnsError()
     {
         // Arrange
-        var productId = new ProductId(Guid.NewGuid());
+        var productId = new ProductId();
         var sut = Aisle.Create("Aisle 1", 1, 1);
         sut.AssignProduct(productId);
 

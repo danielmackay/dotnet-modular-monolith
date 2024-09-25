@@ -1,7 +1,6 @@
-﻿using Common.SharedKernel.Domain.Base;
-using Common.SharedKernel.Domain.Entities;
-using Common.SharedKernel.Domain.Exceptions;
+﻿using Common.SharedKernel.Domain.Exceptions;
 using ErrorOr;
+using Modules.Orders.Common;
 using Modules.Orders.Orders.LineItem;
 using Success = ErrorOr.Success;
 
@@ -67,7 +66,7 @@ internal class Order : AggregateRoot<OrderId>
     {
         var order = new Order
         {
-            Id = new OrderId(Guid.NewGuid()),
+            Id = new OrderId(Uuid.Create()),
             CustomerId = customerId,
             AmountPaid = Money.Zero,
             OrderSubTotal = Money.Zero,

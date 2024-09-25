@@ -1,4 +1,3 @@
-using Common.SharedKernel.Domain.Entities;
 using Modules.Orders.Orders.Payment;
 
 namespace Modules.Orders.Tests.Orders;

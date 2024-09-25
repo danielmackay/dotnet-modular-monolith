@@ -1,6 +1,3 @@
-using Common.SharedKernel.Domain.Base;
-using Common.SharedKernel.Domain.Entities;
-
 namespace Modules.Orders.Orders.Payment;
 
 internal record PaymentId(Guid Value);
@@ -22,7 +19,7 @@ internal class Payment : Entity<PaymentId>
 
         var payment = new Payment
         {
-            Id = new PaymentId(Guid.NewGuid()),
+            Id = new PaymentId(Uuid.Create()),
             Amount = amount,
             PaymentType = paymentType
         };

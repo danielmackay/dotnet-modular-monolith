@@ -1,4 +1,3 @@
-using FluentAssertions;
 using Modules.Warehouse.Products.Domain;
 
 namespace Modules.Warehouse.Tests.Products;
