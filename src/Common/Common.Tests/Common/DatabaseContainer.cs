@@ -39,5 +39,6 @@ public class DatabaseContainer : IAsyncDisposable
     {
         await _container.StopAsync();
         await _container.DisposeAsync();
+        GC.SuppressFinalize(this);
     }
 }

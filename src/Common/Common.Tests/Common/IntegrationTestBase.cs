@@ -13,7 +13,7 @@ public abstract class IntegrationTestBase<TDbContext> : IAsyncLifetime where TDb
 {
     private readonly IServiceScope _scope;
 
-    private readonly TestingDatabaseFixture<TDbContext> _fixture;
+    private readonly TestingDatabaseFixture _fixture;
 
     protected IMediator Mediator { get; }
 
@@ -21,7 +21,7 @@ public abstract class IntegrationTestBase<TDbContext> : IAsyncLifetime where TDb
 
     private TDbContext DbContext { get; }
 
-    protected IntegrationTestBase(TestingDatabaseFixture<TDbContext> fixture, ITestOutputHelper output)
+    protected IntegrationTestBase(TestingDatabaseFixture fixture, ITestOutputHelper output)
     {
         _fixture = fixture;
         _fixture.SetOutput(output);

@@ -3,9 +3,10 @@ using Meziantou.Extensions.Logging.Xunit;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Modules.Catalog.Common.Persistence;
+using Modules.Warehouse.Common.Persistence;
 using WebApi;
 using Xunit.Abstractions;
 
@@ -14,7 +15,7 @@ namespace Common.Tests.Common;
 /// <summary>
 /// Host builder (services, DI, and configuration) for integration tests
 /// </summary>
-public class WebApiTestFactory<TDbContext> : WebApplicationFactory<IWebApiMarker> where TDbContext : DbContext
+public class WebApiTestFactory : WebApplicationFactory<IWebApiMarker>
 {
     public DatabaseContainer Database { get; } = new();
 
@@ -35,7 +36,8 @@ public class WebApiTestFactory<TDbContext> : WebApplicationFactory<IWebApiMarker
         // Override default DB registration to use out Test Container instead
         builder.ConfigureTestServices(services =>
         {
-            services.ReplaceDbContext<TDbContext>(Database);
+            services.ReplaceDbContext<WarehouseDbContext>(Database);
+            services.ReplaceDbContext<CatalogDbContext>(Database);
         });
     }
 }

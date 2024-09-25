@@ -5,7 +5,7 @@ using Xunit.Abstractions;
 namespace Modules.Catalog.Tests.Common;
 
 // ReSharper disable once ClassNeverInstantiated.Global
-public class CatalogDatabaseFixture : TestingDatabaseFixture<CatalogDbContext>;
+public class CatalogDatabaseFixture : TestingDatabaseFixture;
 
 [Collection(CatalogFixtureCollection.Name)]
 public abstract class CatalogIntegrationTestBase(

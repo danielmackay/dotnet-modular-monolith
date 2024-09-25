@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Modules.Catalog.Common.Persistence;
+using Modules.Warehouse.Common.Persistence;
 using Respawn;
 using Xunit;
 using Xunit.Abstractions;
@@ -10,7 +12,7 @@ namespace Common.Tests.Common;
 /// Initializes and resets the database before and after each test
 /// </summary>
 // ReSharper disable once ClassNeverInstantiated.Global
-public class TestingDatabaseFixture<TDbContext> : IAsyncLifetime where TDbContext : DbContext
+public class TestingDatabaseFixture : IAsyncLifetime
 {
     private string ConnectionString => Factory.Database.ConnectionString!;
 
@@ -18,7 +20,7 @@ public class TestingDatabaseFixture<TDbContext> : IAsyncLifetime where TDbContex
 
     public IServiceScopeFactory ScopeFactory { get; private set; } = null!;
 
-    public WebApiTestFactory<TDbContext> Factory { get; } = new();
+    public WebApiTestFactory Factory { get; } = new();
 
     public async Task InitializeAsync()
     {
@@ -26,10 +28,14 @@ public class TestingDatabaseFixture<TDbContext> : IAsyncLifetime where TDbContex
         await Factory.Database.InitializeAsync();
         ScopeFactory = Factory.Services.GetRequiredService<IServiceScopeFactory>();
 
-        // Create and seed database
+        // Create and seed databases
         using var scope = ScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<TDbContext>();
-        await dbContext.Database.EnsureCreatedAsync();
+
+        var catalogDb = scope.ServiceProvider.GetRequiredService<CatalogDbContext>();
+        await catalogDb.Database.MigrateAsync();
+
+        var warehouseDb = scope.ServiceProvider.GetRequiredService<WarehouseDbContext>();
+        await warehouseDb.Database.MigrateAsync();
 
         // NOTE: If there are any tables you want to skip being reset, they can be configured here
         _checkpoint = await Respawner.CreateAsync(ConnectionString);
