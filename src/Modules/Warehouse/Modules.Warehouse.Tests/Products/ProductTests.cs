@@ -4,7 +4,7 @@ namespace Modules.Warehouse.Tests.Products;
 
 public class ProductTests
 {
-    [Fact]
+    [Test]
     public void Create_ShouldInitializeProductCorrectly()
     {
         // Arrange
@@ -21,7 +21,7 @@ public class ProductTests
         product.Id.Should().NotBeNull();
     }
 
-    [Fact]
+    [Test]
     public void RemoveStock_ShouldDecreaseStockOnHand()
     {
         // Arrange
@@ -36,7 +36,7 @@ public class ProductTests
         product.StockOnHand.Should().Be(5);
     }
 
-    [Fact]
+    [Test]
     public void RemoveStock_ShouldThrowException_WhenStockGoesBelowZero()
     {
         // Arrange
@@ -52,7 +52,7 @@ public class ProductTests
         result.FirstError.Should().Be(ProductErrors.CantRemoveMoreStockThanExists);
     }
 
-    [Fact]
+    [Test]
     public void AddStock_ShouldIncreaseStockOnHand()
     {
         // Arrange
