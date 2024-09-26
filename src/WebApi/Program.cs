@@ -6,6 +6,9 @@ using WebApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 {
+    // Add service defaults & Aspire components.
+    builder.AddServiceDefaults();
+
     builder.Services.AddSwagger();
 
     builder.Services.AddGlobalErrorHandler();
@@ -33,6 +36,8 @@ var app = builder.Build();
     app.UseOrders();
     app.UseWarehouse();
     app.UseCatalog();
+
+    app.MapDefaultEndpoints();
 
     app.Run();
 }

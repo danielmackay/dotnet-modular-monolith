@@ -14,6 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Common\Common.ServiceDefaults\Common.ServiceDefaults.csproj" />
       <ProjectReference Include="..\Modules\Orders\Modules.Orders\Modules.Orders.csproj" />
       <ProjectReference Include="..\Modules\Products\Modules.Catalog\Modules.Catalog.csproj" />
       <ProjectReference Include="..\Modules\Warehouse\Modules.Warehouse\Modules.Warehouse.csproj" />
