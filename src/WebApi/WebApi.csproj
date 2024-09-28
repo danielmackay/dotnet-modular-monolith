@@ -5,6 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <!-- TODO: Can this be moved to infra? -->
+        <PackageReference Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" Version="8.2.1" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0-rc.1.24452.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0-rc.1.24451.1">
           <PrivateAssets>all</PrivateAssets>

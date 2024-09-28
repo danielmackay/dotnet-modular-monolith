@@ -15,6 +15,10 @@ builder
 //         opts.EnvironmentVariables.Add("MSSQL_PID", "Developer");
 //     });
 
+var sql = builder
+    .AddSqlServer("sql")
+    .AddDatabase("warehouse");
+
 // builder.AddProject<AspireApp1_Web>("webfrontend")
 //     .WithExternalHttpEndpoints()
 //     .WithReference(apiService);
