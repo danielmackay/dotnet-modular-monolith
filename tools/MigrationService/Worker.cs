@@ -18,16 +18,21 @@ public class Worker(
         try
         {
             using var scope = serviceProvider.CreateScope();
+            var environment = scope.ServiceProvider.GetRequiredService<IHostEnvironment>();
 
             var warehouseInitializer = scope.ServiceProvider.GetRequiredService<WarehouseDbContextInitializer>();
             await warehouseInitializer.EnsureDatabaseAsync(cancellationToken);
             await warehouseInitializer.RunMigrationAsync(cancellationToken);
-            var products = await warehouseInitializer.SeedDataAsync(cancellationToken);
 
             var catalogInitializer = scope.ServiceProvider.GetRequiredService<CatalogDbContextInitializer>();
             await catalogInitializer.EnsureDatabaseAsync(cancellationToken);
             await catalogInitializer.RunMigrationAsync(cancellationToken);
-            await catalogInitializer.SeedDataAsync(products, cancellationToken);
+
+            if (environment.IsDevelopment())
+            {
+                var products = await warehouseInitializer.SeedDataAsync(cancellationToken);
+                await catalogInitializer.SeedDataAsync(products, cancellationToken);
+            }
 
         }
         catch (Exception ex)
