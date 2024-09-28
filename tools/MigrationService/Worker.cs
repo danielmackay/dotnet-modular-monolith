@@ -33,7 +33,6 @@ public class Worker(
                 var products = await warehouseInitializer.SeedDataAsync(cancellationToken);
                 await catalogInitializer.SeedDataAsync(products, cancellationToken);
             }
-
         }
         catch (Exception ex)
         {
