@@ -12,20 +12,26 @@ public class Worker(
     IHostApplicationLifetime hostApplicationLifetime) : BackgroundService
 {
     public const string ActivitySourceName = "Migrations";
-    private static readonly ActivitySource s_activitySource = new(ActivitySourceName);
+    private static readonly ActivitySource _activitySource = new(ActivitySourceName);
 
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
-        using var activity = s_activitySource.StartActivity("Migrating database", ActivityKind.Client);
+        using var activity = _activitySource.StartActivity("Migrating database", ActivityKind.Client);
 
         try
         {
             using var scope = serviceProvider.CreateScope();
-            var warehouseInitializer = scope.ServiceProvider.GetRequiredService<WarehouseDbContextInitializer>();
 
+            var warehouseInitializer = scope.ServiceProvider.GetRequiredService<WarehouseDbContextInitializer>();
             await warehouseInitializer.EnsureDatabaseAsync(cancellationToken);
             await warehouseInitializer.RunMigrationAsync(cancellationToken);
-            await warehouseInitializer.SeedDataAsync(cancellationToken);
+            var products = await warehouseInitializer.SeedDataAsync(cancellationToken);
+
+            var catalogInitializer = scope.ServiceProvider.GetRequiredService<CatalogDbContextInitializer>();
+            await catalogInitializer.EnsureDatabaseAsync(cancellationToken);
+            await catalogInitializer.RunMigrationAsync(cancellationToken);
+            await catalogInitializer.SeedDataAsync(products, cancellationToken);
+
         }
         catch (Exception ex)
         {

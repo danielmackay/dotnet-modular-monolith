@@ -23,6 +23,7 @@ public class WarehouseDbContext : DbContext
         base.OnModelCreating(modelBuilder);
     }
 
+    // TODO: Need to figure out how to get this working in pooled DB mode
     // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     // {
     //     // Produces easy to read exceptions

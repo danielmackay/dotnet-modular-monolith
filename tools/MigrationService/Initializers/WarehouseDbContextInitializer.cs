@@ -51,18 +51,21 @@ internal class WarehouseDbContextInitializer
         });
     }
 
-    public async Task SeedDataAsync(CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<Product>> SeedDataAsync(CancellationToken cancellationToken)
     {
         var strategy = _dbContext.Database.CreateExecutionStrategy();
+        IReadOnlyList<Product> products = [];
         await strategy.ExecuteAsync(async () =>
         {
             // Seed the database
             await using var transaction = await _dbContext.Database.BeginTransactionAsync(cancellationToken);
             await SeedAisles();
-            await SeedProductsAsync();
+            products = await SeedProductsAsync();
             await _dbContext.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
         });
+
+        return products;
     }
 
     private async Task SeedAisles()
