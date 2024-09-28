@@ -1,26 +1,20 @@
 using Projects;
 
-var builder = DistributedApplication.CreateBuilder(args);
+var builder = DistributedApplication.CreateBuilder();
 
 builder
-    .AddProject<WebApi>("apiservice")
+    .AddProject<WebApi>("api")
     .WithExternalHttpEndpoints();
 
-
-// builder
-//     .AddContainer("mssql-server", opts =>
-//     {
-//         opts.EnvironmentVariables.Add("ACCEPT_EULA", "Y");
-//         opts.EnvironmentVariables.Add("SA_PASSWORD", "Password123");
-//         opts.EnvironmentVariables.Add("MSSQL_PID", "Developer");
-//     });
-
-var sql = builder
-    .AddSqlServer("sql")
+var warehouseDb = builder
+    .AddSqlServer("sql-warehouse")
     .AddDatabase("warehouse");
 
-// builder.AddProject<AspireApp1_Web>("webfrontend")
-//     .WithExternalHttpEndpoints()
-//     .WithReference(apiService);
+builder
+    .AddSqlServer("sql-catalog")
+    .AddDatabase("catalog");
+
+builder.AddProject<MigrationService>("migrations")
+    .WithReference(warehouseDb);
 
 builder.Build().Run();
