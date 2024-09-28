@@ -2,9 +2,6 @@ using MigrationService.Initializers;
 using OpenTelemetry.Trace;
 using System.Diagnostics;
 
-// using SupportTicketApi.Data.Contexts;
-// using SupportTicketApi.Data.Models;
-
 namespace MigrationService;
 
 public class Worker(
@@ -41,6 +38,4 @@ public class Worker(
 
         hostApplicationLifetime.StopApplication();
     }
-
-
 }
