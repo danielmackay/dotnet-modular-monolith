@@ -21,6 +21,7 @@
     <ItemGroup>
         <ProjectReference Include="..\..\..\Common\Common.SharedKernel\Common.SharedKernel.csproj" />
         <ProjectReference Include="..\..\Warehouse\Modules.Warehouse.Messages\Modules.Warehouse.Messages.csproj" />
+        <ProjectReference Include="..\Modules.Catalog.Messages\Modules.Catalog.Messages.csproj" />
     </ItemGroup>
 
 </Project>

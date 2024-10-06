@@ -9,16 +9,18 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Modules.Catalog.Common.Persistence;
 using Modules.Catalog.Products.Domain;
+using Request = Modules.Catalog.Messages.GetProductQuery.Request;
+using Response = Modules.Catalog.Messages.GetProductQuery.Response;
 
-namespace Modules.Catalog.Products.UseCases;
+namespace Modules.Catalog.Products.Integrations;
 
 public static class GetProductQuery
 {
-    public record Request(Guid ProductId) : IRequest<ErrorOr<Response>>;
-
-    public record Response(string Name, Guid Id, string Sku, decimal Price, List<CategoryDto> Categories);
-
-    public record CategoryDto(Guid Id, string Name);
+    // public record Request(Guid ProductId) : IRequest<ErrorOr<Response>>;
+    //
+    // public record Response(string Name, Guid Id, string Sku, decimal Price, List<CategoryDto> Categories);
+    //
+    // public record CategoryDto(Guid Id, string Name);
 
     public static class Endpoint
     {
@@ -53,7 +55,7 @@ public static class GetProductQuery
             var product = await _dbContext.Products
                 .WithSpecification(new ProductByIdSpec(productId))
                 .Select(p => new Response(p.Name, p.Id.Value, p.Sku, p.Price.Amount,
-                    p.Categories.Select(c => new CategoryDto(c.Id.Value, c.Name)).ToList()))
+                    p.Categories.Select(c => new Messages.GetProductQuery.CategoryDto(c.Id.Value, c.Name)).ToList()))
                 .FirstOrDefaultAsync(cancellationToken);
 
             if (product is null)

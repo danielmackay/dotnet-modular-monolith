@@ -1,5 +1,3 @@
-using Modules.Orders.Common;
-
 namespace Modules.Orders.Tests.Cart;
 
 public class CartTests
@@ -10,7 +8,7 @@ public class CartTests
         // Arrange
         var productId = new ProductId();
         var unitPrice = new Money(Currency.Default, 10);
-        var cart = Carts.Cart.Create(productId, 1, unitPrice);
+        var cart = Carts.Domain.Cart.Create(productId, 1, unitPrice);
 
         // Act
         cart.AddItem(productId, 2, unitPrice);
@@ -28,7 +26,7 @@ public class CartTests
         var productId1 = new ProductId();
         var productId2 = new ProductId();
         var unitPrice = new Money(Currency.Default, 10);
-        var cart = Carts.Cart.Create(productId1, 1, unitPrice);
+        var cart = Carts.Domain.Cart.Create(productId1, 1, unitPrice);
 
         // Act
         cart.AddItem(productId2, 2, unitPrice);
@@ -46,7 +44,7 @@ public class CartTests
         // Arrange
         var productId = new ProductId();
         var unitPrice = new Money(Currency.Default, 10);
-        var cart = Carts.Cart.Create(productId, 1, unitPrice);
+        var cart = Carts.Domain.Cart.Create(productId, 1, unitPrice);
 
         // Act
         cart.RemoveItem(productId);
@@ -63,7 +61,7 @@ public class CartTests
         var productId1 = new ProductId();
         var productId2 = new ProductId();
         var unitPrice = new Money(Currency.Default, 10);
-        var cart = Carts.Cart.Create(productId1, 1, unitPrice);
+        var cart = Carts.Domain.Cart.Create(productId1, 1, unitPrice);
 
         // Act
         cart.RemoveItem(productId2);
@@ -81,7 +79,7 @@ public class CartTests
         var productId2 = new ProductId();
         var unitPrice1 = new Money(Currency.Default, 10);
         var unitPrice2 = new Money(Currency.Default, 20);
-        var cart = Carts.Cart.Create(productId1, 1, unitPrice1);
+        var cart = Carts.Domain.Cart.Create(productId1, 1, unitPrice1);
 
         // Act
         cart.AddItem(productId2, 2, unitPrice2);

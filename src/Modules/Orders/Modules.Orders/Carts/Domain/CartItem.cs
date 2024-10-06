@@ -1,6 +1,6 @@
-using Modules.Orders.Common;
+using Common.SharedKernel.Domain.Ids;
 
-namespace Modules.Orders.Carts;
+namespace Modules.Orders.Carts.Domain;
 
 internal record CartItemId(Guid Value);
 

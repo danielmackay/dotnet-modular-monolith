@@ -1,5 +1,4 @@
-using Modules.Orders.Carts;
-using Modules.Orders.Common;
+using Modules.Orders.Carts.Domain;
 
 namespace Modules.Orders.Tests.Cart;
 

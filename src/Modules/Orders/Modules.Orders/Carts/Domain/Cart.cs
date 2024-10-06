@@ -1,8 +1,14 @@
-using Modules.Orders.Common;
+using Common.SharedKernel.Domain.Ids;
+using Common.SharedKernel.Domain.Interfaces;
 
-namespace Modules.Orders.Carts;
+namespace Modules.Orders.Carts.Domain;
 
-internal record CartId(Guid Value);
+internal record CartId(Guid Value) : IStronglyTypedId<Guid>
+{
+    public CartId() : this(Uuid.Create())
+    {
+    }
+}
 
 internal class Cart : AggregateRoot<CartId>
 {
@@ -16,7 +22,7 @@ internal class Cart : AggregateRoot<CartId>
     {
         var cart = new Cart
         {
-            Id = new CartId(Uuid.Create())
+            Id = new CartId()
         };
 
         cart.AddItem(productId, quantity, unitPrice);

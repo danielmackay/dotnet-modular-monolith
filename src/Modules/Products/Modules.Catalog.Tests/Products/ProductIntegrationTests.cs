@@ -2,6 +2,7 @@ using Ardalis.Specification.EntityFrameworkCore;
 using Common.SharedKernel.Domain;
 using FluentAssertions;
 using Modules.Catalog.Categories.Domain;
+using Modules.Catalog.Messages;
 using Modules.Catalog.Products.Domain;
 using Modules.Catalog.Products.UseCases;
 using Modules.Catalog.Tests.Common;

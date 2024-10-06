@@ -66,6 +66,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".sln", ".sln", "{63C08527-F
 		src\Modules\Warehouse\AddWarehouseMigration.ps1 = src\Modules\Warehouse\AddWarehouseMigration.ps1
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.Catalog.Messages", "src\Modules\Products\Modules.Catalog.Messages\Modules.Catalog.Messages.csproj", "{75591E8A-4FE8-4179-9332-50A28D7A0073}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -131,6 +133,10 @@ Global
 		{51EA2161-32E7-4B5D-AAFF-E3F8D9D4E3A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51EA2161-32E7-4B5D-AAFF-E3F8D9D4E3A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51EA2161-32E7-4B5D-AAFF-E3F8D9D4E3A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75591E8A-4FE8-4179-9332-50A28D7A0073}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75591E8A-4FE8-4179-9332-50A28D7A0073}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75591E8A-4FE8-4179-9332-50A28D7A0073}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75591E8A-4FE8-4179-9332-50A28D7A0073}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{916135AD-7D7F-4472-BDAB-C5F2BA5F8C67} = {382656EC-4C92-485C-8BC5-349D1A5C05C7}
@@ -153,5 +159,6 @@ Global
 		{A105835C-C285-4AA5-AADF-CCA4BCC933B1} = {D4C452DB-CB41-4B65-8A1A-FCD6E7811EE8}
 		{13094B62-3DBC-4C6F-9ECC-D2DC433C319F} = {382656EC-4C92-485C-8BC5-349D1A5C05C7}
 		{51EA2161-32E7-4B5D-AAFF-E3F8D9D4E3A9} = {3E4B904F-1D6C-437B-8208-C6D17F995528}
+		{75591E8A-4FE8-4179-9332-50A28D7A0073} = {1E1A153A-D69A-4EC5-BD21-DE4249E8FA4F}
 	EndGlobalSection
 EndGlobal
