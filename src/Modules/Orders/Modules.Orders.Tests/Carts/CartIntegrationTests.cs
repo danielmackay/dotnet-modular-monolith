@@ -29,7 +29,7 @@ public class CartIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHelp
         var response = await client.PostAsJsonAsync("/api/carts", request);
 
         // Assert
-        HttpContentExtensions.Should(response).BeSuccessWithStatusCode(HttpStatusCode.OK);
+        HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.OK);
         var carts = await GetQueryable<Cart>().Include(c => c.Items).ToListAsync();
         carts.Should().HaveCount(1);
 
@@ -66,7 +66,7 @@ public class CartIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHelp
         var response2 = await client.PostAsJsonAsync("/api/carts", request2);
 
         // Assert
-        HttpContentExtensions.Should(response2).BeSuccessWithStatusCode(HttpStatusCode.OK);
+        HttpContentExtensions.Should(response2).BeStatusCode(HttpStatusCode.OK);
         var carts = await GetQueryable<Cart>().Include(c => c.Items).ToListAsync();
         carts.Should().HaveCount(1);
 
@@ -84,25 +84,20 @@ public class CartIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHelp
         item.UnitPrice.Amount.Should().Be(100);
     }
 
-    // [Theory]
-    // [InlineData(null, "12345678")]
-    // [InlineData("", "12345678")]
-    // [InlineData(" ", "12345678")]
-    // [InlineData("name", null)]
-    // [InlineData("name", "")]
-    // [InlineData("name", "123")]
-    // public async Task CreateProduct_InvalidRequest_ReturnsBadRequest(string? name, string? sku)
-    // {
-    //     // Arrange
-    //     var client = GetAnonymousClient();
-    //     var request = new CreateProductCommand.Request(name!, sku!);
-    //
-    //     // Act
-    //     var response = await client.PostAsJsonAsync("/api/products", request);
-    //
-    //     // Assert
-    //     response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-    //     var content = await response.Content.ReadAsStringAsync();
-    //     _output.WriteLine(content);
-    // }
+    [Theory]
+    [InlineData("00000000-0000-0000-0000-000000000000", 1)]
+    [InlineData("73060DE4-5AD8-4574-B857-5D5C5F44203F", 0)]
+    [InlineData("73060DE4-5AD8-4574-B857-5D5C5F44203F", -1)]
+    public async Task CreateProduct_InvalidRequest_ReturnsBadRequest(string productId, int quantity)
+    {
+        // Arrange
+        var client = GetAnonymousClient();
+        var request = new AddProductToCartCommand.Request(null, Guid.Parse(productId), quantity);
+
+        // Act
+        var response = await client.PostAsJsonAsync("/api/carts", request);
+
+        // Assert
+        HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.BadRequest);
+    }
 }

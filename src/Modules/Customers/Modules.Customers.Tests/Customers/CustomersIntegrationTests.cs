@@ -25,7 +25,7 @@ public class CustomersIntegrationTests(CustomersDatabaseFixture fixture, ITestOu
         var response = await client.PostAsJsonAsync("/api/customers", request);
 
         // Assert
-        HttpContentExtensions.Should(response).BeSuccessWithStatusCode(HttpStatusCode.Created);
+        HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.Created);
         var customers = await GetQueryable<Customer>().ToListAsync();
         customers.Should().HaveCount(1);
 

@@ -12,7 +12,7 @@ public class HttpResponseMessageAssertions : ReferenceTypeAssertions<HttpRespons
     protected override string Identifier => "HttpResponseMessage";
 
     // TODO: Update other tests to use this extension
-    public AndConstraint<HttpResponseMessageAssertions> BeSuccessWithStatusCode(HttpStatusCode statusCode, string because = "", params object[] becauseArgs)
+    public AndConstraint<HttpResponseMessageAssertions> BeStatusCode(HttpStatusCode statusCode, string because = "", params object[] becauseArgs)
     {
         Execute.Assertion
             .BecauseOf(because, becauseArgs)
