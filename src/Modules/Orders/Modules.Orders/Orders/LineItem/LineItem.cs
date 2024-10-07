@@ -1,4 +1,5 @@
-﻿using Modules.Orders.Orders.Order;
+﻿using Common.SharedKernel.Domain.Ids;
+using Modules.Orders.Orders.Order;
 using Throw;
 
 namespace Modules.Orders.Orders.LineItem;
