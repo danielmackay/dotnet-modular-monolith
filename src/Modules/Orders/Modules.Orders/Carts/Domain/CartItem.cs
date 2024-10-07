@@ -54,6 +54,7 @@ internal class CartItem : Entity<CartItemId>
 
     private void UpdateLinePrice() => LinePrice = UnitPrice with { Amount = UnitPrice.Amount * Quantity };
 
+    // Needed for EF
     private CartItem()
     {
     }

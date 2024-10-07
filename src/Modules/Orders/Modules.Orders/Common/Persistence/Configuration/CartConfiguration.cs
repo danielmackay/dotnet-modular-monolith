@@ -17,6 +17,7 @@ internal class CartConfiguration : IEntityTypeConfiguration<Cart>
 
         builder.ComplexProperty(p => p.TotalPrice);
 
-        builder.ComplexProperty(p => p.Items);
+        // TODO: Try to get this working.  Perhaps try owned entity?
+        // builder.ComplexProperty(p => p.Items);
     }
 }

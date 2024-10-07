@@ -1,14 +1,20 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Modules.Orders.Carts;
+using Modules.Orders.Common.Persistence;
 
 namespace Modules.Orders;
 
 public static class OrdersModule
 {
-    // public static void AddOrders(this IServiceCollection services)
-    // {
-    // }
+    public static void AddOrders(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddPersistence(configuration);
+    }
 
+    // TODO: Refactor to REPR pattern
     public static void UseOrders(this WebApplication app)
     {
         app.MapGet("/api/orders", () =>
@@ -24,6 +30,8 @@ public static class OrdersModule
             .WithName("GetOrders")
             .WithTags("Orders")
             .WithOpenApi();
+
+        AddProductToCartCommand.Endpoint.MapEndpoint(app);
     }
 }
 

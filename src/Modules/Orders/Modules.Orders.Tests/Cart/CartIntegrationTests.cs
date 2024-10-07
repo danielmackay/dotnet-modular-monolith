@@ -1,0 +1,68 @@
+using Common.Tests.Assertions;
+using Microsoft.EntityFrameworkCore;
+using Modules.Catalog.Products.Domain;
+using Modules.Orders.Carts;
+using Modules.Orders.Tests.Common;
+using System.Net;
+using System.Net.Http.Json;
+using Xunit.Abstractions;
+
+namespace Modules.Orders.Tests.Cart;
+
+public class CartIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHelper output)
+    : OrdersIntegrationTestBase(fixture, output)
+{
+    [Fact]
+    public async Task CreateCart_WithValidRequest_ReturnsCart()
+    {
+        // Arrange
+        var product = Product.Create("name", "12345678");
+        product.UpdatePrice(new Money(100));
+        fixture.CatalogDbContext.Products.Add(product);
+        await fixture.CatalogDbContext.SaveChangesAsync();
+        var client = GetAnonymousClient();
+        var quantity = 1;
+        var request = new AddProductToCartCommand.Request(null, product.Id.Value, quantity);
+
+        // Act
+        var response = await client.PostAsJsonAsync("/api/carts", request);
+
+        // Assert
+        HttpContentExtensions.Should(response).BeSuccessWithStatusCode(HttpStatusCode.OK);
+        var carts = await GetQueryable<Carts.Domain.Cart>().Include(c => c.Items).ToListAsync();
+        carts.Should().HaveCount(1);
+
+        var cart = carts.First();
+        cart.CreatedAt.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(1));
+        cart.CreatedBy.Should().NotBeNullOrWhiteSpace();
+        cart.Id.Should().NotBeNull();
+        cart.Items.Should().HaveCount(quantity);
+
+        var item = cart.Items.First();
+        item.Should().NotBeNull();
+        item.ProductId.Should().Be(product.Id);
+        item.Quantity.Should().Be(quantity);
+    }
+
+    // [Theory]
+    // [InlineData(null, "12345678")]
+    // [InlineData("", "12345678")]
+    // [InlineData(" ", "12345678")]
+    // [InlineData("name", null)]
+    // [InlineData("name", "")]
+    // [InlineData("name", "123")]
+    // public async Task CreateProduct_InvalidRequest_ReturnsBadRequest(string? name, string? sku)
+    // {
+    //     // Arrange
+    //     var client = GetAnonymousClient();
+    //     var request = new CreateProductCommand.Request(name!, sku!);
+    //
+    //     // Act
+    //     var response = await client.PostAsJsonAsync("/api/products", request);
+    //
+    //     // Assert
+    //     response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+    //     var content = await response.Content.ReadAsStringAsync();
+    //     _output.WriteLine(content);
+    // }
+}
