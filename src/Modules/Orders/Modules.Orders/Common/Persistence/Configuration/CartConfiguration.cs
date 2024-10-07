@@ -1,4 +1,5 @@
-﻿using Common.SharedKernel.Persistence.Extensions;
+﻿using Common.SharedKernel.Persistence;
+using Common.SharedKernel.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Modules.Orders.Carts.Domain;
@@ -15,7 +16,9 @@ internal class CartConfiguration : IEntityTypeConfiguration<Cart>
             .HasStronglyTypedId<CartId, Guid>()
             .ValueGeneratedNever();
 
-        builder.ComplexProperty(p => p.TotalPrice);
+        builder.ComplexProperty(m => m.TotalPrice, MoneyConfiguration.BuildAction);
+
+        builder.HasMany(p => p.Items);
 
         // TODO: Try to get this working.  Perhaps try owned entity?
         // builder.ComplexProperty(p => p.Items);

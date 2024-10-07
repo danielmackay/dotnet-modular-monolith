@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using Modules.Catalog.Categories.Domain;
 using Modules.Catalog.Common.Persistence;
 using Modules.Warehouse.Products.Domain;
-using ProductId = Modules.Catalog.Products.Domain.ProductId;
 
 namespace Database.Initialisers;
 
@@ -74,7 +73,7 @@ internal class CatalogDbContextInitialiser
             var catalogProduct = Modules.Catalog.Products.Domain.Product.Create(
                 warehouseProduct.Name,
                 warehouseProduct.Sku.Value,
-                new ProductId(warehouseProduct.Id.Value));
+                warehouseProduct.Id);
 
             var productCategory = categoryFaker.Generate();
             catalogProduct.AddCategory(productCategory);

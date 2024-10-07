@@ -1,8 +1,14 @@
 using Common.SharedKernel.Domain.Ids;
+using Common.SharedKernel.Domain.Interfaces;
 
 namespace Modules.Orders.Carts.Domain;
 
-internal record CartItemId(Guid Value);
+internal record CartItemId(Guid Value) : IStronglyTypedId<Guid>
+{
+    public CartItemId() : this(Uuid.Create())
+    {
+    }
+}
 
 internal class CartItem : Entity<CartItemId>
 {
@@ -22,7 +28,7 @@ internal class CartItem : Entity<CartItemId>
 
         var cartItem = new CartItem
         {
-            Id = new CartItemId(Uuid.Create()),
+            Id = new CartItemId(),
             ProductId = productId,
             Quantity = quantity,
             UnitPrice = unitPrice,
@@ -58,5 +64,4 @@ internal class CartItem : Entity<CartItemId>
     private CartItem()
     {
     }
-
 }

@@ -1,15 +1,14 @@
-﻿using Common.SharedKernel.Domain.Interfaces;
-using ErrorOr;
+﻿using ErrorOr;
 using Throw;
 
 namespace Modules.Warehouse.Products.Domain;
 
-internal record ProductId(Guid Value) : IStronglyTypedId<Guid>
-{
-    internal ProductId() : this(Uuid.Create())
-    {
-    }
-}
+// internal record ProductId(Guid Value) : IStronglyTypedId<Guid>
+// {
+//     internal ProductId() : this(Uuid.Create())
+//     {
+//     }
+// }
 
 internal class Product : AggregateRoot<ProductId>
 {
