@@ -1,4 +1,5 @@
 using Common.SharedKernel.Persistence.Interceptors;
+using EntityFramework.Exceptions.SqlServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +26,9 @@ internal static class DependencyInjection
             options.AddInterceptors(
                 serviceProvider.GetRequiredService<EntitySaveChangesInterceptor>(),
                 serviceProvider.GetRequiredService<DispatchDomainEventsInterceptor>());
+
+            options.UseExceptionProcessor();
+
         });
 
         services.AddScoped<EntitySaveChangesInterceptor>();

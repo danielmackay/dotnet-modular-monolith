@@ -1,5 +1,4 @@
-﻿using EntityFramework.Exceptions.SqlServer;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Modules.Customers.Customers.Domain;
 
 namespace Modules.Customers.Common.Persistence;
@@ -20,13 +19,5 @@ public class CustomersDbContext : DbContext
         modelBuilder.HasDefaultSchema("customer");
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(CustomersDbContext).Assembly);
         base.OnModelCreating(modelBuilder);
-    }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        // Produces easy to read exceptions
-        optionsBuilder.UseExceptionProcessor();
-
-        base.OnConfiguring(optionsBuilder);
     }
 }
