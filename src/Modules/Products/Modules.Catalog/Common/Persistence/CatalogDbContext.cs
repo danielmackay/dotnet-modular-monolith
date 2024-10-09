@@ -1,5 +1,4 @@
-﻿using EntityFramework.Exceptions.SqlServer;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Modules.Catalog.Categories.Domain;
 using Modules.Catalog.Products.Domain;
 
@@ -23,11 +22,12 @@ public class CatalogDbContext : DbContext
         base.OnModelCreating(modelBuilder);
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        // Produces easy to read exceptions
-        optionsBuilder.UseExceptionProcessor();
-
-        base.OnConfiguring(optionsBuilder);
-    }
+    // TODO: Figure out how to do this with DbContext Pooling
+    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    // {
+    //     // Produces easy to read exceptions
+    //     optionsBuilder.UseExceptionProcessor();
+    //
+    //     base.OnConfiguring(optionsBuilder);
+    // }
 }
