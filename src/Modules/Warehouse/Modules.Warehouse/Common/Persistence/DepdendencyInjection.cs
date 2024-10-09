@@ -1,4 +1,5 @@
 using Common.SharedKernel.Persistence.Interceptors;
+using EntityFramework.Exceptions.SqlServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -19,24 +20,8 @@ internal static class DepdendencyInjection
                 options.AddInterceptors(
                     serviceProvider.GetRequiredService<EntitySaveChangesInterceptor>(),
                     serviceProvider.GetRequiredService<DispatchDomainEventsInterceptor>());
+                options.UseExceptionProcessor();
             });
-
-        // var connectionString = config.GetConnectionString("Warehouse");
-        // services.AddDbContext<WarehouseDbContext>(options =>
-        // {
-        //     options.UseSqlServer(connectionString, builder =>
-        //     {
-        //         builder.MigrationsAssembly(typeof(WarehouseModule).Assembly.FullName);
-        //         // builder.EnableRetryOnFailure();
-        //     });
-        //
-        //     var serviceProvider = services.BuildServiceProvider();
-        //
-        //     options.AddInterceptors(
-        //         serviceProvider.GetRequiredService<EntitySaveChangesInterceptor>(),
-        //         serviceProvider.GetRequiredService<DispatchDomainEventsInterceptor>());
-        // });
-
 
         builder.Services.AddScoped<EntitySaveChangesInterceptor>();
         builder.Services.AddScoped<DispatchDomainEventsInterceptor>();

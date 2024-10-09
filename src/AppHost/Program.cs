@@ -2,12 +2,13 @@ using Projects;
 
 var builder = DistributedApplication.CreateBuilder();
 
+// TODO: Figure out how to keep these running after the AppHost shuts down
 var warehouseDb = builder
-    .AddSqlServer("sql-warehouse")
+    .AddSqlServer("warehouse-sql")
     .AddDatabase("warehouse");
 
 var catalogDb = builder
-    .AddSqlServer("sql-catalog")
+    .AddSqlServer("catalog-sql")
     .AddDatabase("catalog");
 
 builder.AddProject<MigrationService>("migrations")
@@ -20,4 +21,6 @@ builder
     .WithReference(warehouseDb)
     .WithReference(catalogDb);
 
-builder.Build().Run();
+builder
+    .Build()
+    .Run();

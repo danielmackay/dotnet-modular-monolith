@@ -19,7 +19,7 @@ public class Worker(
         try
         {
             logger.LogInformation("Waiting for SQL Server to be ready");
-            await Task.Delay(10_000, cancellationToken);
+            await Task.Delay(15_000, cancellationToken);
 
             using var scope = serviceProvider.CreateScope();
             var environment = scope.ServiceProvider.GetRequiredService<IHostEnvironment>();

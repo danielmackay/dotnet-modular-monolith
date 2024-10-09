@@ -21,13 +21,4 @@ public class CatalogDbContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogDbContext).Assembly);
         base.OnModelCreating(modelBuilder);
     }
-
-    // TODO: Figure out how to do this with DbContext Pooling
-    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    // {
-    //     // Produces easy to read exceptions
-    //     optionsBuilder.UseExceptionProcessor();
-    //
-    //     base.OnConfiguring(optionsBuilder);
-    // }
 }

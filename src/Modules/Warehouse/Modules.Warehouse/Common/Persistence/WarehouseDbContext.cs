@@ -22,13 +22,4 @@ public class WarehouseDbContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(WarehouseDbContext).Assembly);
         base.OnModelCreating(modelBuilder);
     }
-
-    // TODO: Need to figure out how to get this working in pooled DB mode
-    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    // {
-    //     // Produces easy to read exceptions
-    //     optionsBuilder.UseExceptionProcessor();
-    //
-    //     base.OnConfiguring(optionsBuilder);
-    // }
 }
