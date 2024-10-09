@@ -21,7 +21,7 @@ public static class SearchProductsQuery
         public static void MapEndpoint(IEndpointRouteBuilder app)
         {
             app.MapGet("/api/products",
-                    async (string name, Guid categoryId, ISender sender) =>
+                    async (string? name, Guid? categoryId, ISender sender) =>
                     {
                         var request = new Request(name, categoryId);
                         var response = await sender.Send(request);
