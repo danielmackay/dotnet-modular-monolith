@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Modules.Customers.Common.Persistence;
 using Modules.Customers.Customers.UseCases;
 
@@ -9,15 +9,15 @@ namespace Modules.Customers;
 
 public static class CustomersModule
 {
-    public static void AddCustomers(this IServiceCollection services, IConfiguration configuration)
+    public static void AddCustomers(this IHostApplicationBuilder builder)
     {
         var applicationAssembly = typeof(CustomersModule).Assembly;
 
-        services.AddHttpContextAccessor();
+        builder.Services.AddHttpContextAccessor();
 
-        services.AddValidatorsFromAssembly(applicationAssembly);
+        builder.Services.AddValidatorsFromAssembly(applicationAssembly);
 
-        services.AddPersistence(configuration);
+        builder.AddPersistence();
     }
 
     public static void UseCustomers(this WebApplication app)

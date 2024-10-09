@@ -1,8 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Modules.Orders.Carts;
 using Modules.Orders.Common.Persistence;
 
@@ -10,10 +9,10 @@ namespace Modules.Orders;
 
 public static class OrdersModule
 {
-    public static void AddOrders(this IServiceCollection services, IConfiguration configuration)
+    public static void AddOrders(this IHostApplicationBuilder builder)
     {
-        services.AddPersistence(configuration);
-        services.AddValidatorsFromAssembly(typeof(OrdersModule).Assembly);
+        builder.AddPersistence();
+        builder.Services.AddValidatorsFromAssembly(typeof(OrdersModule).Assembly);
     }
 
     // TODO: Refactor to REPR pattern

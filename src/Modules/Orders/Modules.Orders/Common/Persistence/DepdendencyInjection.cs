@@ -1,38 +1,29 @@
 using Common.SharedKernel.Persistence.Interceptors;
 using EntityFramework.Exceptions.SqlServer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Modules.Warehouse.Common.Persistence.Interceptors;
 
 namespace Modules.Orders.Common.Persistence;
 
 internal static class DependencyInjection
 {
-    internal static void AddPersistence(this IServiceCollection services, IConfiguration config)
+    internal static void AddPersistence(this IHostApplicationBuilder builder)
     {
-        var connectionString = config.GetConnectionString("Catalog");
-        services.AddDbContext<OrdersDbContext>(options =>
-        {
-            options.UseSqlServer(connectionString, builder =>
+        builder.AddSqlServerDbContext<OrdersDbContext>("warehouse",
+            null,
+            options =>
             {
-                builder.MigrationsAssembly(typeof(OrdersModule).Assembly.FullName);
-                // builder.EnableRetryOnFailure();
+                var serviceProvider = builder.Services.BuildServiceProvider();
+                options.AddInterceptors(
+                    serviceProvider.GetRequiredService<EntitySaveChangesInterceptor>(),
+                    serviceProvider.GetRequiredService<DispatchDomainEventsInterceptor>());
+                options.UseExceptionProcessor();
             });
 
-            var serviceProvider = services.BuildServiceProvider();
-
-            options.AddInterceptors(
-                serviceProvider.GetRequiredService<EntitySaveChangesInterceptor>(),
-                serviceProvider.GetRequiredService<DispatchDomainEventsInterceptor>());
-
-            options.UseExceptionProcessor();
-
-        });
-
-        services.AddScoped<EntitySaveChangesInterceptor>();
-        services.AddScoped<DispatchDomainEventsInterceptor>();
+        builder.Services.AddScoped<EntitySaveChangesInterceptor>();
+        builder.Services.AddScoped<DispatchDomainEventsInterceptor>();
         // services.AddScoped<OutboxInterceptor>();
     }
 

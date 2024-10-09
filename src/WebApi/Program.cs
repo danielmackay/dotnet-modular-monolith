@@ -21,8 +21,8 @@ var builder = WebApplication.CreateBuilder(args);
     // builder.Services.AddOrders();
     builder.AddWarehouse();
     builder.AddCatalog();
-    builder.Services.AddCustomers(builder.Configuration);
-    builder.Services.AddOrders(builder.Configuration);
+    builder.AddCustomers();
+    builder.AddOrders();
 }
 
 var app = builder.Build();
