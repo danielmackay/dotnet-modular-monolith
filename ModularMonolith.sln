@@ -44,12 +44,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.Customers.Tests", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{7915FF68-4EC9-497B-BD33-1A3DA7D6B457}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".infra", ".infra", "{758DF8D4-BEBB-4AD8-9B9E-84F613420CB2}"
-	ProjectSection(SolutionItems) = preProject
-		up.ps1 = up.ps1
-		docker-compose.yml = docker-compose.yml
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "tools\Database\Database.csproj", "{9C4C7E4C-48AD-4E9C-93BB-B7F6F15A35EB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.Warehouse.Messages", "src\Modules\Warehouse\Modules.Warehouse.Messages\Modules.Warehouse.Messages.csproj", "{A105835C-C285-4AA5-AADF-CCA4BCC933B1}"
