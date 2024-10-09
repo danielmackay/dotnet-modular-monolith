@@ -25,7 +25,7 @@ public static class SearchProductsQuery
                     {
                         var request = new Request(name, categoryId);
                         var response = await sender.Send(request);
-                        TypedResults.Ok(response);
+                        return TypedResults.Ok(response);
                     })
                 .WithName("SearchProducts")
                 .WithTags("Catalog")

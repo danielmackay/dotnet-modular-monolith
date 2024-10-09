@@ -18,7 +18,6 @@ builder.AddSqlServerDbContext<WarehouseDbContext>("warehouse");
 builder.Services.AddScoped<CatalogDbContextInitializer>();
 builder.AddSqlServerDbContext<CatalogDbContext>("catalog");
 
-
 var host = builder.Build();
 
 host.Run();
