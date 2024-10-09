@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Modules.Catalog.Categories;
 using Modules.Catalog.Common.Persistence;
 using Modules.Catalog.Products.UseCases;
@@ -10,15 +10,15 @@ namespace Modules.Catalog;
 
 public static class CatalogModule
 {
-    public static void AddCatalog(this IServiceCollection services, IConfiguration configuration)
+    public static void AddCatalog(this IHostApplicationBuilder builder)
     {
         var applicationAssembly = typeof(CatalogModule).Assembly;
 
-        services.AddHttpContextAccessor();
+        builder.Services.AddHttpContextAccessor();
 
-        services.AddValidatorsFromAssembly(applicationAssembly);
+        builder.Services.AddValidatorsFromAssembly(applicationAssembly);
 
-        services.AddPersistence(configuration);
+        builder.AddPersistence();
     }
 
     public static void UseCatalog(this WebApplication app)

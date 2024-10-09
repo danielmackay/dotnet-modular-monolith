@@ -28,14 +28,14 @@ public class Worker(
             await warehouseInitializer.EnsureDatabaseAsync(cancellationToken);
             await warehouseInitializer.RunMigrationAsync(cancellationToken);
 
-            // var catalogInitializer = scope.ServiceProvider.GetRequiredService<CatalogDbContextInitializer>();
-            // await catalogInitializer.EnsureDatabaseAsync(cancellationToken);
-            // await catalogInitializer.RunMigrationAsync(cancellationToken);
+            var catalogInitializer = scope.ServiceProvider.GetRequiredService<CatalogDbContextInitializer>();
+            await catalogInitializer.EnsureDatabaseAsync(cancellationToken);
+            await catalogInitializer.RunMigrationAsync(cancellationToken);
 
             if (environment.IsDevelopment())
             {
                 var products = await warehouseInitializer.SeedDataAsync(cancellationToken);
-                // await catalogInitializer.SeedDataAsync(products, cancellationToken);
+                await catalogInitializer.SeedDataAsync(products, cancellationToken);
             }
         }
         catch (Exception ex)

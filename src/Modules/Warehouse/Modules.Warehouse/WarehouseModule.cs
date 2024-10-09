@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Modules.Warehouse.Common.Persistence;
 using Modules.Warehouse.Products.UseCases;
 using Modules.Warehouse.Storage.UseCases;
@@ -9,15 +9,15 @@ namespace Modules.Warehouse;
 
 public static class WarehouseModule
 {
-    public static void AddWarehouse(this IServiceCollection services, IConfiguration configuration)
+    public static void AddWarehouse(this IHostApplicationBuilder builder)
     {
         var applicationAssembly = typeof(WarehouseModule).Assembly;
 
-        services.AddHttpContextAccessor();
+        builder.Services.AddHttpContextAccessor();
 
-        services.AddValidatorsFromAssembly(applicationAssembly);
+        builder.Services.AddValidatorsFromAssembly(applicationAssembly);
 
-        services.AddPersistence(configuration);
+        builder.AddPersistence();
     }
 
     public static void UseWarehouse(this WebApplication app)

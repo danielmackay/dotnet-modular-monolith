@@ -10,11 +10,12 @@ var warehouseDb = builder
     .AddSqlServer("sql-warehouse")
     .AddDatabase("warehouse");
 
-builder
+var catalogDb = builder
     .AddSqlServer("sql-catalog")
     .AddDatabase("catalog");
 
 builder.AddProject<MigrationService>("migrations")
-    .WithReference(warehouseDb);
+    .WithReference(warehouseDb)
+    .WithReference(catalogDb);
 
 builder.Build().Run();

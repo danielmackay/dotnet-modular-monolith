@@ -1,7 +1,7 @@
 using Common.SharedKernel.Persistence.Interceptors;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Modules.Warehouse.Common.Middleware;
 using Modules.Warehouse.Common.Persistence.Interceptors;
 
@@ -9,9 +9,18 @@ namespace Modules.Warehouse.Common.Persistence;
 
 internal static class DepdendencyInjection
 {
-    internal static void AddPersistence(this IServiceCollection services, IConfiguration config)
+    internal static void AddPersistence(this IHostApplicationBuilder builder)
     {
-        // TODO: Fix up
+        builder.AddSqlServerDbContext<WarehouseDbContext>("warehouse",
+            null,
+            options =>
+            {
+                var serviceProvider = builder.Services.BuildServiceProvider();
+                options.AddInterceptors(
+                    serviceProvider.GetRequiredService<EntitySaveChangesInterceptor>(),
+                    serviceProvider.GetRequiredService<DispatchDomainEventsInterceptor>());
+            });
+
         // var connectionString = config.GetConnectionString("Warehouse");
         // services.AddDbContext<WarehouseDbContext>(options =>
         // {
@@ -29,8 +38,8 @@ internal static class DepdendencyInjection
         // });
 
 
-        services.AddScoped<EntitySaveChangesInterceptor>();
-        services.AddScoped<DispatchDomainEventsInterceptor>();
+        builder.Services.AddScoped<EntitySaveChangesInterceptor>();
+        builder.Services.AddScoped<DispatchDomainEventsInterceptor>();
         // services.AddScoped<OutboxInterceptor>();
     }
 

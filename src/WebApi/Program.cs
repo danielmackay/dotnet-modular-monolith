@@ -2,7 +2,6 @@ using Common.SharedKernel;
 using Modules.Catalog;
 using Modules.Orders;
 using Modules.Warehouse;
-using Modules.Warehouse.Common.Persistence;
 using WebApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,10 +18,8 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddMediatR();
 
     // builder.Services.AddOrders();
-    builder.Services.AddWarehouse(builder.Configuration);
-    builder.Services.AddCatalog(builder.Configuration);
-
-    builder.AddSqlServerDbContext<WarehouseDbContext>("warehouse");
+    builder.AddWarehouse();
+    builder.AddCatalog();
 }
 
 var app = builder.Build();

@@ -1,34 +1,27 @@
 using Common.SharedKernel.Persistence.Interceptors;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Modules.Warehouse.Common.Persistence.Interceptors;
 
 namespace Modules.Catalog.Common.Persistence;
 
 internal static class DependencyInjection
 {
-    internal static void AddPersistence(this IServiceCollection services, IConfiguration config)
+    internal static void AddPersistence(this IHostApplicationBuilder builder)
     {
-        var connectionString = config.GetConnectionString("Catalog");
-        services.AddDbContext<CatalogDbContext>(options =>
-        {
-            options.UseSqlServer(connectionString, builder =>
+        builder.AddSqlServerDbContext<CatalogDbContext>("catalog",
+            null,
+            options =>
             {
-                builder.MigrationsAssembly(typeof(CatalogModule).Assembly.FullName);
-                // builder.EnableRetryOnFailure();
+                var serviceProvider = builder.Services.BuildServiceProvider();
+                options.AddInterceptors(
+                    serviceProvider.GetRequiredService<EntitySaveChangesInterceptor>(),
+                    serviceProvider.GetRequiredService<DispatchDomainEventsInterceptor>());
             });
 
-            var serviceProvider = services.BuildServiceProvider();
-
-            options.AddInterceptors(
-                serviceProvider.GetRequiredService<EntitySaveChangesInterceptor>(),
-                serviceProvider.GetRequiredService<DispatchDomainEventsInterceptor>());
-        });
-
-        services.AddScoped<EntitySaveChangesInterceptor>();
-        services.AddScoped<DispatchDomainEventsInterceptor>();
+        builder.Services.AddScoped<EntitySaveChangesInterceptor>();
+        builder.Services.AddScoped<DispatchDomainEventsInterceptor>();
         // services.AddScoped<OutboxInterceptor>();
     }
 
