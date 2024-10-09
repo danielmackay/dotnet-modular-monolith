@@ -1,3 +1,4 @@
+using Common.Tests.Assertions;
 using Microsoft.EntityFrameworkCore;
 using Modules.Warehouse.Products.Domain;
 using Modules.Warehouse.Products.UseCases;
@@ -24,7 +25,7 @@ public class ProductIntegrationTests(WarehouseDatabaseFixture fixture, ITestOutp
         var response = await client.PostAsJsonAsync("/api/products", request);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Created);
+        HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.Created);
         var products = await GetQueryable<Product>().ToListAsync();
         products.Should().HaveCount(1);
 
@@ -52,7 +53,7 @@ public class ProductIntegrationTests(WarehouseDatabaseFixture fixture, ITestOutp
         var response = await client.PostAsJsonAsync("/api/products", request);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.BadRequest);
         var content = await response.Content.ReadAsStringAsync();
         _output.WriteLine(content);
     }
