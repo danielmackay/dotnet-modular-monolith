@@ -1,5 +1,6 @@
 ﻿using Common.SharedKernel.Persistence.Interceptors;
 using Common.Tests.Common;
+using EntityFramework.Exceptions.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -20,7 +21,7 @@ internal static class ServiceCollectionExt
         services
             .RemoveAll<DbContextOptions<T>>()
             .RemoveAll<T>()
-            .AddDbContext<T>((_, options) =>
+            .AddDbContextPool<T>((_, options) =>
             {
                 options.UseSqlServer(databaseContainer.ConnectionString,
                     b => b.MigrationsAssembly(typeof(T).Assembly.FullName));
@@ -34,6 +35,8 @@ internal static class ServiceCollectionExt
                     serviceProvider.GetRequiredService<EntitySaveChangesInterceptor>(),
                     serviceProvider.GetRequiredService<DispatchDomainEventsInterceptor>()
                 );
+
+                options.UseExceptionProcessor();
             });
 
         return services;
