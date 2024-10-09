@@ -28,6 +28,9 @@ jobs:
       with:
         dotnet-version: 9.0.x
 
+    - name: Install Aspire
+      run: dotnet workload install Aspire
+
     - name: Restore dependencies
       run: dotnet restore
 
