@@ -11,15 +11,27 @@ var catalogDb = builder
     .AddSqlServer("catalog-sql")
     .AddDatabase("catalog");
 
+var customersDb = builder
+    .AddSqlServer("customers-sql")
+    .AddDatabase("customers");
+
+var ordersDb = builder
+    .AddSqlServer("orders-sql")
+    .AddDatabase("orders");
+
 builder.AddProject<MigrationService>("migrations")
     .WithReference(warehouseDb)
-    .WithReference(catalogDb);
+    .WithReference(catalogDb)
+    .WithReference(customersDb)
+    .WithReference(ordersDb);
 
 builder
     .AddProject<WebApi>("api")
     .WithExternalHttpEndpoints()
     .WithReference(warehouseDb)
-    .WithReference(catalogDb);
+    .WithReference(catalogDb)
+    .WithReference(customersDb)
+    .WithReference(ordersDb);
 
 builder
     .Build()
