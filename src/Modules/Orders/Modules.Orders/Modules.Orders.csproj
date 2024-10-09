@@ -2,15 +2,24 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\..\Common\Common.SharedKernel\Common.SharedKernel.csproj"/>
+        <ProjectReference Include="..\..\Products\Modules.Catalog.Messages\Modules.Catalog.Messages.csproj" />
     </ItemGroup>
 
 
     <ItemGroup>
         <PackageReference Include="Ardalis.SmartEnum" Version="8.0.0" />
         <PackageReference Include="Ardalis.Specification" Version="8.0.0" />
+        <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="8.0.0" />
         <PackageReference Include="ErrorOr" Version="2.0.1" />
+        <PackageReference Include="EntityFrameworkCore.Exceptions.SqlServer" Version="8.1.3" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0-rc.1.24451.1" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0-rc.1.24452.1" />
         <PackageReference Include="Throw" Version="1.4.0" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <Folder Include="Common\Persistence\Migrations\" />
     </ItemGroup>
 
 </Project>

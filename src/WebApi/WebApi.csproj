@@ -7,6 +7,8 @@
     <ItemGroup>
         <!-- TODO: Can this be moved to infra? -->
         <PackageReference Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" Version="8.2.1" />
+        <!-- TODO: Can this be moved to infra? -->
+        <PackageReference Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" Version="8.2.1" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0-rc.1.24452.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0-rc.1.24451.1">
           <PrivateAssets>all</PrivateAssets>
@@ -17,8 +19,10 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Common\Common.ServiceDefaults\Common.ServiceDefaults.csproj" />
+      <ProjectReference Include="..\Modules\Customers\Modules.Customers\Modules.Customers.csproj" />
       <ProjectReference Include="..\Modules\Orders\Modules.Orders\Modules.Orders.csproj" />
       <ProjectReference Include="..\Modules\Products\Modules.Catalog\Modules.Catalog.csproj" />
+      <ProjectReference Include="..\Modules\Customers\Modules.Customers\Modules.Customers.csproj" />
       <ProjectReference Include="..\Modules\Warehouse\Modules.Warehouse\Modules.Warehouse.csproj" />
     </ItemGroup>
 

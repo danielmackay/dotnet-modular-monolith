@@ -1,4 +1,4 @@
-using Modules.Customers.Customers;
+using Modules.Customers.Customers.Domain;
 
 namespace Modules.Customers.Tests;
 

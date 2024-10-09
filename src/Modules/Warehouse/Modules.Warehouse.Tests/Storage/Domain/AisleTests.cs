@@ -1,4 +1,3 @@
-using Modules.Warehouse.Products.Domain;
 using Modules.Warehouse.Storage.Domain;
 using Xunit.Abstractions;
 

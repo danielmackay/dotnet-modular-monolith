@@ -1,14 +1,13 @@
-using Common.SharedKernel.Domain.Interfaces;
 using Modules.Catalog.Categories.Domain;
 
 namespace Modules.Catalog.Products.Domain;
-
-internal record ProductId(Guid Value) : IStronglyTypedId<Guid>
-{
-    internal ProductId() : this(Uuid.Create())
-    {
-    }
-}
+//
+// internal record ProductId(Guid Value) : IStronglyTypedId<Guid>
+// {
+//     internal ProductId() : this(Uuid.Create())
+//     {
+//     }
+// }
 
 internal class Product : AggregateRoot<ProductId>
 {

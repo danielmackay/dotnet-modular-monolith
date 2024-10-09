@@ -1,4 +1,4 @@
-﻿namespace Modules.Customers.Customers;
+﻿namespace Modules.Customers.Customers.Domain;
 
 /* Invariants:
  * - Must have a unique email address (handled by application)

@@ -2,22 +2,21 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Modules.Catalog.Common.Persistence;
 using Modules.Catalog.Products.Domain;
-using Modules.Warehouse.Messages;
 
-namespace Modules.Catalog.Products.IntegrationEvents;
+namespace Modules.Catalog.Products.Integrations;
 
-internal class ProductStoredIntegrationEventHandler : INotificationHandler<ProductStoredIntegrationEvent>
+internal class ProductStoredIntegrationEvent : INotificationHandler<Warehouse.Messages.ProductStoredIntegrationEvent>
 {
-    private readonly ILogger<ProductStoredIntegrationEventHandler> _logger;
+    private readonly ILogger<ProductStoredIntegrationEvent> _logger;
     private readonly CatalogDbContext _dbContext;
 
-    public ProductStoredIntegrationEventHandler(ILogger<ProductStoredIntegrationEventHandler> logger, CatalogDbContext dbContext)
+    public ProductStoredIntegrationEvent(ILogger<ProductStoredIntegrationEvent> logger, CatalogDbContext dbContext)
     {
         _logger = logger;
         _dbContext = dbContext;
     }
 
-    public async Task Handle(ProductStoredIntegrationEvent notification, CancellationToken cancellationToken)
+    public async Task Handle(Warehouse.Messages.ProductStoredIntegrationEvent notification, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Product stored integration event received");
 

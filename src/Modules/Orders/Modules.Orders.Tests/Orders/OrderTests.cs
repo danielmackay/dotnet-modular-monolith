@@ -1,4 +1,3 @@
-using Modules.Orders.Common;
 using Modules.Orders.Orders.Order;
 
 namespace Modules.Orders.Tests.Orders

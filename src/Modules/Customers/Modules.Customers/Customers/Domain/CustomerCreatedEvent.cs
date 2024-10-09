@@ -1,6 +1,6 @@
 ﻿using Common.SharedKernel.Domain.Interfaces;
 
-namespace Modules.Customers.Customers;
+namespace Modules.Customers.Customers.Domain;
 
 internal record CustomerCreatedEvent(CustomerId Id, string FirstName, string LastName) : IDomainEvent
 {

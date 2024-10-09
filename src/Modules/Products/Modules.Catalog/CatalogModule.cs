@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Modules.Catalog.Categories;
 using Modules.Catalog.Common.Persistence;
+using Modules.Catalog.Products.Integrations;
 using Modules.Catalog.Products.UseCases;
 
 namespace Modules.Catalog;

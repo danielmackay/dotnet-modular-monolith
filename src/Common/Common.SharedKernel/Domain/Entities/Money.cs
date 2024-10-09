@@ -6,6 +6,10 @@ public record Money(Currency Currency, decimal Amount)
 {
     public static Money Create(decimal amount) => new(Currency.Default, amount);
 
+    public Money(decimal amount) : this(Currency.Default, amount)
+    {
+    }
+
     public static Money Default => new(Currency.Default, 0);
 
     public static Money Zero => Default;

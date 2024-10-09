@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Modules.Catalog.Common.Persistence;
+using Modules.Customers.Common.Persistence;
+using Modules.Orders.Common.Persistence;
 using Modules.Warehouse.Common.Persistence;
 using WebApi;
 using Xunit.Abstractions;
@@ -38,6 +40,8 @@ public class WebApiTestFactory : WebApplicationFactory<IWebApiMarker>
         {
             services.ReplaceDbContext<WarehouseDbContext>(Database);
             services.ReplaceDbContext<CatalogDbContext>(Database);
+            services.ReplaceDbContext<CustomersDbContext>(Database);
+            services.ReplaceDbContext<OrdersDbContext>(Database);
         });
     }
 }
