@@ -6,6 +6,31 @@
 
 Sample repo demoing how an e-commerce system can be architected as a modular monolith using ASP.NET Core.
 
+## Technology
+
+- .NET 9.0
+- Aspire
+- ASP.NET Core Minimal API
+- Entity Framework Core
+- FluentValidation
+- TestContainers
+- MediatR
+- Bogus
+- ErrorOr
+- Open Telemetry
+- Swagger
+
+## Architecture / Patterns
+
+- Modular Monolith
+- Domain Driven Design
+- VSA (within each module)
+- REPR Pattern
+- CQRS
+- Strongly Typed IDs
+- Result Pattern
+- API Discovery
+
 ## Modules
 
 ### Orders Module
