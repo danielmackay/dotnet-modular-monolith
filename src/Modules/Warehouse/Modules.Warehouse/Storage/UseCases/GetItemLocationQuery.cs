@@ -1,12 +1,12 @@
 using Common.SharedKernel;
 using Common.SharedKernel.Api;
+using Common.SharedKernel.Discovery;
 using ErrorOr;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Modules.Warehouse.Common.Persistence;
-using Modules.Warehouse.Products.Domain;
 using Modules.Warehouse.Storage.Domain;
 
 namespace Modules.Warehouse.Storage.UseCases;
@@ -17,9 +17,9 @@ public static class GetItemLocationQuery
 
     public record Response(string AisleName, string BayName, string ShelfName);
 
-    public static class Endpoint
+    public class Endpoint : IEndpoint
     {
-        public static void MapEndpoint(IEndpointRouteBuilder app)
+        public void MapEndpoint(IEndpointRouteBuilder app)
         {
             app.MapGet("/api/aisles/products/{productId:guid}", async (Guid productId, ISender sender) =>
                 {

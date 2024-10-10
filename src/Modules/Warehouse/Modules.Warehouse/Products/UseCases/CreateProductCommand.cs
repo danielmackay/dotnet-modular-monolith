@@ -1,5 +1,6 @@
 using Common.SharedKernel;
 using Common.SharedKernel.Api;
+using Common.SharedKernel.Discovery;
 using ErrorOr;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -13,9 +14,9 @@ public static class CreateProductCommand
 {
     public record Request(string Name, string Sku) : IRequest<ErrorOr<Success>>;
 
-    public static class Endpoint
+    public class Endpoint : IEndpoint
     {
-        public static void MapEndpoint(IEndpointRouteBuilder app)
+        public void MapEndpoint(IEndpointRouteBuilder app)
         {
             app.MapPost("/api/products", async (Request request, ISender sender) =>
                 {

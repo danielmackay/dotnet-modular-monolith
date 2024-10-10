@@ -1,4 +1,5 @@
 using Common.SharedKernel;
+using Common.SharedKernel.Discovery;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -16,9 +17,9 @@ public static class SearchProductsQuery
 
     public record Response(string Name, Guid Id, string Sku, decimal Price);
 
-    public static class Endpoint
+    public class Endpoint : IEndpoint
     {
-        public static void MapEndpoint(IEndpointRouteBuilder app)
+        public void MapEndpoint(IEndpointRouteBuilder app)
         {
             app.MapGet("/api/products",
                     async (string? name, Guid? categoryId, ISender sender) =>

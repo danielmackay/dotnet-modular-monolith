@@ -1,6 +1,7 @@
 using Ardalis.Specification.EntityFrameworkCore;
 using Common.SharedKernel;
 using Common.SharedKernel.Api;
+using Common.SharedKernel.Discovery;
 using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -22,9 +23,9 @@ public static class GetProductQuery
     //
     // public record CategoryDto(Guid Id, string Name);
 
-    public static class Endpoint
+    public class Endpoint : IEndpoint
     {
-        public static void MapEndpoint(IEndpointRouteBuilder app)
+        public void MapEndpoint(IEndpointRouteBuilder app)
         {
             app.MapGet("/api/products/{productId:guid}",
                     async (Guid productId, ISender sender) =>

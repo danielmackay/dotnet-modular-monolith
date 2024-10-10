@@ -1,6 +1,7 @@
 using Ardalis.Specification.EntityFrameworkCore;
 using Common.SharedKernel;
 using Common.SharedKernel.Api;
+using Common.SharedKernel.Discovery;
 using ErrorOr;
 using FluentValidation;
 using MediatR;
@@ -18,9 +19,9 @@ public static class RemoveProductCategoryCommand
 {
     public record Request(Guid ProductId, Guid CategoryId) : IRequest<ErrorOr<Success>>;
 
-    public static class Endpoint
+    public class Endpoint : IEndpoint
     {
-        public static void MapEndpoint(IEndpointRouteBuilder app)
+        public void MapEndpoint(IEndpointRouteBuilder app)
         {
             app.MapDelete("/api/products/{productId:guid}/categories/{categoryId:guid}",
                     async (Guid productId, Guid categoryId, ISender sender) =>

@@ -1,21 +1,22 @@
-﻿using FluentValidation;
+﻿using Common.SharedKernel.Discovery;
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Modules.Customers.Common.Persistence;
-using Modules.Customers.Customers.UseCases;
+using System.Reflection;
 
 namespace Modules.Customers;
 
 public static class CustomersModule
 {
+    private static readonly Assembly _module = typeof(CustomersModule).Assembly;
+
     public static void AddCustomers(this IHostApplicationBuilder builder)
     {
-        var applicationAssembly = typeof(CustomersModule).Assembly;
-
         builder.Services.AddHttpContextAccessor();
 
-        builder.Services.AddValidatorsFromAssembly(applicationAssembly);
+        builder.Services.AddValidatorsFromAssembly(_module);
 
         builder.AddPersistence();
     }
@@ -24,7 +25,6 @@ public static class CustomersModule
     {
         app.UseInfrastructureMiddleware();
 
-        // TODO: Consider source generation or reflection for endpoint mapping
-        RegisterCustomerCommand.Endpoint.MapEndpoint(app);
+        app.DiscoverEndpoints(_module);
     }
 }

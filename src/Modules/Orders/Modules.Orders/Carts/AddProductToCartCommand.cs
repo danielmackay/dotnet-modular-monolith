@@ -1,6 +1,7 @@
 using Ardalis.Specification.EntityFrameworkCore;
 using Common.SharedKernel;
 using Common.SharedKernel.Api;
+using Common.SharedKernel.Discovery;
 using Common.SharedKernel.Domain.Ids;
 using ErrorOr;
 using FluentValidation;
@@ -21,9 +22,9 @@ public static class AddProductToCartCommand
 
     public record Response(Guid CartId);
 
-    public static class Endpoint
+    public class Endpoint : IEndpoint
     {
-        public static void MapEndpoint(IEndpointRouteBuilder app)
+        public void MapEndpoint(IEndpointRouteBuilder app)
         {
             app.MapPost("/api/carts",
                     async (Request request, ISender sender) =>

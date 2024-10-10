@@ -1,6 +1,7 @@
 using Ardalis.Specification.EntityFrameworkCore;
 using Common.SharedKernel;
 using Common.SharedKernel.Api;
+using Common.SharedKernel.Discovery;
 using ErrorOr;
 using FluentValidation;
 using MediatR;
@@ -22,9 +23,9 @@ public static class UpdateProductPriceCommand
         public Guid ProductId { get; set; }
     }
 
-    public static class Endpoint
+    public class Endpoint : IEndpoint
     {
-        public static void MapEndpoint(IEndpointRouteBuilder app)
+        public void MapEndpoint(IEndpointRouteBuilder app)
         {
             app.MapPut("/api/products/{productId:guid}/price",
                     async (Guid productId, Request request, ISender sender) =>

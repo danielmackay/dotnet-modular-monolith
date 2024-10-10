@@ -1,5 +1,6 @@
 using Common.SharedKernel;
 using Common.SharedKernel.Api;
+using Common.SharedKernel.Discovery;
 using ErrorOr;
 using FluentValidation;
 using MediatR;
@@ -15,9 +16,9 @@ public static class RegisterCustomerCommand
 {
     public record Request(string FirstName, string LastName, string Email) : IRequest<ErrorOr<Success>>;
 
-    public static class Endpoint
+    public class Endpoint : IEndpoint
     {
-        public static void MapEndpoint(IEndpointRouteBuilder app)
+        public void MapEndpoint(IEndpointRouteBuilder app)
         {
             app.MapPost("/api/customers", async (Request request, ISender sender) =>
                 {

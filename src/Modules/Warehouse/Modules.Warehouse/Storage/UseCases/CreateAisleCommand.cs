@@ -1,4 +1,5 @@
 using Common.SharedKernel.Api;
+using Common.SharedKernel.Discovery;
 using ErrorOr;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -12,9 +13,9 @@ public static class CreateAisleCommand
 {
     public record Request(string Name, int NumBays, int NumShelves) : IRequest<ErrorOr<Success>>;
 
-    public static class Endpoint
+    public class Endpoint : IEndpoint
     {
-        public static void MapEndpoint(IEndpointRouteBuilder app)
+        public void MapEndpoint(IEndpointRouteBuilder app)
         {
             app.MapPost("/api/aisles", async (Request request, ISender sender) =>
                 {

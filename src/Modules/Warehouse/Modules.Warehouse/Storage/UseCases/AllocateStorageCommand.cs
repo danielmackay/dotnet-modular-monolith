@@ -1,4 +1,5 @@
 using Common.SharedKernel.Api;
+using Common.SharedKernel.Discovery;
 using ErrorOr;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -14,9 +15,9 @@ public static class AllocateStorageCommand
 {
     public record Request(Guid ProductId) : IRequest<ErrorOr<Success>>;
 
-    public static class Endpoint
+    public class Endpoint : IEndpoint
     {
-        public static void MapEndpoint(IEndpointRouteBuilder app)
+        public void MapEndpoint(IEndpointRouteBuilder app)
         {
             app.MapPost("/api/aisles/allocate-storage", async (Request request, ISender sender) =>
                 {
