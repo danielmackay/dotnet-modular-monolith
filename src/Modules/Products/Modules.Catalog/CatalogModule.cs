@@ -14,7 +14,6 @@ public static class CatalogModule
 
     public static void AddCatalog(this IHostApplicationBuilder builder)
     {
-
         builder.Services.AddHttpContextAccessor();
 
         builder.Services.AddValidatorsFromAssembly(_module);
@@ -27,13 +26,5 @@ public static class CatalogModule
         // app.UseInfrastructureMiddleware();
 
         app.DiscoverEndpoints(_module);
-
-        // // TODO: Consider source generation or reflection for endpoint mapping
-        // CreateCategoryCommand.Endpoint.MapEndpoint(app);
-        // AddProductCategoryCommand.Endpoint.MapEndpoint(app);
-        // RemoveProductCategoryCommand.Endpoint.MapEndpoint(app);
-        // GetProductQuery.Endpoint.MapEndpoint(app);
-        // UpdateProductPriceCommand.Endpoint.MapEndpoint(app);
-        // SearchProductsQuery.Endpoint.MapEndpoint(app);
     }
 }
