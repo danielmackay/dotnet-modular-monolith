@@ -25,6 +25,7 @@
 
     <ItemGroup>
       <Folder Include="Common\Persistence\Migrations\" />
+      <Folder Include="Orders\Domain\" />
     </ItemGroup>
 
 </Project>

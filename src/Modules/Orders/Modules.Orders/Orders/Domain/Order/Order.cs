@@ -1,10 +1,9 @@
-﻿using Common.SharedKernel.Domain.Exceptions;
-using Common.SharedKernel.Domain.Ids;
+﻿using Common.SharedKernel.Domain.Ids;
 using ErrorOr;
 using Modules.Orders.Orders.LineItem;
-using Success = ErrorOr.Success;
+using Modules.Orders.Orders.Order;
 
-namespace Modules.Orders.Orders.Order;
+namespace Modules.Orders.Orders.Domain.Order;
 
 /*
  * An order must be associated with a customer - DONE
@@ -157,7 +156,7 @@ internal class Order : AggregateRoot<OrderId>
             return OrderErrors.OrderAlreadyShipped;
 
         if (_lineItems.Sum(li => li.Quantity) <= 0)
-            throw new DomainException("Can't ship an order with no items");
+            return OrderErrors.OrderEmpty;
 
         ShippingDate = timeProvider.GetUtcNow();
         Status = OrderStatus.InTransit;

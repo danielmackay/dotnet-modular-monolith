@@ -1,11 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Modules.Orders.Carts.Domain;
+using Modules.Orders.Orders.Domain.Order;
 
 namespace Modules.Orders.Common.Persistence;
 
 public class OrdersDbContext : DbContext
 {
     internal DbSet<Cart> Carts => Set<Cart>();
+    internal DbSet<Order> Orders => Set<Order>();
 
     // Needs to be public for the Database project
     public OrdersDbContext(DbContextOptions<OrdersDbContext> options) : base(options)
