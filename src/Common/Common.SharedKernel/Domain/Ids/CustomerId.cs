@@ -1,3 +1,10 @@
-﻿namespace Common.SharedKernel.Domain.Ids;
+﻿using Common.SharedKernel.Domain.Interfaces;
 
-public record CustomerId(Guid Value);
+namespace Common.SharedKernel.Domain.Ids;
+
+public record CustomerId(Guid Value) : IStronglyTypedId<Guid>
+{
+    public CustomerId() : this(Uuid.Create())
+    {
+    }
+}
