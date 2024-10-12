@@ -4,6 +4,7 @@ using Common.SharedKernel.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Modules.Orders.Orders.Domain.LineItem;
+using Modules.Orders.Orders.Domain.Order;
 
 namespace Modules.Orders.Common.Persistence.Configuration;
 
@@ -17,13 +18,17 @@ internal class LineItemConfiguration : IEntityTypeConfiguration<LineItem>
             .HasStronglyTypedId<LineItemId, Guid>()
             .ValueGeneratedNever();
 
+        builder.Property(p => p.OrderId)
+            .HasStronglyTypedId<OrderId, Guid>()
+            .ValueGeneratedNever();
+
         builder.Property(p => p.ProductId)
             .HasStronglyTypedId<ProductId, Guid>()
             .ValueGeneratedNever();
 
         builder.ComplexProperty(m => m.Price, MoneyConfiguration.BuildAction);
-        builder.ComplexProperty(m => m.Tax, MoneyConfiguration.BuildAction);
-        builder.ComplexProperty(m => m.Total, MoneyConfiguration.BuildAction);
-        builder.ComplexProperty(m => m.TotalIncludingTax, MoneyConfiguration.BuildAction);
+        // builder.ComplexProperty(m => m.Tax, MoneyConfiguration.BuildAction);
+        // builder.ComplexProperty(m => m.Total, MoneyConfiguration.BuildAction);
+        // builder.ComplexProperty(m => m.TotalIncludingTax, MoneyConfiguration.BuildAction);
     }
 }

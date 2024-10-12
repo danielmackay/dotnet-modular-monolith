@@ -1,3 +1,4 @@
+using Common.SharedKernel.Domain.Ids;
 using Common.SharedKernel.Persistence;
 using Common.SharedKernel.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -16,8 +17,12 @@ internal class OrderConfiguration : IEntityTypeConfiguration<Order>
             .HasStronglyTypedId<OrderId, Guid>()
             .ValueGeneratedNever();
 
+        builder.Property(p => p.CustomerId)
+            .HasStronglyTypedId<CustomerId, Guid>()
+            .ValueGeneratedNever();
+
         builder.ComplexProperty(m => m.AmountPaid, MoneyConfiguration.BuildAction);
-        builder.ComplexProperty(m => m.OrderTotal, MoneyConfiguration.BuildAction);
+        // builder.ComplexProperty(m => m.OrderTotal, MoneyConfiguration.BuildAction);
         builder.ComplexProperty(m => m.ShippingTotal, MoneyConfiguration.BuildAction);
         builder.ComplexProperty(m => m.TaxTotal, MoneyConfiguration.BuildAction);
         builder.ComplexProperty(m => m.OrderSubTotal, MoneyConfiguration.BuildAction);

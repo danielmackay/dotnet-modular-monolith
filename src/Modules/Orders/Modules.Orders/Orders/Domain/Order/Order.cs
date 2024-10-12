@@ -25,6 +25,7 @@ internal class Order : AggregateRoot<OrderId>
 
     public Money AmountPaid { get; private set; } = null!;
 
+    // TODO: Add support for payment
     // private readonly Payment.Payment _payment = null!;
 
     public OrderStatus Status { get; private set; } = null!;

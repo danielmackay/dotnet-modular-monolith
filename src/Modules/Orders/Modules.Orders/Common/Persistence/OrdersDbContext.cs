@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Modules.Orders.Carts.Domain;
 using Modules.Orders.Orders.Domain.Order;
+using SmartEnum.EFCore;
 
 namespace Modules.Orders.Common.Persistence;
 
@@ -18,6 +19,7 @@ public class OrdersDbContext : DbContext
     {
         modelBuilder.HasDefaultSchema("catalog");
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(OrdersDbContext).Assembly);
+        modelBuilder.ConfigureSmartEnum();
         base.OnModelCreating(modelBuilder);
     }
 }
