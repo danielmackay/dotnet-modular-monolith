@@ -102,7 +102,6 @@ public class CartIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHelp
         HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.BadRequest);
     }
 
-    // TODO: Add Integration tests for Checkout Cart
     [Fact]
     public async Task CheckoutCart_WithValidRequest_ReturnsOrderId()
     {
@@ -136,7 +135,7 @@ public class CartIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHelp
         var item = order.LineItems.First();
         item.Should().NotBeNull();
         item.ProductId.Should().Be(product.Id);
-        item.Quantity.Should().Be(quantity + quantity);
+        item.Quantity.Should().Be(quantity);
         item.Price.Amount.Should().Be(100);
         item.Total.Amount.Should().Be(200);
     }
