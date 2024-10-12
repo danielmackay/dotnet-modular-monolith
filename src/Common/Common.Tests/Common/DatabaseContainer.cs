@@ -33,20 +33,6 @@ public class DatabaseContainer : IAsyncDisposable
             .WaitAndRetryAsync(MaxRetries, _ => TimeSpan.FromSeconds(5));
 
         await policy.ExecuteAsync(async () => { await _container.StartAsync(); });
-
-        // var ready = false;
-        // while (!ready)
-        // {
-        //     try
-        //     {
-        //         await _container.StartAsync();
-        //         ready = true;
-        //     }
-        //     catch (Exception)
-        //     {
-        //         await Task.Delay(2000);
-        //     }
-        // }
     }
 
     public async ValueTask DisposeAsync()
