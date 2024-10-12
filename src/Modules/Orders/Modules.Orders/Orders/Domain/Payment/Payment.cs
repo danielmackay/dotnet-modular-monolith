@@ -1,4 +1,4 @@
-namespace Modules.Orders.Orders.Payment;
+namespace Modules.Orders.Orders.Domain.Payment;
 
 internal record PaymentId(Guid Value);
 

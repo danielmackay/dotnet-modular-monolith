@@ -1,6 +1,6 @@
 using Ardalis.SmartEnum;
 
-namespace Modules.Orders.Orders.Payment;
+namespace Modules.Orders.Orders.Domain.Payment;
 
 internal class PaymentType : SmartEnum<PaymentType>
 {

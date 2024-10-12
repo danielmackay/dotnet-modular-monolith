@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Modules.Catalog.Products.Domain;
 using Modules.Orders.Carts;
 using Modules.Orders.Carts.Domain;
+using Modules.Orders.Orders.Domain.Order;
 using Modules.Orders.Tests.Common;
 using System.Net;
 using System.Net.Http.Json;
@@ -99,5 +100,43 @@ public class CartIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHelp
 
         // Assert
         HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.BadRequest);
+    }
+
+    [Fact]
+    public async Task CheckoutCart_WithValidRequest_ReturnsOrderId()
+    {
+        // Arrange
+        var product = Product.Create("name", "12345678");
+        product.UpdatePrice(new Money(100));
+        fixture.CatalogDbContext.Products.Add(product);
+        await fixture.CatalogDbContext.SaveChangesAsync();
+        var client = GetAnonymousClient();
+        var quantity = 2;
+        var customerId = Uuid.Create();
+        var request1 = new AddProductToCartCommand.Request(null, product.Id.Value, quantity);
+        var response1 = await client.PostAsJsonAsync("/api/carts", request1);
+        var content = await response1.Content.ReadFromJsonAsync<AddProductToCartCommand.Response>();
+        var request2 = new CheckoutCartCommand.Request(content!.CartId, customerId);
+
+        // Act
+        var response2 = await client.PostAsJsonAsync("/api/carts/checkout", request2);
+
+        // Assert
+        HttpContentExtensions.Should(response2).BeStatusCode(HttpStatusCode.OK);
+        var orders = await GetQueryable<Order>().Include(c => c.LineItems).ToListAsync();
+        orders.Should().HaveCount(1);
+
+        var order = orders.First();
+        order.CreatedAt.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(1));
+        order.CreatedBy.Should().NotBeNullOrWhiteSpace();
+        order.Id.Should().NotBeNull();
+        order.LineItems.Should().HaveCount(1);
+
+        var item = order.LineItems.First();
+        item.Should().NotBeNull();
+        item.ProductId.Should().Be(product.Id);
+        item.Quantity.Should().Be(quantity);
+        item.Price.Amount.Should().Be(100);
+        item.Total.Amount.Should().Be(200);
     }
 }

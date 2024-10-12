@@ -1,4 +1,4 @@
-using Modules.Orders.Orders.Order;
+using Modules.Orders.Orders.Domain.Order;
 
 namespace Modules.Orders.Tests.Orders
 {

@@ -1,6 +1,4 @@
-﻿using Common.SharedKernel.Domain.Exceptions;
-
-namespace Common.SharedKernel.Domain.Entities;
+﻿namespace Common.SharedKernel.Domain.Entities;
 
 public record Currency
 {
@@ -9,7 +7,7 @@ public record Currency
     public Currency(string symbol)
     {
         if (!Symbols.Contains(symbol.ToUpper()))
-            throw new DomainException($"Invalid Symbol {symbol}");
+            throw new ArgumentException($"Invalid Symbol {symbol}");
 
         Symbol = symbol.ToUpper();
     }

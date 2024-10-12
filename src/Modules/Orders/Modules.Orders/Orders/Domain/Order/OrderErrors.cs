@@ -1,6 +1,6 @@
 using ErrorOr;
 
-namespace Modules.Orders.Orders.Order;
+namespace Modules.Orders.Orders.Domain.Order;
 
 public static class OrderErrors
 {
@@ -27,4 +27,8 @@ public static class OrderErrors
     public static readonly Error OrderAlreadyShipped = Error.Validation(
         "Order.OrderAlreadyShipped",
         "Order already shipped to customer");
+
+    public static readonly Error OrderEmpty = Error.Validation(
+        "Order.OrderEmpty",
+        "Can't ship an order with no items");
 }
