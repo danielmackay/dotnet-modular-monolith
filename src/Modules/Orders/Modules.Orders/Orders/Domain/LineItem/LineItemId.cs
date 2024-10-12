@@ -1,3 +1,10 @@
-﻿namespace Modules.Orders.Orders.LineItem;
+﻿using Common.SharedKernel.Domain.Interfaces;
 
-internal record LineItemId(Guid Value);
+namespace Modules.Orders.Orders.Domain.LineItem;
+
+internal record LineItemId(Guid Value) : IStronglyTypedId<Guid>
+{
+    internal LineItemId() : this(Uuid.Create())
+    {
+    }
+}

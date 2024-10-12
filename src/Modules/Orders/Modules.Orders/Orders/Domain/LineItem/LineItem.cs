@@ -1,8 +1,8 @@
 ﻿using Common.SharedKernel.Domain.Ids;
-using Modules.Orders.Orders.Order;
+using Modules.Orders.Orders.Domain.Order;
 using Throw;
 
-namespace Modules.Orders.Orders.LineItem;
+namespace Modules.Orders.Orders.Domain.LineItem;
 
 internal class LineItem : Entity<LineItemId>
 {

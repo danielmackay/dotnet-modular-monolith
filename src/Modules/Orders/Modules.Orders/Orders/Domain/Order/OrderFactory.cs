@@ -1,7 +1,7 @@
 using Common.SharedKernel.Domain.Ids;
-using Modules.Orders.Orders.Domain.Order;
+using Modules.Orders.Carts.Domain;
 
-namespace Modules.Orders.Carts.Domain;
+namespace Modules.Orders.Orders.Domain.Order;
 
 internal class OrderFactory
 {

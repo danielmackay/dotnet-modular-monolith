@@ -1,7 +1,6 @@
 ﻿using Common.SharedKernel.Domain.Ids;
 using ErrorOr;
-using Modules.Orders.Orders.LineItem;
-using Modules.Orders.Orders.Order;
+using Modules.Orders.Orders.Domain.LineItem;
 
 namespace Modules.Orders.Orders.Domain.Order;
 

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Modules.Orders.Carts.Domain;
 using Modules.Orders.Common.Persistence;
+using Modules.Orders.Orders.Domain.Order;
 
 namespace Modules.Orders.Carts;
 

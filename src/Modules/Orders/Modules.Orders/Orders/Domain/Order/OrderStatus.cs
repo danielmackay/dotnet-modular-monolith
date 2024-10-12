@@ -1,6 +1,6 @@
 ﻿using Ardalis.SmartEnum;
 
-namespace Modules.Orders.Orders.Order;
+namespace Modules.Orders.Orders.Domain.Order;
 
 // internal enum OrderStatus
 // {

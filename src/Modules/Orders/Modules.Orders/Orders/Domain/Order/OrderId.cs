@@ -1,3 +1,10 @@
-﻿namespace Modules.Orders.Orders.Order;
+﻿using Common.SharedKernel.Domain.Interfaces;
 
-internal record OrderId(Guid Value);
+namespace Modules.Orders.Orders.Domain.Order;
+
+internal record OrderId(Guid Value) : IStronglyTypedId<Guid>
+{
+    internal OrderId() : this(Uuid.Create())
+    {
+    }
+}

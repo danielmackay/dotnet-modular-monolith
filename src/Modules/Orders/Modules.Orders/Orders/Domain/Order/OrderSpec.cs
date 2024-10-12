@@ -1,8 +1,8 @@
 ﻿using Ardalis.Specification;
 
-namespace Modules.Orders.Orders.Order;
+namespace Modules.Orders.Orders.Domain.Order;
 
-internal class OrderSpec : Specification<Domain.Order.Order>
+internal class OrderSpec : Specification<Order>
 {
     public OrderSpec()
     {
