@@ -1,6 +1,6 @@
 ﻿using Common.SharedKernel.Domain.Interfaces;
 
-namespace Modules.Orders.Orders.Domain.Order;
+namespace Modules.Orders.Orders.Domain.Orders;
 
 internal record OrderId(Guid Value) : IStronglyTypedId<Guid>
 {

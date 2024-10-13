@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Modules.Orders.Common.Persistence;
-using Modules.Orders.Orders.Domain.Order;
+using Modules.Orders.Orders.Domain.Orders;
 
 namespace Modules.Orders.Orders;
 

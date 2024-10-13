@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Modules.Catalog.Products.Domain;
 using Modules.Orders.Carts;
 using Modules.Orders.Carts.Domain;
-using Modules.Orders.Orders.Domain.Order;
+using Modules.Orders.Orders.Domain.Orders;
 using Modules.Orders.Tests.Common;
 using System.Net;
 using System.Net.Http.Json;

@@ -1,4 +1,4 @@
-using Modules.Orders.Orders.Domain.Payment;
+using Modules.Orders.Orders.Domain.Payments;
 
 namespace Modules.Orders.Tests.Orders;
 

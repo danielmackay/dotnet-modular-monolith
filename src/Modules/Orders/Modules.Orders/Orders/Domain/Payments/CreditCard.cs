@@ -1,7 +1,7 @@
 using Common.SharedKernel.Domain.Interfaces;
 using System.Text.RegularExpressions;
 
-namespace Modules.Orders.Orders.Domain.Payment;
+namespace Modules.Orders.Orders.Domain.Payments;
 
 public record CreditCard : IValueObject
 {

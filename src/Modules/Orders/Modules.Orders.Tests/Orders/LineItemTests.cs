@@ -1,5 +1,5 @@
-using Modules.Orders.Orders.Domain.LineItem;
-using Modules.Orders.Orders.Domain.Order;
+using Modules.Orders.Orders.Domain.LineItems;
+using Modules.Orders.Orders.Domain.Orders;
 
 namespace Modules.Orders.Tests.Orders;
 

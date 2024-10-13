@@ -1,9 +1,9 @@
 ﻿using Common.SharedKernel.Domain.Ids;
 using ErrorOr;
-using Modules.Orders.Orders.Domain.LineItem;
-using Modules.Orders.Orders.Domain.Payment;
+using Modules.Orders.Orders.Domain.LineItems;
+using Modules.Orders.Orders.Domain.Payments;
 
-namespace Modules.Orders.Orders.Domain.Order;
+namespace Modules.Orders.Orders.Domain.Orders;
 
 /*
  * An order must be associated with a customer - DONE
@@ -18,16 +18,16 @@ internal class Order : AggregateRoot<OrderId>
     // 10% tax rate
     private const decimal TaxRate = 0.1m;
 
-    private readonly List<LineItem.LineItem> _lineItems = [];
+    private readonly List<LineItem> _lineItems = [];
 
-    public IEnumerable<LineItem.LineItem> LineItems => _lineItems.AsReadOnly();
+    public IEnumerable<LineItem> LineItems => _lineItems.AsReadOnly();
 
     public required CustomerId CustomerId { get; init; }
 
     public Money AmountPaid { get; private set; } = null!;
 
     // TODO: Allow multiple payments
-    public Payment.Payment? Payment { get; private set; }
+    public Payment? Payment { get; private set; }
 
     public OrderStatus Status { get; private set; } = null!;
 
@@ -80,7 +80,7 @@ internal class Order : AggregateRoot<OrderId>
         return order;
     }
 
-    public ErrorOr<LineItem.LineItem> AddLineItem(ProductId productId, Money price, int quantity)
+    public ErrorOr<LineItem> AddLineItem(ProductId productId, Money price, int quantity)
     {
         // TODO: Unit test
         if (Status == OrderStatus.PaymentReceived)
@@ -97,7 +97,7 @@ internal class Order : AggregateRoot<OrderId>
             return existingLineItem;
         }
 
-        var lineItem = LineItem.LineItem.Create(Id, productId, price, quantity);
+        var lineItem = LineItem.Create(Id, productId, price, quantity);
         AddDomainEvent(new LineItemCreatedEvent(lineItem.Id, lineItem.OrderId));
         _lineItems.Add(lineItem);
         UpdateOrderTotal();

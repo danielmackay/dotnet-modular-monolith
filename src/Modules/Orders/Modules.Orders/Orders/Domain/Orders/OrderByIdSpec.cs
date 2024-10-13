@@ -1,6 +1,6 @@
 ﻿using Ardalis.Specification;
 
-namespace Modules.Orders.Orders.Domain.Order;
+namespace Modules.Orders.Orders.Domain.Orders;
 
 internal class OrderByIdSpec : OrderSpec, ISingleResultSpecification<Order>
 {
