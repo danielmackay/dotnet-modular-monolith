@@ -1,6 +1,7 @@
 ﻿using Common.SharedKernel.Domain.Ids;
 using ErrorOr;
 using Modules.Orders.Orders.Domain.LineItem;
+using Modules.Orders.Orders.Domain.Payment;
 
 namespace Modules.Orders.Orders.Domain.Order;
 
@@ -25,8 +26,8 @@ internal class Order : AggregateRoot<OrderId>
 
     public Money AmountPaid { get; private set; } = null!;
 
-    // TODO: Add support for payment
-    // private readonly Payment.Payment _payment = null!;
+    // TODO: Allow multiple payments
+    public Payment.Payment? Payment { get; private set; }
 
     public OrderStatus Status { get; private set; } = null!;
 
@@ -121,7 +122,18 @@ internal class Order : AggregateRoot<OrderId>
         ShippingTotal = shipping;
     }
 
-    public ErrorOr<Success> AddPayment(Money payment)
+
+    public ErrorOr<Success> AddCreditCardPayment(Money payment, CreditCard card)
+    {
+
+    }
+
+    public ErrorOr<Success> AddCashPayment(Money payment)
+    {
+
+    }
+
+    private ErrorOr<Success> AddPayment(Money payment)
     {
         if (payment.Amount <= 0)
             return OrderErrors.PaymentAmountZeroOrNegative;

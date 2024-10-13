@@ -9,14 +9,13 @@ public class PaymentTests
     {
         // Arrange
         var amount = new Money(Currency.Default, 100);
-        var paymentType = PaymentType.CreditCard;
 
         // Act
-        var payment = Payment.Create(amount, paymentType);
+        var payment = CashPayment.Create(amount);
 
         // Assert
         payment.Amount.Should().Be(amount);
-        payment.PaymentType.Should().Be(paymentType);
+        payment.PaymentType.Should().Be(PaymentType.Cash);
         payment.Id.Should().NotBeNull();
     }
 
@@ -25,11 +24,10 @@ public class PaymentTests
     {
         // Arrange
         var amount = new Money(Currency.Default, 100);
-        var paymentType = PaymentType.CreditCard;
 
         // Act
-        var payment1 = Payment.Create(amount, paymentType);
-        var payment2 = Payment.Create(amount, paymentType);
+        var payment1 = CashPayment.Create(amount);
+        var payment2 = CashPayment.Create(amount);
 
         // Assert
         payment1.Id.Should().NotBe(payment2.Id);
@@ -39,20 +37,11 @@ public class PaymentTests
     public void Create_ShouldThrowException_WhenAmountIsNull()
     {
         // Arrange
-        Action act = () => Payment.Create(null!, PaymentType.CreditCard);
+        Action act = () => CashPayment.Create(null!);
 
         // Act & Assert
         act.Should().Throw<ArgumentNullException>();
     }
 
-    [Fact]
-    public void Create_ShouldThrowException_WhenPaymentTypeIsNull()
-    {
-        // Arrange
-        var amount = new Money(Currency.Default, 100);
-        Action act = () => Payment.Create(amount, null!);
-
-        // Act & Assert
-        act.Should().Throw<ArgumentNullException>();
-    }
+    // TODO: Add tests for Credit Card Payments
 }

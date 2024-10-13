@@ -1,8 +1,9 @@
-﻿using Throw;
+﻿using Common.SharedKernel.Domain.Interfaces;
+using Throw;
 
 namespace Common.SharedKernel.Domain.Entities;
 
-public record Money(Currency Currency, decimal Amount)
+public record Money(Currency Currency, decimal Amount) : IValueObject
 {
     public static Money Create(decimal amount) => new(Currency.Default, amount);
 

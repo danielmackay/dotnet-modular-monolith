@@ -1,6 +1,8 @@
-﻿namespace Common.SharedKernel.Domain.Entities;
+﻿using Common.SharedKernel.Domain.Interfaces;
 
-public record Currency
+namespace Common.SharedKernel.Domain.Entities;
+
+public record Currency : IValueObject
 {
     public string Symbol { get; }
 

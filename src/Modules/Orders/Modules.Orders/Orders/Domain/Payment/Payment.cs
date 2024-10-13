@@ -12,18 +12,35 @@ internal class Payment : Entity<PaymentId>
     {
     }
 
-    public static Payment Create(Money amount, PaymentType paymentType)
+    protected Payment(Money amount, PaymentType paymentType)
     {
         ArgumentNullException.ThrowIfNull(amount);
         ArgumentNullException.ThrowIfNull(paymentType);
 
-        var payment = new Payment
-        {
-            Id = new PaymentId(Uuid.Create()),
-            Amount = amount,
-            PaymentType = paymentType
-        };
-
-        return payment;
+        Id = new PaymentId(Uuid.Create());
+        Amount = amount;
+        PaymentType = paymentType;
     }
+}
+
+internal class CreditCardPayment : Payment
+{
+    public CreditCard Card { get; private set; }
+
+    internal CreditCardPayment(Money amount, CreditCard card) : base(amount, PaymentType.CreditCard)
+    {
+        Card = card;
+    }
+}
+
+internal class CashPayment : Payment
+{
+    private CashPayment(Money money) : base(money, PaymentType.Cash)
+    {
+    }
+
+    internal static CashPayment Create(Money amount) => new CashPayment(amount)
+    {
+        Id = new PaymentId(Uuid.Create())
+    };
 }
