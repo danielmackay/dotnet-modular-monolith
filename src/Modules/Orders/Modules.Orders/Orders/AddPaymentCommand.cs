@@ -19,11 +19,11 @@ namespace Modules.Orders.Orders;
 public static class AddPaymentCommand
 {
     // TODO: Test if FromRoute parameter is correct
-    public record Request([FromRoute] Guid OrderId, decimal Amount, CreditCardDto? Card) : IRequest<ErrorOr<Response>>;
+    public record Request([FromRoute] Guid OrderId, decimal Amount, CreditCardDto? Card) : IRequest<ErrorOr<Success>>;
 
     public record CreditCardDto(string CardNumber, string ExpirationMonth, string ExpirationYear, string SecurityCode);
 
-    public record Response();
+    // public record Response();
 
     public class Endpoint : IEndpoint
     {
@@ -82,7 +82,7 @@ public static class AddPaymentCommand
         }
     }
 
-    internal class Handler : IRequestHandler<Request, ErrorOr<Response>>
+    internal class Handler : IRequestHandler<Request, ErrorOr<Success>>
     {
         private readonly OrdersDbContext _dbContext;
         private readonly IPaymentService _paymentService;
@@ -93,7 +93,7 @@ public static class AddPaymentCommand
             _paymentService = paymentService;
         }
 
-        public async Task<ErrorOr<Response>> Handle(Request request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Success>> Handle(Request request, CancellationToken cancellationToken)
         {
             var order = await _dbContext.Orders
                 .WithSpecification(new OrderByIdSpec(new OrderId(request.OrderId)))
@@ -105,19 +105,26 @@ public static class AddPaymentCommand
             var amount = new Money(request.Amount);
             if (request.Card is null)
             {
-                order.AddCashPayment(amount);
+                var result = order.AddCashPayment(amount);
+
+                if (result.IsError)
+                    return result;
             }
             else
             {
                 var card = new CreditCard(request.Card.CardNumber, request.Card.ExpirationMonth,
                     request.Card.ExpirationYear, request.Card.SecurityCode);
-                order.AddCreditCardPayment(amount, card);
+                var result = order.AddCreditCardPayment(amount, card);
+
+                if (result.IsError)
+                    return result;
+
                 _paymentService.MakeCreditCardPayment(amount, card);
             }
 
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            return new Response();
+            return new Success();
         }
     }
 }
