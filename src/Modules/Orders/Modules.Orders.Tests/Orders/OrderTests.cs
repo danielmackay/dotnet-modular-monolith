@@ -71,7 +71,7 @@ namespace Modules.Orders.Tests.Orders
             order.AddShipping(new Money(Currency.USD, 10));
 
             // Act
-            var result = order.AddPayment(new Money(Currency.USD, 110));
+            var result = order.AddCashPayment(new Money(Currency.USD, 110));
 
             // Assert
             result.IsError.Should().BeFalse();
@@ -89,7 +89,7 @@ namespace Modules.Orders.Tests.Orders
             var quantity = 1;
             order.AddLineItem(productId, price, quantity);
             order.AddShipping(new Money(Currency.USD, 10));
-            order.AddPayment(new Money(Currency.USD, 110));
+            order.AddCashPayment(new Money(Currency.USD, 110));
             var timeProvider = TimeProvider.System;
 
             // Act

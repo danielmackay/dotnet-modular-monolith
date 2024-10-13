@@ -12,13 +12,14 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Modules.Orders.Common.Persistence;
 using Modules.Orders.Orders.Domain.Orders;
+using Modules.Orders.Orders.Domain.Payments;
 
 namespace Modules.Orders.Orders;
 
 public static class AddPaymentCommand
 {
     // TODO: Test if FromRoute parameter is correct
-    public record Request([FromRoute]Guid OrderId, decimal Amount, CreditCardDto Card) : IRequest<ErrorOr<Response>>;
+    public record Request([FromRoute] Guid OrderId, decimal Amount, CreditCardDto? Card) : IRequest<ErrorOr<Response>>;
 
     public record CreditCardDto(string CardNumber, string ExpirationMonth, string ExpirationYear, string SecurityCode);
 
@@ -51,32 +52,45 @@ public static class AddPaymentCommand
             RuleFor(r => r.Amount)
                 .NotEmpty();
 
-            RuleFor(r => r.Card)
-                .NotNull();
+            // TODO: Fix up nested rules
+            // RuleFor(r => r.Card)
+            //     .ChildRules(rules => rules
+            //         .RuleFor(r => r.CardNumber).NotEmpty()
+            //         .RuleFor(r => r.CardNumber).NotEmpty()
+            //     )
+            //     .When(r => r.Card is not null);
+            //
+            // RuleFor(r => r.Card)
+            //     .When(c => c.Card is not null)
+            //     .NotNull();
 
-            RuleFor(r => r.Card.CardNumber)
-                .NotEmpty();
+            RuleFor(r => r.Card!.CardNumber)
+                .NotEmpty()
+                .When(r => r.Card is not null);
 
-            RuleFor(r => r.Card.ExpirationMonth)
-                .NotEmpty();
+            RuleFor(r => r.Card!.ExpirationMonth)
+                .NotEmpty()
+                .When(r => r.Card is not null);
 
-            RuleFor(r => r.Card.ExpirationYear)
-                .NotEmpty();
+            RuleFor(r => r.Card!.ExpirationYear)
+                .NotEmpty()
+                .When(r => r.Card is not null);
 
-            RuleFor(r => r.Card.SecurityCode)
-                .NotEmpty();
+            RuleFor(r => r.Card!.SecurityCode)
+                .NotEmpty()
+                .When(r => r.Card is not null);
         }
     }
 
     internal class Handler : IRequestHandler<Request, ErrorOr<Response>>
     {
         private readonly OrdersDbContext _dbContext;
-        private readonly IMediator _mediator;
+        private readonly IPaymentService _paymentService;
 
-        public Handler(OrdersDbContext dbContext, IMediator mediator)
+        public Handler(OrdersDbContext dbContext, IPaymentService paymentService)
         {
             _dbContext = dbContext;
-            _mediator = mediator;
+            _paymentService = paymentService;
         }
 
         public async Task<ErrorOr<Response>> Handle(Request request, CancellationToken cancellationToken)
@@ -89,15 +103,21 @@ public static class AddPaymentCommand
                 return Error.NotFound();
 
             var amount = new Money(request.Amount);
-            order.AddPayment(amount);
-
-            _dbContext.Orders.Add(order);
-
-
+            if (request.Card is null)
+            {
+                order.AddCashPayment(amount);
+            }
+            else
+            {
+                var card = new CreditCard(request.Card.CardNumber, request.Card.ExpirationMonth,
+                    request.Card.ExpirationYear, request.Card.SecurityCode);
+                order.AddCreditCardPayment(amount, card);
+                _paymentService.MakeCreditCardPayment(amount, card);
+            }
 
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            return new Response(order.Id.Value);
+            return new Response();
         }
     }
 }

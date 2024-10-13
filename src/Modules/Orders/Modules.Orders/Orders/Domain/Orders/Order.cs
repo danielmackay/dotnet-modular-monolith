@@ -125,12 +125,14 @@ internal class Order : AggregateRoot<OrderId>
 
     public ErrorOr<Success> AddCreditCardPayment(Money payment, CreditCard card)
     {
-
+        Payment = CreditCardPayment.Create(payment, card);
+        return AddPayment(payment);
     }
 
     public ErrorOr<Success> AddCashPayment(Money payment)
     {
-
+        Payment = CashPayment.Create(payment);
+        return AddPayment(payment);
     }
 
     private ErrorOr<Success> AddPayment(Money payment)
