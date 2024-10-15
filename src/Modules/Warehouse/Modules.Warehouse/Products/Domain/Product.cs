@@ -39,7 +39,7 @@ internal class Product : AggregateRoot<ProductId>
         product.UpdateName(name);
         product.UpdateSku(sku);
 
-        product.AddDomainEvent(ProductCreatedEvent.Create(product));
+        product.AddDomainEvent(new ProductCreatedEvent(product));
 
         return product;
     }
@@ -65,7 +65,7 @@ internal class Product : AggregateRoot<ProductId>
         StockOnHand -= quantity;
 
         if (StockOnHand <= LowStockThreshold)
-            AddDomainEvent(new LowStockEvent(Id));
+            AddDomainEvent(new LowStockEvent(this));
 
         return Result.Success;
     }

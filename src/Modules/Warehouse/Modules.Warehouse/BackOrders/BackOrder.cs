@@ -1,44 +1,56 @@
-using Ardalis.SmartEnum;
+using Common.SharedKernel.Domain.Interfaces;
 
 namespace Modules.Warehouse.BackOrders;
 
-internal record BackOrderId(Guid Value);
+internal record BackOrderId(Guid Value) : IStronglyTypedId<Guid>
+{
+    internal BackOrderId() : this(Uuid.Create())
+    {
+    }
+}
 
 internal class BackOrder : AggregateRoot<BackOrderId>
 {
-    // private ProductId _productId = null!;
+    public ProductId ProductId { get; private set; } = null!;
 
-    // private int _quantityOrdered;
+    public int QuantityOrdered { get; private set; }
 
-    // private int _quantityReceived;
+    public int QuantityReceived { get; private set; }
+
+    public string? OrderReference { get; private set; }
 
     public BackOrderStatus Status { get; private set; } = null!;
 
+    // Needed for EF
     private BackOrder()
     {
     }
 
-    public static BackOrder Create(/*ProductId productId, int quantityOrdered*/)
+    public static BackOrder Create(ProductId productId, int quantityOrdered)
     {
         var backOrder = new BackOrder
         {
             Id = new BackOrderId(Uuid.Create()),
-            // _productId = productId,
-            // _quantityOrdered = quantityOrdered,
-            // _quantityReceived = 0,
+            ProductId = productId,
+            QuantityOrdered = quantityOrdered,
+            QuantityReceived = 0,
             Status = BackOrderStatus.Pending
         };
 
         return backOrder;
     }
-}
 
-internal class BackOrderStatus : SmartEnum<BackOrderStatus>
-{
-    public static readonly BackOrderStatus Pending = new(1, "Pending");
-    public static readonly BackOrderStatus Received = new(2, "Received");
-
-    private BackOrderStatus(int id, string name) : base(name, id)
+    public void UpdateReference(string reference)
     {
+        ArgumentException.ThrowIfNullOrWhiteSpace(reference);
+        OrderReference = reference;
+    }
+
+    public void UpdateReceived(int quantity)
+    {
+        QuantityReceived = quantity;
+
+        if (QuantityReceived >= QuantityOrdered)
+            Status = BackOrderStatus.Received;
     }
 }
