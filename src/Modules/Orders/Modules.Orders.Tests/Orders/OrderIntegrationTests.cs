@@ -4,6 +4,7 @@ using Modules.Orders.Orders;
 using Modules.Orders.Orders.Domain.Orders;
 using Modules.Orders.Orders.Domain.Payments;
 using Modules.Orders.Tests.Common;
+using Modules.Orders.Tests.Common.Builders;
 using System.Net;
 using System.Net.Http.Json;
 using Xunit.Abstractions;
@@ -18,7 +19,6 @@ public class OrderIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHel
     {
         // Arrange
         var order = new OrderBuilder()
-            .NewOrder()
             .WithLineItem()
             .Build();
         await AddEntityAsync(order);
@@ -50,7 +50,6 @@ public class OrderIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHel
     {
         // Arrange
         var order = new OrderBuilder()
-            .NewOrder()
             .WithLineItem()
             .Build();
         await AddEntityAsync(order);

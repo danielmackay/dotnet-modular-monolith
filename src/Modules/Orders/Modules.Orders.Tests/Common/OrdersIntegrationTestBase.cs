@@ -9,9 +9,9 @@ namespace Modules.Orders.Tests.Common;
 // ReSharper disable once ClassNeverInstantiated.Global
 public class OrdersDatabaseFixture : TestingDatabaseFixture, IAsyncLifetime
 {
-    private IServiceScope _scope;
+    private IServiceScope? _scope;
 
-    public CatalogDbContext CatalogDbContext { get; private set; }
+    public CatalogDbContext? CatalogDbContext { get; private set; }
 
     public new async Task InitializeAsync()
     {
@@ -22,9 +22,12 @@ public class OrdersDatabaseFixture : TestingDatabaseFixture, IAsyncLifetime
 
     public new async Task DisposeAsync()
     {
+        if (CatalogDbContext is not null)
+            await CatalogDbContext.DisposeAsync();
+
+        _scope?.Dispose();
+
         await base.DisposeAsync();
-        await CatalogDbContext.DisposeAsync();
-        _scope.Dispose();
     }
 }
 

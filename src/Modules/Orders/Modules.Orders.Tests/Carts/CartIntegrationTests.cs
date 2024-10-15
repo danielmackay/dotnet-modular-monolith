@@ -1,10 +1,10 @@
 using Common.Tests.Assertions;
 using Microsoft.EntityFrameworkCore;
-using Modules.Catalog.Products.Domain;
 using Modules.Orders.Carts;
 using Modules.Orders.Carts.Domain;
 using Modules.Orders.Orders.Domain.Orders;
 using Modules.Orders.Tests.Common;
+using Modules.Orders.Tests.Common.Builders;
 using System.Net;
 using System.Net.Http.Json;
 using Xunit.Abstractions;
@@ -18,8 +18,9 @@ public class CartIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHelp
     public async Task CreateCart_WithValidRequest_ReturnsCart()
     {
         // Arrange
-        var product = Product.Create("name", "12345678");
-        product.UpdatePrice(new Money(100));
+        var product = new ProductBuilder()
+            .WithPrice()
+            .Build();
         fixture.CatalogDbContext.Products.Add(product);
         await fixture.CatalogDbContext.SaveChangesAsync();
         var client = GetAnonymousClient();
@@ -52,8 +53,9 @@ public class CartIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHelp
     public async Task AddProduct_WithExistingCart_ReturnsCart()
     {
         // Arrange
-        var product = Product.Create("name", "12345678");
-        product.UpdatePrice(new Money(100));
+        var product = new ProductBuilder()
+            .WithPrice()
+            .Build();
         fixture.CatalogDbContext.Products.Add(product);
         await fixture.CatalogDbContext.SaveChangesAsync();
         var client = GetAnonymousClient();
@@ -106,8 +108,9 @@ public class CartIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHelp
     public async Task CheckoutCart_WithValidRequest_ReturnsOrderId()
     {
         // Arrange
-        var product = Product.Create("name", "12345678");
-        product.UpdatePrice(new Money(100));
+        var product = new ProductBuilder()
+            .WithPrice()
+            .Build();
         fixture.CatalogDbContext.Products.Add(product);
         await fixture.CatalogDbContext.SaveChangesAsync();
         var client = GetAnonymousClient();
