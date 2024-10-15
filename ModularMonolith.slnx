@@ -26,9 +26,9 @@
     <Project Path="src\Modules\Customers\Modules.Customers\Modules.Customers.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/src/Modules/Orders/">
+    <Project Path="src\Modules\Orders\Modules.Orders.Messages\Modules.Orders.Messages.csproj" Type="Classic C#" />
     <Project Path="src\Modules\Orders\Modules.Orders.Tests\Modules.Orders.Tests.csproj" Type="Classic C#" />
     <Project Path="src\Modules\Orders\Modules.Orders\Modules.Orders.csproj" Type="Classic C#" />
-    <Project Path="src\Modules\Orders\Orders.Messages\Orders.Messages.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/src/Modules/Warehouse/">
     <Project Path="src\Modules\Warehouse\Modules.Warehouse.Messages\Modules.Warehouse.Messages.csproj" Type="Classic C#" />

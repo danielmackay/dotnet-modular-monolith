@@ -19,7 +19,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\..\Common\Common.SharedKernel\Common.SharedKernel.csproj"/>
-        <ProjectReference Include="..\..\Orders\Orders.Messages\Orders.Messages.csproj" />
+        <ProjectReference Include="..\..\Orders\Modules.Orders.Messages\Modules.Orders.Messages.csproj" />
         <ProjectReference Include="..\Modules.Warehouse.Messages\Modules.Warehouse.Messages.csproj"/>
     </ItemGroup>
 

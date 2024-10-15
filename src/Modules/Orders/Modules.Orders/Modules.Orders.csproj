@@ -3,7 +3,7 @@
     <ItemGroup>
         <ProjectReference Include="..\..\..\Common\Common.SharedKernel\Common.SharedKernel.csproj"/>
         <ProjectReference Include="..\..\Products\Modules.Catalog.Messages\Modules.Catalog.Messages.csproj" />
-        <ProjectReference Include="..\Orders.Messages\Orders.Messages.csproj" />
+        <ProjectReference Include="..\Modules.Orders.Messages\Modules.Orders.Messages.csproj" />
     </ItemGroup>
 
     <ItemGroup>
