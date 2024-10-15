@@ -3,6 +3,7 @@ using EntityFramework.Exceptions.SqlServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Modules.Orders.Orders;
 using Modules.Warehouse.Common.Persistence.Interceptors;
 
 namespace Modules.Orders.Common.Persistence;
@@ -25,6 +26,11 @@ internal static class DependencyInjection
         builder.Services.AddScoped<EntitySaveChangesInterceptor>();
         builder.Services.AddScoped<DispatchDomainEventsInterceptor>();
         // services.AddScoped<OutboxInterceptor>();
+    }
+
+    internal static void AddInfrastructure(this IServiceCollection services)
+    {
+        services.AddScoped<IPaymentService, FakePaymentService>();
     }
 
     public static IApplicationBuilder UseInfrastructureMiddleware(this IApplicationBuilder app)

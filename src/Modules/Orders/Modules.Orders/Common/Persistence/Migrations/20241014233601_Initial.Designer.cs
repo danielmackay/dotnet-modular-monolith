@@ -13,7 +13,7 @@ using Modules.Orders.Common.Persistence;
 namespace Modules.Orders.Common.Persistence.Migrations
 {
     [DbContext(typeof(OrdersDbContext))]
-    [Migration("20241012122337_Initial")]
+    [Migration("20241014233601_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -124,7 +124,7 @@ namespace Modules.Orders.Common.Persistence.Migrations
                     b.ToTable("CartItem", "catalog");
                 });
 
-            modelBuilder.Entity("Modules.Orders.Orders.Domain.LineItem.LineItem", b =>
+            modelBuilder.Entity("Modules.Orders.Orders.Domain.LineItems.LineItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -150,7 +150,7 @@ namespace Modules.Orders.Common.Persistence.Migrations
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.ComplexProperty<Dictionary<string, object>>("Price", "Modules.Orders.Orders.Domain.LineItem.LineItem.Price#Money", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("Price", "Modules.Orders.Orders.Domain.LineItems.LineItem.Price#Money", b1 =>
                         {
                             b1.IsRequired();
 
@@ -171,7 +171,7 @@ namespace Modules.Orders.Common.Persistence.Migrations
                     b.ToTable("LineItem", "catalog");
                 });
 
-            modelBuilder.Entity("Modules.Orders.Orders.Domain.Order.Order", b =>
+            modelBuilder.Entity("Modules.Orders.Orders.Domain.Orders.Order", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -183,6 +183,9 @@ namespace Modules.Orders.Common.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("PaymentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTimeOffset>("ShippingDate")
@@ -197,7 +200,7 @@ namespace Modules.Orders.Common.Persistence.Migrations
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.ComplexProperty<Dictionary<string, object>>("AmountPaid", "Modules.Orders.Orders.Domain.Order.Order.AmountPaid#Money", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("AmountPaid", "Modules.Orders.Orders.Domain.Orders.Order.AmountPaid#Money", b1 =>
                         {
                             b1.IsRequired();
 
@@ -211,7 +214,7 @@ namespace Modules.Orders.Common.Persistence.Migrations
                                 .HasColumnType("nvarchar(3)");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("OrderSubTotal", "Modules.Orders.Orders.Domain.Order.Order.OrderSubTotal#Money", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("OrderSubTotal", "Modules.Orders.Orders.Domain.Orders.Order.OrderSubTotal#Money", b1 =>
                         {
                             b1.IsRequired();
 
@@ -225,7 +228,7 @@ namespace Modules.Orders.Common.Persistence.Migrations
                                 .HasColumnType("nvarchar(3)");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("ShippingTotal", "Modules.Orders.Orders.Domain.Order.Order.ShippingTotal#Money", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("ShippingTotal", "Modules.Orders.Orders.Domain.Orders.Order.ShippingTotal#Money", b1 =>
                         {
                             b1.IsRequired();
 
@@ -239,7 +242,7 @@ namespace Modules.Orders.Common.Persistence.Migrations
                                 .HasColumnType("nvarchar(3)");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("TaxTotal", "Modules.Orders.Orders.Domain.Order.Order.TaxTotal#Money", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("TaxTotal", "Modules.Orders.Orders.Domain.Orders.Order.TaxTotal#Money", b1 =>
                         {
                             b1.IsRequired();
 
@@ -255,7 +258,48 @@ namespace Modules.Orders.Common.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PaymentId");
+
                     b.ToTable("Orders", "catalog");
+                });
+
+            modelBuilder.Entity("Modules.Orders.Orders.Domain.Payments.Payment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PaymentType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ComplexProperty<Dictionary<string, object>>("Amount", "Modules.Orders.Orders.Domain.Payments.Payment.Amount#Money", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<decimal>("Amount")
+                                .HasPrecision(18, 2)
+                                .HasColumnType("decimal(18,2)");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasMaxLength(3)
+                                .HasColumnType("nvarchar(3)");
+                        });
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Payment", "catalog");
                 });
 
             modelBuilder.Entity("Modules.Orders.Carts.Domain.CartItem", b =>
@@ -265,13 +309,22 @@ namespace Modules.Orders.Common.Persistence.Migrations
                         .HasForeignKey("CartId");
                 });
 
-            modelBuilder.Entity("Modules.Orders.Orders.Domain.LineItem.LineItem", b =>
+            modelBuilder.Entity("Modules.Orders.Orders.Domain.LineItems.LineItem", b =>
                 {
-                    b.HasOne("Modules.Orders.Orders.Domain.Order.Order", null)
+                    b.HasOne("Modules.Orders.Orders.Domain.Orders.Order", null)
                         .WithMany("LineItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Modules.Orders.Orders.Domain.Orders.Order", b =>
+                {
+                    b.HasOne("Modules.Orders.Orders.Domain.Payments.Payment", "Payment")
+                        .WithMany()
+                        .HasForeignKey("PaymentId");
+
+                    b.Navigation("Payment");
                 });
 
             modelBuilder.Entity("Modules.Orders.Carts.Domain.Cart", b =>
@@ -279,7 +332,7 @@ namespace Modules.Orders.Common.Persistence.Migrations
                     b.Navigation("Items");
                 });
 
-            modelBuilder.Entity("Modules.Orders.Orders.Domain.Order.Order", b =>
+            modelBuilder.Entity("Modules.Orders.Orders.Domain.Orders.Order", b =>
                 {
                     b.Navigation("LineItems");
                 });

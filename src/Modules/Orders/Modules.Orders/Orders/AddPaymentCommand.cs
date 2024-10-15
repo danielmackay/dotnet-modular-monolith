@@ -50,7 +50,8 @@ public static class AddPaymentCommand
                 .NotEmpty();
 
             RuleFor(r => r.Amount)
-                .NotEmpty();
+                .NotEmpty()
+                .GreaterThan(0);
 
             // TODO: Fix up nested rules
             // RuleFor(r => r.Card)
