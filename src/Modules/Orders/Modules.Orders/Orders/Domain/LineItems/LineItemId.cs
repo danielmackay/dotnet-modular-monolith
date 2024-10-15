@@ -1,6 +1,6 @@
 ﻿using Common.SharedKernel.Domain.Interfaces;
 
-namespace Modules.Orders.Orders.Domain.LineItem;
+namespace Modules.Orders.Orders.Domain.LineItems;
 
 internal record LineItemId(Guid Value) : IStronglyTypedId<Guid>
 {

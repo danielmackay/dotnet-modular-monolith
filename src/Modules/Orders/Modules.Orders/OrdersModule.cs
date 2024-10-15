@@ -15,6 +15,7 @@ public static class OrdersModule
     public static void AddOrders(this IHostApplicationBuilder builder)
     {
         builder.AddPersistence();
+        builder.Services.AddInfrastructure();
         builder.Services.AddValidatorsFromAssembly(_module);
     }
 

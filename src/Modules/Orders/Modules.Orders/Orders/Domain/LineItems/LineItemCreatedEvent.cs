@@ -1,7 +1,7 @@
 ﻿using Common.SharedKernel.Domain.Interfaces;
-using Modules.Orders.Orders.Domain.Order;
+using Modules.Orders.Orders.Domain.Orders;
 
-namespace Modules.Orders.Orders.Domain.LineItem;
+namespace Modules.Orders.Orders.Domain.LineItems;
 
 internal record LineItemCreatedEvent(LineItemId LineItemId, OrderId Order) : IDomainEvent
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Modules.Orders.Carts.Domain;
-using Modules.Orders.Orders.Domain.Order;
+using Modules.Orders.Orders.Domain.Orders;
 using SmartEnum.EFCore;
 
 namespace Modules.Orders.Common.Persistence;

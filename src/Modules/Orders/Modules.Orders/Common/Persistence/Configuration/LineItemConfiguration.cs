@@ -3,8 +3,8 @@ using Common.SharedKernel.Persistence;
 using Common.SharedKernel.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Modules.Orders.Orders.Domain.LineItem;
-using Modules.Orders.Orders.Domain.Order;
+using Modules.Orders.Orders.Domain.LineItems;
+using Modules.Orders.Orders.Domain.Orders;
 
 namespace Modules.Orders.Common.Persistence.Configuration;
 

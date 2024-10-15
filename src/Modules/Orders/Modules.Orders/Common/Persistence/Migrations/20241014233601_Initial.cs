@@ -33,22 +33,14 @@ namespace Modules.Orders.Common.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "Payment",
                 schema: "catalog",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    ShippingDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    AmountPaid_Amount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    AmountPaid_Currency = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
-                    OrderSubTotal_Amount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    OrderSubTotal_Currency = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
-                    ShippingTotal_Amount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    ShippingTotal_Currency = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
-                    TaxTotal_Amount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    TaxTotal_Currency = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    PaymentType = table.Column<int>(type: "int", nullable: false),
+                    Amount_Amount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    Amount_Currency = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -56,7 +48,7 @@ namespace Modules.Orders.Common.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.PrimaryKey("PK_Payment", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,6 +77,40 @@ namespace Modules.Orders.Common.Persistence.Migrations
                         column: x => x.CartId,
                         principalSchema: "catalog",
                         principalTable: "Carts",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                schema: "catalog",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PaymentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    ShippingDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    AmountPaid_Amount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    AmountPaid_Currency = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    OrderSubTotal_Amount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    OrderSubTotal_Currency = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    ShippingTotal_Amount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    ShippingTotal_Currency = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    TaxTotal_Amount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    TaxTotal_Currency = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_Payment_PaymentId",
+                        column: x => x.PaymentId,
+                        principalSchema: "catalog",
+                        principalTable: "Payment",
                         principalColumn: "Id");
                 });
 
@@ -127,6 +153,12 @@ namespace Modules.Orders.Common.Persistence.Migrations
                 schema: "catalog",
                 table: "LineItem",
                 column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_PaymentId",
+                schema: "catalog",
+                table: "Orders",
+                column: "PaymentId");
         }
 
         /// <inheritdoc />
@@ -146,6 +178,10 @@ namespace Modules.Orders.Common.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Orders",
+                schema: "catalog");
+
+            migrationBuilder.DropTable(
+                name: "Payment",
                 schema: "catalog");
         }
     }

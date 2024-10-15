@@ -1,6 +1,6 @@
 using ErrorOr;
 
-namespace Modules.Orders.Orders.Domain.Order;
+namespace Modules.Orders.Orders.Domain.Orders;
 
 public static class OrderErrors
 {
