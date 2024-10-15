@@ -155,7 +155,7 @@ internal class Order : AggregateRoot<OrderId>
         if (AmountPaid >= OrderTotal)
         {
             Status = OrderStatus.ReadyForShipping;
-            AddDomainEvent(new OrderReadyForShippingEvent(Id));
+            AddDomainEvent(new OrderPaidEvent(this));
         }
 
         return Result.Success;
@@ -192,4 +192,6 @@ internal class Order : AggregateRoot<OrderId>
         OrderSubTotal = new Money(currency, amount);
         TaxTotal = new Money(currency, OrderSubTotal.Amount * TaxRate);
     }
+
+    public IEnumerable<ProductId> GetProducts() => LineItems.Select(li => li.ProductId).ToList();
 }

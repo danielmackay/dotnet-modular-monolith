@@ -1,5 +1,7 @@
 using Common.SharedKernel.Domain.Interfaces;
+using ErrorOr;
 using Modules.Warehouse.Products.Domain;
+using Success = OneOf.Types.Success;
 
 namespace Modules.Warehouse.Storage.Domain;
 
@@ -10,7 +12,7 @@ internal record ShelfId(Guid Value) : IStronglyTypedId<Guid>
     }
 }
 
-internal class Shelf : Entity<ShelfId>
+internal class Shelf : AggregateRoot<ShelfId>
 {
     public string Name { get; private set; } = null!;
 
@@ -33,5 +35,15 @@ internal class Shelf : Entity<ShelfId>
     {
         ArgumentNullException.ThrowIfNull(productId);
         ProductId = productId;
+    }
+
+    public ErrorOr<Success> PickProduct()
+    {
+        if (ProductId is null)
+            return Error.Failure("Shelf doesn't currently contain a product");
+
+        ProductId = null;
+
+        return new Success();
     }
 }

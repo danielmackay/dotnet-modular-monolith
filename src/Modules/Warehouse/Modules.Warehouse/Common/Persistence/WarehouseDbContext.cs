@@ -9,6 +9,8 @@ public class WarehouseDbContext : DbContext
 {
     internal DbSet<Aisle> Aisles => Set<Aisle>();
 
+    internal DbSet<Shelf> Shelves => Set<Shelf>();
+
     internal DbSet<Product> Products => Set<Product>();
 
     // Needs to be public for the Database project
