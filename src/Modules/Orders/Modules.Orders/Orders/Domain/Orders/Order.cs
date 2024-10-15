@@ -57,7 +57,6 @@ internal class Order : AggregateRoot<OrderId>
     public Money OrderTotal => OrderSubTotal + ShippingTotal + TaxTotal;
 
 
-
     private Order()
     {
     }
@@ -75,7 +74,7 @@ internal class Order : AggregateRoot<OrderId>
             Status = OrderStatus.New
         };
 
-        order.AddDomainEvent(OrderCreatedEvent.Create(order));
+        order.AddDomainEvent(new OrderCreatedEvent(order));
 
         return order;
     }
@@ -83,8 +82,14 @@ internal class Order : AggregateRoot<OrderId>
     public ErrorOr<LineItem> AddLineItem(ProductId productId, Money price, int quantity)
     {
         // TODO: Unit test
-        if (Status == OrderStatus.PaymentReceived)
+        if (Status == OrderStatus.Paid)
             return OrderErrors.CantModifyAfterPayment;
+
+        if (Status == OrderStatus.Shipped)
+            return Error.Conflict("Can't add an item once it's shipped");
+
+        if (Status == OrderStatus.Delivered)
+            return Error.Conflict("Can't add an item once it's delivered");
 
         // TODO: Unit test
         if (OrderCurrency != null && OrderCurrency != price.Currency)
@@ -107,8 +112,14 @@ internal class Order : AggregateRoot<OrderId>
 
     public ErrorOr<Success> RemoveLineItem(ProductId productId)
     {
-        if (Status == OrderStatus.PaymentReceived)
+        if (Status == OrderStatus.Paid)
             return OrderErrors.CantModifyAfterPayment;
+
+        if (Status == OrderStatus.Shipped)
+            return Error.Conflict("Can't remove an item once it's shipped");
+
+        if (Status == OrderStatus.Delivered)
+            return Error.Conflict("Can't remove an item once it's delivered");
 
         _lineItems.RemoveAll(x => x.ProductId == productId);
         UpdateOrderTotal();
@@ -150,11 +161,9 @@ internal class Order : AggregateRoot<OrderId>
         else
             AmountPaid += payment;
 
-        Status = OrderStatus.PaymentReceived;
-
         if (AmountPaid >= OrderTotal)
         {
-            Status = OrderStatus.ReadyForShipping;
+            Status = OrderStatus.Paid;
             AddDomainEvent(new OrderPaidEvent(this));
         }
 
@@ -166,14 +175,16 @@ internal class Order : AggregateRoot<OrderId>
         if (Status == OrderStatus.New)
             return OrderErrors.CantShipUnpaidOrder;
 
-        if (Status == OrderStatus.InTransit)
+        if (Status == OrderStatus.Shipped)
             return OrderErrors.OrderAlreadyShipped;
 
         if (_lineItems.Sum(li => li.Quantity) <= 0)
             return OrderErrors.OrderEmpty;
 
         ShippingDate = timeProvider.GetUtcNow();
-        Status = OrderStatus.InTransit;
+        Status = OrderStatus.Shipped;
+
+        AddDomainEvent(new OrderShippedEvent(this));
 
         return Result.Success;
     }

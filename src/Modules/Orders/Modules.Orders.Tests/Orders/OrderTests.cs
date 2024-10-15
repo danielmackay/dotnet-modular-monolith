@@ -76,7 +76,7 @@ public class OrderTests
         // Assert
         result.IsError.Should().BeFalse();
         order.AmountPaid.Amount.Should().Be(110);
-        order.Status.Should().Be(OrderStatus.PaymentReceived);
+        order.Status.Should().Be(OrderStatus.Paid);
     }
 
     [Fact]
@@ -97,7 +97,7 @@ public class OrderTests
 
         // Assert
         result.IsError.Should().BeFalse();
-        order.Status.Should().Be(OrderStatus.InTransit);
+        order.Status.Should().Be(OrderStatus.Shipped);
         order.ShippingDate.Should().BeCloseTo(timeProvider.GetUtcNow(), TimeSpan.FromSeconds(1));
     }
 }

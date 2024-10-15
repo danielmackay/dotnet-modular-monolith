@@ -120,7 +120,8 @@ public class OrderIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHel
 
     }
 
-    // TODO: Validation Tests
+    // TODO: Add Order Shipped Command Integration Tests
+
 
     private static AddPaymentCommand.CreditCardDto NewCreditCard() => new("4444333322221111", "01", "2030", "123");
 }

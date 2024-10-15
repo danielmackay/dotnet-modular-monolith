@@ -26,7 +26,7 @@ public static class OrderErrors
 
     public static readonly Error OrderAlreadyShipped = Error.Validation(
         "Order.OrderAlreadyShipped",
-        "Order already shipped to customer");
+        "Order already shipped");
 
     public static readonly Error OrderEmpty = Error.Validation(
         "Order.OrderEmpty",

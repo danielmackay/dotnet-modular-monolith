@@ -13,9 +13,8 @@ namespace Modules.Orders.Orders.Domain.Orders;
 internal class OrderStatus : SmartEnum<OrderStatus>
 {
     public static readonly OrderStatus New = new(1, "New");
-    public static readonly OrderStatus PaymentReceived = new(2, "PaymentReceived");
-    public static readonly OrderStatus ReadyForShipping = new(3, "ReadyForShipping");
-    public static readonly OrderStatus InTransit = new(4, "InTransit");
+    public static readonly OrderStatus Paid = new(2, "Paid");
+    public static readonly OrderStatus Shipped = new(4, "Shipped");
     public static readonly OrderStatus Delivered = new(5, "Delivered");
 
     private OrderStatus(int id, string name) : base(name, id)
