@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Modules.Orders.Orders.Domain.Payments;
 
-namespace Modules.Orders.Orders;
+namespace Modules.Orders.Orders.Infrastructure;
 
 /// <summary>
 /// Payment Infrastructure Service

@@ -3,7 +3,7 @@ using EntityFramework.Exceptions.SqlServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Modules.Orders.Orders;
+using Modules.Orders.Orders.Infrastructure;
 using Modules.Warehouse.Common.Persistence.Interceptors;
 
 namespace Modules.Orders.Common.Persistence;

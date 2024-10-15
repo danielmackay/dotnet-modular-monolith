@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Modules.Orders.Common.Persistence;
 using Modules.Orders.Orders.Domain.Orders;
 using Modules.Orders.Orders.Domain.Payments;
+using Modules.Orders.Orders.Infrastructure;
 
 namespace Modules.Orders.Orders;
 
