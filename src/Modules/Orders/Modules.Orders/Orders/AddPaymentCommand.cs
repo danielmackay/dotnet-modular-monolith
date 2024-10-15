@@ -23,8 +23,6 @@ public static class AddPaymentCommand
 
     public record CreditCardDto(string CardNumber, string ExpirationMonth, string ExpirationYear, string SecurityCode);
 
-    // public record Response();
-
     public class Endpoint : IEndpoint
     {
         public void MapEndpoint(IEndpointRouteBuilder app)
@@ -53,32 +51,25 @@ public static class AddPaymentCommand
                 .NotEmpty()
                 .GreaterThan(0);
 
-            // TODO: Fix up nested rules
-            // RuleFor(r => r.Card)
-            //     .ChildRules(rules => rules
-            //         .RuleFor(r => r.CardNumber).NotEmpty()
-            //         .RuleFor(r => r.CardNumber).NotEmpty()
-            //     )
-            //     .When(r => r.Card is not null);
-            //
-            // RuleFor(r => r.Card)
-            //     .When(c => c.Card is not null)
-            //     .NotNull();
+            RuleFor(r => r.Card)
+                .ChildRules(card =>
+                {
+                    card.RuleFor(c => c!.CardNumber)
+                        .NotEmpty()
+                        .Length(16);
 
-            RuleFor(r => r.Card!.CardNumber)
-                .NotEmpty()
-                .When(r => r.Card is not null);
+                    card.RuleFor(c => c!.ExpirationMonth)
+                        .NotEmpty()
+                        .Length(2);
 
-            RuleFor(r => r.Card!.ExpirationMonth)
-                .NotEmpty()
-                .When(r => r.Card is not null);
+                    card.RuleFor(c => c!.ExpirationYear)
+                        .NotEmpty()
+                        .Length(4);
 
-            RuleFor(r => r.Card!.ExpirationYear)
-                .NotEmpty()
-                .When(r => r.Card is not null);
-
-            RuleFor(r => r.Card!.SecurityCode)
-                .NotEmpty()
+                    card.RuleFor(c => c!.SecurityCode)
+                        .NotEmpty()
+                        .Length(3);
+                })
                 .When(r => r.Card is not null);
         }
     }

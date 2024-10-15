@@ -44,7 +44,6 @@ public class OrderIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHel
         paidOrder.Payment.PaymentType.Should().Be(PaymentType.CreditCard);
     }
 
-    // TODO: Cash Payment Test
     [Fact]
     public async Task AddCashPayment_WithValidOrder_Succeeds()
     {
