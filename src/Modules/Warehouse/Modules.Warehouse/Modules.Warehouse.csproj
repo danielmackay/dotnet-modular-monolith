@@ -22,4 +22,8 @@
         <ProjectReference Include="..\Modules.Warehouse.Messages\Modules.Warehouse.Messages.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Storage\Integrations\" />
+    </ItemGroup>
+
 </Project>

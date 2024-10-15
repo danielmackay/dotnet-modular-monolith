@@ -18,7 +18,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Common\Common.ServiceDefaults\Common.ServiceDefaults.csproj" />
       <ProjectReference Include="..\Modules\Customers\Modules.Customers\Modules.Customers.csproj" />
       <ProjectReference Include="..\Modules\Orders\Modules.Orders\Modules.Orders.csproj" />
       <ProjectReference Include="..\Modules\Products\Modules.Catalog\Modules.Catalog.csproj" />

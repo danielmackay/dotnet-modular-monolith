@@ -12,7 +12,6 @@
     <Project Path="src\WebApi\WebApi.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/src/Common/">
-    <Project Path="src\Common\Common.ServiceDefaults\Common.ServiceDefaults.csproj" Type="Classic C#" />
     <Project Path="src\Common\Common.SharedKernel\Common.SharedKernel.csproj" Type="Classic C#" />
     <Project Path="src\Common\Common.Tests\Common.Tests.csproj" Type="Classic C#" />
   </Folder>
