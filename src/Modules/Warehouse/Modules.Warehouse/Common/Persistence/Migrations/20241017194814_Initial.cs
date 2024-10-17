@@ -32,6 +32,27 @@ namespace Modules.Warehouse.Common.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BackOrder",
+                schema: "warehouse",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    QuantityOrdered = table.Column<int>(type: "int", nullable: false),
+                    QuantityReceived = table.Column<int>(type: "int", nullable: false),
+                    OrderReference = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BackOrder", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 schema: "warehouse",
                 columns: table => new
@@ -129,6 +150,10 @@ namespace Modules.Warehouse.Common.Persistence.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "BackOrder",
+                schema: "warehouse");
+
             migrationBuilder.DropTable(
                 name: "Shelves",
                 schema: "warehouse");
