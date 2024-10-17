@@ -57,7 +57,7 @@ namespace Modules.Warehouse.Common.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BackOrder", "warehouse");
+                    b.ToTable("BackOrders", "warehouse");
                 });
 
             modelBuilder.Entity("Modules.Warehouse.Products.Domain.Product", b =>

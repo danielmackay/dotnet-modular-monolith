@@ -32,7 +32,7 @@ namespace Modules.Warehouse.Common.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BackOrder",
+                name: "BackOrders",
                 schema: "warehouse",
                 columns: table => new
                 {
@@ -49,7 +49,7 @@ namespace Modules.Warehouse.Common.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BackOrder", x => x.Id);
+                    table.PrimaryKey("PK_BackOrders", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -151,7 +151,7 @@ namespace Modules.Warehouse.Common.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BackOrder",
+                name: "BackOrders",
                 schema: "warehouse");
 
             migrationBuilder.DropTable(

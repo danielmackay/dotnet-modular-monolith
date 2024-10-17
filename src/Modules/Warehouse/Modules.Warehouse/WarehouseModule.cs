@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Modules.Warehouse.Common.Persistence;
+using Modules.Warehouse.Products.Events;
 using System.Reflection;
 
 namespace Modules.Warehouse;
@@ -18,6 +19,8 @@ public static class WarehouseModule
         builder.Services.AddValidatorsFromAssembly(_module);
 
         builder.AddPersistence();
+
+        builder.Services.AddScoped<ISupplierService, FakeSupplierService>();
     }
 
     public static void UseWarehouse(this WebApplication app)
