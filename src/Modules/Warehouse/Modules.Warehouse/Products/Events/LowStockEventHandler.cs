@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Modules.Warehouse.BackOrders;
 using Modules.Warehouse.Common.Persistence;
 using Modules.Warehouse.Products.Domain;
 
@@ -9,10 +10,12 @@ internal static class LowStockEventHandler
     internal class Handler : INotificationHandler<LowStockEvent>
     {
         private readonly WarehouseDbContext _dbContext;
+        private readonly ISupplierService _supplierService;
 
-        public Handler(WarehouseDbContext dbContext)
+        public Handler(WarehouseDbContext dbContext, ISupplierService supplierService)
         {
             _dbContext = dbContext;
+            _supplierService = supplierService;
         }
 
         public async Task Handle(LowStockEvent notification, CancellationToken cancellationToken)
@@ -22,8 +25,17 @@ internal static class LowStockEventHandler
                 .WithSpecification(spec)
                 .FirstAsync(cancellationToken);
 
+            if (product is null)
+                throw new InvalidOperationException("Cannot find product");
 
+            // TODO: Check we don't have an outstanding backorder for this product
 
+            var backOrder = BackOrder.Create(product.Id);
+            var reference = await _supplierService.Order(product, backOrder.QuantityOrdered);
+            backOrder.UpdateReference(reference);
+            _dbContext.BackOrders.Add(backOrder);
+
+            await _dbContext.SaveChangesAsync(cancellationToken);
         }
     }
 }

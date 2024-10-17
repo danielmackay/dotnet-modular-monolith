@@ -11,6 +11,8 @@ internal record BackOrderId(Guid Value) : IStronglyTypedId<Guid>
 
 internal class BackOrder : AggregateRoot<BackOrderId>
 {
+    private const int DefaultQuantityToOrder = 10;
+
     public ProductId ProductId { get; private set; } = null!;
 
     public int QuantityOrdered { get; private set; }
@@ -26,13 +28,13 @@ internal class BackOrder : AggregateRoot<BackOrderId>
     {
     }
 
-    public static BackOrder Create(ProductId productId, int quantityOrdered)
+    public static BackOrder Create(ProductId productId)
     {
         var backOrder = new BackOrder
         {
             Id = new BackOrderId(Uuid.Create()),
             ProductId = productId,
-            QuantityOrdered = quantityOrdered,
+            QuantityOrdered = DefaultQuantityToOrder,
             QuantityReceived = 0,
             Status = BackOrderStatus.Pending
         };
