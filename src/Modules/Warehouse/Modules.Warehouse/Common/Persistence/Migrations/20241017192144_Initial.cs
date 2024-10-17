@@ -76,7 +76,7 @@ namespace Modules.Warehouse.Common.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Shelf",
+                name: "Shelves",
                 schema: "warehouse",
                 columns: table => new
                 {
@@ -91,16 +91,16 @@ namespace Modules.Warehouse.Common.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Shelf", x => x.Id);
+                    table.PrimaryKey("PK_Shelves", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Shelf_Bay_BayId",
+                        name: "FK_Shelves_Bay_BayId",
                         column: x => x.BayId,
                         principalSchema: "warehouse",
                         principalTable: "Bay",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Shelf_Products_ProductId",
+                        name: "FK_Shelves_Products_ProductId",
                         column: x => x.ProductId,
                         principalSchema: "warehouse",
                         principalTable: "Products",
@@ -114,15 +114,15 @@ namespace Modules.Warehouse.Common.Persistence.Migrations
                 column: "AisleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Shelf_BayId",
+                name: "IX_Shelves_BayId",
                 schema: "warehouse",
-                table: "Shelf",
+                table: "Shelves",
                 column: "BayId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Shelf_ProductId",
+                name: "IX_Shelves_ProductId",
                 schema: "warehouse",
-                table: "Shelf",
+                table: "Shelves",
                 column: "ProductId");
         }
 
@@ -130,7 +130,7 @@ namespace Modules.Warehouse.Common.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Shelf",
+                name: "Shelves",
                 schema: "warehouse");
 
             migrationBuilder.DropTable(

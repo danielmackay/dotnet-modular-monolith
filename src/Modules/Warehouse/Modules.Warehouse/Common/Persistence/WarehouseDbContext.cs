@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Modules.Warehouse.Products.Domain;
 using Modules.Warehouse.Storage.Domain;
+using SmartEnum.EFCore;
 
 namespace Modules.Warehouse.Common.Persistence;
 
@@ -22,6 +23,7 @@ public class WarehouseDbContext : DbContext
     {
         modelBuilder.HasDefaultSchema("warehouse");
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(WarehouseDbContext).Assembly);
+        modelBuilder.ConfigureSmartEnum();
         base.OnModelCreating(modelBuilder);
     }
 }

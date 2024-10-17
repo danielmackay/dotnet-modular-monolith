@@ -71,11 +71,11 @@ public class OrderTests
         order.AddShipping(new Money(Currency.USD, 10));
 
         // Act
-        var result = order.AddCashPayment(new Money(Currency.USD, 110));
+        var result = order.AddCashPayment(order.OrderTotal);
 
         // Assert
         result.IsError.Should().BeFalse();
-        order.AmountPaid.Amount.Should().Be(110);
+        order.AmountPaid.Should().Be(order.OrderTotal);
         order.Status.Should().Be(OrderStatus.Paid);
     }
 
@@ -89,7 +89,7 @@ public class OrderTests
         var quantity = 1;
         order.AddLineItem(productId, price, quantity);
         order.AddShipping(new Money(Currency.USD, 10));
-        order.AddCashPayment(new Money(Currency.USD, 110));
+        order.AddCashPayment(order.OrderTotal);
         var timeProvider = TimeProvider.System;
 
         // Act
