@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Modules.Warehouse.BackOrders.Domain;
 using Modules.Warehouse.Products.Domain;
 using Modules.Warehouse.Storage.Domain;
 using SmartEnum.EFCore;
@@ -13,6 +14,8 @@ public class WarehouseDbContext : DbContext
     internal DbSet<Shelf> Shelves => Set<Shelf>();
 
     internal DbSet<Product> Products => Set<Product>();
+
+    internal DbSet<BackOrder> BackOrders => Set<BackOrder>();
 
     // Needs to be public for the Database project
     public WarehouseDbContext(DbContextOptions<WarehouseDbContext> options) : base(options)
