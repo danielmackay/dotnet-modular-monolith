@@ -18,7 +18,7 @@ namespace Modules.Warehouse.Common.Persistence.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("warehouse")
-                .HasAnnotation("ProductVersion", "9.0.0-rc.1.24451.1")
+                .HasAnnotation("ProductVersion", "9.0.0-rc.2.24474.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -147,7 +147,7 @@ namespace Modules.Warehouse.Common.Persistence.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Shelf", "warehouse");
+                    b.ToTable("Shelves", "warehouse");
                 });
 
             modelBuilder.Entity("Modules.Warehouse.Storage.Domain.Bay", b =>
