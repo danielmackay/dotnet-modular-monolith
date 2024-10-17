@@ -1,6 +1,6 @@
 using Common.SharedKernel.Domain.Interfaces;
 
-namespace Modules.Warehouse.BackOrders;
+namespace Modules.Warehouse.BackOrders.Domain;
 
 internal record BackOrderId(Guid Value) : IStronglyTypedId<Guid>
 {

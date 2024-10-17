@@ -1,6 +1,6 @@
 using Ardalis.SmartEnum;
 
-namespace Modules.Warehouse.BackOrders;
+namespace Modules.Warehouse.BackOrders.Domain;
 
 internal class BackOrderStatus : SmartEnum<BackOrderStatus>
 {

@@ -1,7 +1,7 @@
 using Common.SharedKernel.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Modules.Warehouse.BackOrders;
+using Modules.Warehouse.BackOrders.Domain;
 
 namespace Modules.Warehouse.Common.Persistence.Configuration;
 

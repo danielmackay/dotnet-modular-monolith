@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using Modules.Warehouse.BackOrders;
+using Modules.Warehouse.BackOrders.Domain;
 using Modules.Warehouse.Common.Persistence;
 using Modules.Warehouse.Products.Domain;
 
-namespace Modules.Warehouse.Products.Events;
+namespace Modules.Warehouse.BackOrders;
 
 internal static class LowStockEventHandler
 {

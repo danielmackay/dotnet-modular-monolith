@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Modules.Warehouse.BackOrders;
+using Modules.Warehouse.BackOrders.Domain;
 using Modules.Warehouse.Products.Domain;
 using Modules.Warehouse.Storage.Domain;
 using SmartEnum.EFCore;

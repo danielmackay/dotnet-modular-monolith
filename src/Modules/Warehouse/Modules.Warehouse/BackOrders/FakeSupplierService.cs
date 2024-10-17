@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Modules.Warehouse.Products.Domain;
 
-namespace Modules.Warehouse.Products.Events;
+namespace Modules.Warehouse.BackOrders;
 
 internal class FakeSupplierService : ISupplierService
 {

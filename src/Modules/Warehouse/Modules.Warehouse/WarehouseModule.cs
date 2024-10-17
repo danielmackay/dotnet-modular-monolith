@@ -2,8 +2,8 @@ using Common.SharedKernel.Discovery;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Modules.Warehouse.BackOrders;
 using Modules.Warehouse.Common.Persistence;
-using Modules.Warehouse.Products.Events;
 using System.Reflection;
 
 namespace Modules.Warehouse;
