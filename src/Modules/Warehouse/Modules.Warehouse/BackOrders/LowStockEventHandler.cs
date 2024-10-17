@@ -28,7 +28,11 @@ internal static class LowStockEventHandler
             if (product is null)
                 throw new InvalidOperationException("Cannot find product");
 
-            // TODO: Check we don't have an outstanding backorder for this product
+            var existingBackOrder = await _dbContext.BackOrders.AnyAsync(bo =>
+                bo.ProductId == notification.Product.Id && bo.Status == BackOrderStatus.Pending, cancellationToken: cancellationToken);
+
+            if (existingBackOrder)
+                return;
 
             var backOrder = BackOrder.Create(product.Id);
             var reference = await _supplierService.Order(product, backOrder.QuantityOrdered);
