@@ -17,6 +17,7 @@ public abstract class IntegrationTestBase<TDbContext> : IAsyncLifetime where TDb
 
     protected IMediator Mediator { get; }
 
+    // TODO: Make DB Access code more composable (i.e. allow adding multiple DB's (or even none) easier)
     protected IQueryable<T> GetQueryable<T>() where T : class => DbContext.Set<T>().AsNoTracking();
 
     private TDbContext DbContext { get; }
