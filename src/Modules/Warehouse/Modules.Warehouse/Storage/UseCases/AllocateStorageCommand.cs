@@ -13,7 +13,7 @@ namespace Modules.Warehouse.Storage.UseCases;
 
 public static class AllocateStorageCommand
 {
-    public record Request(Guid ProductId) : IRequest<ErrorOr<Success>>;
+    public record Request(Guid ProductId, int Quantity) : IRequest<ErrorOr<Success>>;
 
     public class Endpoint : IEndpoint
     {
@@ -35,6 +35,10 @@ public static class AllocateStorageCommand
         public Validator()
         {
             RuleFor(r => r.ProductId).NotEmpty();
+
+            RuleFor(r => r.Quantity)
+                .NotEmpty()
+                .GreaterThan(0);
         }
     }
 
@@ -63,6 +67,8 @@ public static class AllocateStorageCommand
             var result = StorageAllocationService.AllocateStorage(aisles, product.Id);
             if (result.IsError)
                 return result.FirstError;
+
+            product.AddStock(request.Quantity);
 
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Success;

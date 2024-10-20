@@ -6,7 +6,7 @@
 
     <ItemGroup>
         <!-- TODO: Can this be moved to infra? -->
-        <PackageReference Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" Version="8.2.1" />
+        <PackageReference Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0-rc.1.24511.1" />
         <!-- TODO: Can this be moved to infra? -->
         <PackageReference Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" Version="8.2.1" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0-rc.2.24474.3" />

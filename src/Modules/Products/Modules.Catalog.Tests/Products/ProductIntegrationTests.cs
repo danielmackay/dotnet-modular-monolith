@@ -1,5 +1,6 @@
 using Ardalis.Specification.EntityFrameworkCore;
 using Common.SharedKernel.Domain;
+using Common.Tests.Assertions;
 using FluentAssertions;
 using Modules.Catalog.Categories.Domain;
 using Modules.Catalog.Messages;
@@ -29,6 +30,7 @@ public class ProductIntegrationTests(CatalogDatabaseFixture fixture, ITestOutput
         var response = await client.PostAsync($"/api/products/{product.Id.Value}/categories/{category.Id.Value}", null);
 
         // Assert
+        HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.Created);
         response.StatusCode.Should().Be(HttpStatusCode.Created);
         var updatedProduct = GetQueryable<Product>()
             .WithSpecification(new ProductByIdSpec(new ProductId(product.Id.Value))).FirstOrDefault();
@@ -113,7 +115,7 @@ public class ProductIntegrationTests(CatalogDatabaseFixture fixture, ITestOutput
         var response = await client.PutAsJsonAsync($"/api/products/{product.Id.Value}/price", request);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+        HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.NoContent);
         var updatedProduct = GetQueryable<Product>()
             .WithSpecification(new ProductByIdSpec(new ProductId(product.Id.Value))).FirstOrDefault();
         updatedProduct.Should().NotBeNull();

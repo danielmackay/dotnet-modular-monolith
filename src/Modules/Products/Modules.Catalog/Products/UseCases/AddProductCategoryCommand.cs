@@ -24,9 +24,8 @@ public static class AddProductCategoryCommand
         public void MapEndpoint(IEndpointRouteBuilder app)
         {
             app.MapPost("/api/products/{productId:guid}/categories/{categoryId:guid}",
-                    async (Guid productId, Guid categoryId, ISender sender) =>
+                    async ([AsParameters]Request request, ISender sender) =>
                     {
-                        var request = new Request(productId, categoryId);
                         var response = await sender.Send(request);
                         return response.IsError ? response.Problem() : TypedResults.Created();
                     })

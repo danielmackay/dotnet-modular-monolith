@@ -1,3 +1,5 @@
+// ReSharper disable UnusedType.Global
+
 using Common.SharedKernel;
 using Common.SharedKernel.Api;
 using Common.SharedKernel.Discovery;
@@ -12,7 +14,9 @@ namespace Modules.Warehouse.Products.UseCases;
 
 public static class CreateProductCommand
 {
-    public record Request(string Name, string Sku) : IRequest<ErrorOr<Success>>;
+    public record Request(string Name, string Sku) : IRequest<ErrorOr<Response>>;
+
+    public record Response(Guid ProductId);
 
     public class Endpoint : IEndpoint
     {
@@ -21,7 +25,7 @@ public static class CreateProductCommand
             app.MapPost("/api/products", async (Request request, ISender sender) =>
                 {
                     var response = await sender.Send(request);
-                    return response.IsError ? response.Problem() : TypedResults.Created();
+                    return response.Match(TypedResults.Ok, ErrorOrExt.Problem);
                 })
                 .WithName("Create Product")
                 .WithTags("Warehouse")
@@ -41,7 +45,7 @@ public static class CreateProductCommand
         }
     }
 
-    internal class Handler : IRequestHandler<Request, ErrorOr<Success>>
+    internal class Handler : IRequestHandler<Request, ErrorOr<Response>>
     {
         private readonly WarehouseDbContext _dbContext;
 
@@ -50,7 +54,7 @@ public static class CreateProductCommand
             _dbContext = dbContext;
         }
 
-        public async Task<ErrorOr<Success>> Handle(Request request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Response>> Handle(Request request, CancellationToken cancellationToken)
         {
             var sku = Sku.Create(request.Sku);
 
@@ -58,7 +62,7 @@ public static class CreateProductCommand
             _dbContext.Products.Add(product);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            return Result.Success;
+            return new Response(product.Id.Value);
         }
     }
 }
