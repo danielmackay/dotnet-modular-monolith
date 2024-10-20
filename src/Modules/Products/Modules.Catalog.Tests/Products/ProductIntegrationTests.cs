@@ -22,9 +22,9 @@ public class ProductIntegrationTests(CatalogDatabaseFixture fixture, ITestOutput
         // Arrange
         var client = GetAnonymousClient();
         var category = Category.Create("category");
-        await AddEntityAsync(category);
+        await Database.AddEntityAsync(category);
         var product = Product.Create("product", "12345678");
-        await AddEntityAsync(product);
+        await Database.AddEntityAsync(product);
 
         // Act
         var response = await client.PostAsync($"/api/products/{product.Id.Value}/categories/{category.Id.Value}", null);
@@ -32,7 +32,7 @@ public class ProductIntegrationTests(CatalogDatabaseFixture fixture, ITestOutput
         // Assert
         HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.Created);
         response.StatusCode.Should().Be(HttpStatusCode.Created);
-        var updatedProduct = GetQueryable<Product>()
+        var updatedProduct = Database.GetQueryable<Product>()
             .WithSpecification(new ProductByIdSpec(new ProductId(product.Id.Value))).FirstOrDefault();
         updatedProduct.Should().NotBeNull();
         updatedProduct!.Categories.Should().HaveCount(1);
@@ -45,18 +45,18 @@ public class ProductIntegrationTests(CatalogDatabaseFixture fixture, ITestOutput
         // Arrange
         var client = GetAnonymousClient();
         var category = Category.Create("category");
-        await AddEntityAsync(category);
+        await Database.AddEntityAsync(category);
         var product = Product.Create("product", "12345678");
-        await AddEntityAsync(product);
+        await Database.AddEntityAsync(product);
         product.AddCategory(category);
-        await SaveAsync();
+        await Database.SaveAsync();
 
         // Act
         var response = await client.DeleteAsync($"/api/products/{product.Id.Value}/categories/{category.Id.Value}");
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.NoContent);
-        var updatedProduct = GetQueryable<Product>()
+        var updatedProduct = Database.GetQueryable<Product>()
             .WithSpecification(new ProductByIdSpec(new ProductId(product.Id.Value))).FirstOrDefault();
         updatedProduct.Should().NotBeNull();
         updatedProduct!.Categories.Should().HaveCount(0);
@@ -68,11 +68,11 @@ public class ProductIntegrationTests(CatalogDatabaseFixture fixture, ITestOutput
         // Arrange
         var client = GetAnonymousClient();
         var category = Category.Create("category");
-        await AddEntityAsync(category);
+        await Database.AddEntityAsync(category);
         var product = Product.Create("product", "12345678");
-        await AddEntityAsync(product);
+        await Database.AddEntityAsync(product);
         product.AddCategory(category);
-        await SaveAsync();
+        await Database.SaveAsync();
 
         // Act
         var response = await client.GetAsync($"/api/products/{product.Id.Value}");
@@ -107,8 +107,8 @@ public class ProductIntegrationTests(CatalogDatabaseFixture fixture, ITestOutput
         // Arrange
         var client = GetAnonymousClient();
         var product = Product.Create("product", "12345678");
-        await AddEntityAsync(product);
-        await SaveAsync();
+        await Database.AddEntityAsync(product);
+        await Database.SaveAsync();
         var request = new UpdateProductPriceCommand.Request(10.0m);
 
         // Act
@@ -116,7 +116,7 @@ public class ProductIntegrationTests(CatalogDatabaseFixture fixture, ITestOutput
 
         // Assert
         HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.NoContent);
-        var updatedProduct = GetQueryable<Product>()
+        var updatedProduct = Database.GetQueryable<Product>()
             .WithSpecification(new ProductByIdSpec(new ProductId(product.Id.Value))).FirstOrDefault();
         updatedProduct.Should().NotBeNull();
         updatedProduct!.Price.Amount.Should().Be(request.Price);

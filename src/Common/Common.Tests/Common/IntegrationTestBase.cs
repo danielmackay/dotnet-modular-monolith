@@ -117,19 +117,19 @@ public class DatabaseFacade<TDbContext> where TDbContext : DbContext
 
     public IQueryable<TEntity> GetQueryable<TEntity>() where TEntity : class => _dbContext.Set<TEntity>().AsNoTracking();
 
-    protected async Task AddEntityAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
+    public async Task AddEntityAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
     {
         await _dbContext.Set<TEntity>().AddAsync(entity, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    protected async Task AddEntitiesAsync<TEntity>(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default) where TEntity : class
+    public async Task AddEntitiesAsync<TEntity>(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default) where TEntity : class
     {
         await _dbContext.Set<TEntity>().AddRangeAsync(entities, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    protected async Task SaveAsync(CancellationToken cancellationToken = default)
+    public async Task SaveAsync(CancellationToken cancellationToken = default)
     {
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
