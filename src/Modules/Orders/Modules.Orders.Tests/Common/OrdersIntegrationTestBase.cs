@@ -7,35 +7,26 @@ using Xunit.Abstractions;
 namespace Modules.Orders.Tests.Common;
 
 // ReSharper disable once ClassNeverInstantiated.Global
-public class OrdersDatabaseFixture : TestingDatabaseFixture, IAsyncLifetime
-{
-    private IServiceScope? _scope;
-
-    public CatalogDbContext? CatalogDbContext { get; private set; }
-
-    public new async Task InitializeAsync()
-    {
-        await base.InitializeAsync();
-        _scope = ScopeFactory.CreateScope();
-        CatalogDbContext = _scope.ServiceProvider.GetRequiredService<CatalogDbContext>();
-    }
-
-    public new async Task DisposeAsync()
-    {
-        if (CatalogDbContext is not null)
-            await CatalogDbContext.DisposeAsync();
-
-        _scope?.Dispose();
-
-        await base.DisposeAsync();
-    }
-}
+public class OrdersDatabaseFixture : TestingDatabaseFixture;
 
 [Collection(OrdersFixtureCollection.Name)]
-public abstract class OrdersIntegrationTestBase(
-    OrdersDatabaseFixture fixture,
-    ITestOutputHelper output)
-    : IntegrationTestBase<OrdersDbContext>(fixture, output);
+public abstract class OrdersIntegrationTestBase : IntegrationTestBase
+{
+    protected DatabaseFacade<OrdersDbContext> OrdersDb;
+    protected DatabaseFacade<CatalogDbContext> CatalogDb;
+
+    protected OrdersIntegrationTestBase(OrdersDatabaseFixture fixture, ITestOutputHelper output)
+        : base(fixture, output)
+    {
+        var scope = fixture.ScopeFactory.CreateScope();
+
+        var ordersDbContext = scope.ServiceProvider.GetRequiredService<OrdersDbContext>();
+        OrdersDb = new DatabaseFacade<OrdersDbContext>(ordersDbContext);
+
+        var catalogDbContext = scope.ServiceProvider.GetRequiredService<CatalogDbContext>();
+        CatalogDb = new DatabaseFacade<CatalogDbContext>(catalogDbContext);
+    }
+}
 
 [CollectionDefinition(Name)]
 public class OrdersFixtureCollection : ICollectionFixture<OrdersDatabaseFixture>

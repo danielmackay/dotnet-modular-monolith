@@ -8,13 +8,6 @@ namespace Modules.Customers.Tests.Common;
 // ReSharper disable once ClassNeverInstantiated.Global
 public class CustomersDatabaseFixture : TestingDatabaseFixture;
 
-// [Collection(CustomersFixtureCollection.Name)]
-// public abstract class CustomersIntegrationTestBase(
-//     CustomersDatabaseFixture fixture,
-//     ITestOutputHelper output)
-//     : IntegrationTestBase<CustomersDbContext>(fixture, output);
-
-[Collection(CustomersFixtureCollection.Name)]
 public abstract class CustomersIntegrationTestBase : IntegrationTestBase
 {
     protected DatabaseFacade<CustomersDbContext> Database;

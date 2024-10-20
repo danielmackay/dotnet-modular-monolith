@@ -21,7 +21,7 @@ public class OrderIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHel
         var order = new OrderBuilder()
             .WithLineItem()
             .Build();
-        await AddEntityAsync(order);
+        await OrdersDb.AddEntityAsync(order);
         var card = NewCreditCard();
         var client = GetAnonymousClient();
         var paymentAmount = order.OrderTotal.Amount;
@@ -32,7 +32,7 @@ public class OrderIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHel
 
         // Assert
         HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.OK);
-        var paidOrder = await GetQueryable<Order>()
+        var paidOrder = await OrdersDb.GetQueryable<Order>()
             .Include(i => i.LineItems)
             .Include(i => i.Payment)
             .FirstOrDefaultAsync();
@@ -51,7 +51,7 @@ public class OrderIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHel
         var order = new OrderBuilder()
             .WithLineItem()
             .Build();
-        await AddEntityAsync(order);
+        await OrdersDb.AddEntityAsync(order);
         var client = GetAnonymousClient();
         var paymentAmount = order.OrderTotal.Amount;
         var request = new AddPaymentCommand.Request(order.Id.Value, paymentAmount, null);
@@ -61,7 +61,7 @@ public class OrderIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHel
 
         // Assert
         HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.OK);
-        var paidOrder = await GetQueryable<Order>()
+        var paidOrder = await OrdersDb.GetQueryable<Order>()
             .Include(i => i.LineItems)
             .Include(i => i.Payment)
             .FirstOrDefaultAsync();
