@@ -18,8 +18,9 @@ public class Worker(
 
         try
         {
-            logger.LogInformation("Waiting for SQL Server to be ready");
-            await Task.Delay(10_000, cancellationToken);
+            // TODO: Check that this is no longer needed in Aspire .NET 9
+            // logger.LogInformation("Waiting for SQL Server to be ready");
+            // await Task.Delay(10_000, cancellationToken);
 
             var sw = Stopwatch.StartNew();
             using var scope = serviceProvider.CreateScope();
