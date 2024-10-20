@@ -2,7 +2,10 @@ using Projects;
 
 var builder = DistributedApplication.CreateBuilder();
 
-var sqlServer = builder.AddSqlServer("sql-server");
+var sqlServer = builder
+    .AddSqlServer("sql")
+    .WithLifetime(ContainerLifetime.Persistent);
+
 var warehouseDb = sqlServer.AddDatabase("warehouse");
 var catalogDb = sqlServer.AddDatabase("catalog");
 var customersDb = sqlServer.AddDatabase("customers");
