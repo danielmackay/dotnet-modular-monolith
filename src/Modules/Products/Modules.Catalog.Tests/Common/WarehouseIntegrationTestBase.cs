@@ -8,11 +8,6 @@ namespace Modules.Catalog.Tests.Common;
 // ReSharper disable once ClassNeverInstantiated.Global
 public class CatalogDatabaseFixture : TestingDatabaseFixture;
 
-// public abstract class CatalogIntegrationTestBase(
-//     CatalogDatabaseFixture fixture,
-//     ITestOutputHelper output)
-//     : IntegrationTestBase<CatalogDbContext>(fixture, output);
-
 [Collection(CatalogFixtureCollection.Name)]
 public abstract class CatalogIntegrationTestBase : IntegrationTestBase
 {
