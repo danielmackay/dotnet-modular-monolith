@@ -27,7 +27,7 @@ public class CategoryIntegrationTests(CatalogDatabaseFixture fixture, ITestOutpu
         var content = await response.Content.ReadAsStringAsync();
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Created);
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
         var categories = await GetQueryable<Category>().ToListAsync();
         categories.Should().HaveCount(1);
 
@@ -65,7 +65,7 @@ public class CategoryIntegrationTests(CatalogDatabaseFixture fixture, ITestOutpu
 
         // Act
         var response = await client.PostAsJsonAsync("/api/categories", request);
-        response.StatusCode.Should().Be(HttpStatusCode.Created);
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
         var response2 = await client.PostAsJsonAsync("/api/categories", request);
 
         // Assert

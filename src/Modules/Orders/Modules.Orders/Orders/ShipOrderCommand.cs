@@ -65,7 +65,9 @@ public static class ShipOrderCommand
             if (order is null)
                 return Error.NotFound();
 
-            order.ShipOrder(_timeProvider);
+            var result = order.ShipOrder(_timeProvider);
+            if (result.IsError)
+                return result;
 
             await _dbContext.SaveChangesAsync(cancellationToken);
 

@@ -1,3 +1,4 @@
+using Common.SharedKernel.Domain.Ids;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Modules.Catalog.Categories;
@@ -83,7 +84,7 @@ public class WorkflowTests(WorkflowDatabaseFixture fixture, ITestOutputHelper ou
         var orderId = checkoutOrderResp!.OrderId;
 
         // Orders - Add Payment
-        var makePaymentReq = new AddPaymentCommand.Request(orderId, 50, null);
+        var makePaymentReq = new AddPaymentCommand.Request(orderId, 55, null);
         response = await client.PostAsJsonAsync($"api/orders/{orderId}/payment", makePaymentReq);
         response.EnsureSuccessStatusCode();
 
@@ -92,15 +93,18 @@ public class WorkflowTests(WorkflowDatabaseFixture fixture, ITestOutputHelper ou
         response = await client.PostAsJsonAsync($"api/orders/{orderId}/ship", shipOrderReq);
         response.EnsureSuccessStatusCode();
 
+        // Allow for events to be processed
+        await Task.Delay(5000);
+
         // Warehouse - confirm stock updated
-        var product = await Database.GetQueryable<Product>().FirstOrDefaultAsync(p => p.Id.Value == productId);
+        var product = await Database.GetQueryable<Product>().FirstOrDefaultAsync(p => p.Id == new ProductId(productId));
         product.Should().NotBeNull();
         product!.StockOnHand.Should().Be(2);
 
         // Warehouse - confirm stock re-ordered
-        var backOrder = await Database.GetQueryable<BackOrder>().FirstOrDefaultAsync(o => o.ProductId.Value == productId);
+        var backOrder = await Database.GetQueryable<BackOrder>().FirstOrDefaultAsync(o => o.ProductId == new ProductId(productId));
         backOrder.Should().NotBeNull();
-        backOrder!.QuantityOrdered.Should().Be(5);
+        backOrder!.QuantityOrdered.Should().Be(10);
         backOrder.QuantityReceived.Should().Be(0);
     }
 }

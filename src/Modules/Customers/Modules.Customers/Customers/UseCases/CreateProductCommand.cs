@@ -25,7 +25,7 @@ public static class RegisterCustomerCommand
             app.MapPost("/api/customers", async (Request request, ISender sender) =>
                 {
                     var response = await sender.Send(request);
-                    return response.IsError ? response.Problem() : TypedResults.Created();
+                    return response.Match(TypedResults.Ok, ErrorOrExt.Problem);
                 })
                 .WithName("Create Customer")
                 .WithTags("Customers")
