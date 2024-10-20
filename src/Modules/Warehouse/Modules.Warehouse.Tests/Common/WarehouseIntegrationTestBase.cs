@@ -1,4 +1,5 @@
 using Common.Tests.Common;
+using Microsoft.Extensions.DependencyInjection;
 using Modules.Warehouse.Common.Persistence;
 using Xunit.Abstractions;
 
@@ -8,10 +9,18 @@ namespace Modules.Warehouse.Tests.Common;
 public class WarehouseDatabaseFixture : TestingDatabaseFixture;
 
 [Collection(WarehouseFixtureCollection.Name)]
-public abstract class WarehouseIntegrationTestBase(
-    WarehouseDatabaseFixture fixture,
-    ITestOutputHelper output)
-    : IntegrationTestBase<WarehouseDbContext>(fixture, output);
+public abstract class WarehouseIntegrationTestBase : IntegrationTestBase
+{
+    protected DatabaseFacade<WarehouseDbContext> Database;
+
+    protected WarehouseIntegrationTestBase(WarehouseDatabaseFixture fixture, ITestOutputHelper output)
+        : base(fixture, output)
+    {
+        var scope = fixture.ScopeFactory.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<WarehouseDbContext>();
+        Database = new DatabaseFacade<WarehouseDbContext>(dbContext);
+    }
+}
 
 [CollectionDefinition(Name)]
 public class WarehouseFixtureCollection : ICollectionFixture<WarehouseDatabaseFixture>
