@@ -5,6 +5,7 @@ using Modules.Warehouse.Common.Persistence;
 
 namespace Modules.Warehouse.Common.Middleware;
 
+// TODO: Consider moving this to the Shared Kernel
 internal class EventualConsistencyMiddleware
 {
     // TODO: Make the key specific to each module

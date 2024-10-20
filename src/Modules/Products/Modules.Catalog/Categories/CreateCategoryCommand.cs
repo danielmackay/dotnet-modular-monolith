@@ -14,7 +14,9 @@ namespace Modules.Catalog.Categories;
 
 public static class CreateCategoryCommand
 {
-    public record Request(string Name) : IRequest<ErrorOr<Success>>;
+    public record Request(string Name) : IRequest<ErrorOr<Response>>;
+
+    public record Response(Guid CategoryId);
 
     public class Endpoint : IEndpoint
     {
@@ -40,7 +42,7 @@ public static class CreateCategoryCommand
         }
     }
 
-    internal class Handler : IRequestHandler<Request, ErrorOr<Success>>
+    internal class Handler : IRequestHandler<Request, ErrorOr<Response>>
     {
         private readonly CatalogDbContext _dbContext;
 
@@ -49,7 +51,7 @@ public static class CreateCategoryCommand
             _dbContext = dbContext;
         }
 
-        public async Task<ErrorOr<Success>> Handle(Request request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Response>> Handle(Request request, CancellationToken cancellationToken)
         {
             var exists = _dbContext.Categories.Any(c => c.Name == request.Name);
 
@@ -60,7 +62,7 @@ public static class CreateCategoryCommand
             _dbContext.Categories.Add(category);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            return Result.Success;
+            return new Response(category.Id.Value);
         }
     }
 }

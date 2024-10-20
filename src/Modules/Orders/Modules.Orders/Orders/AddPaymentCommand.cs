@@ -19,7 +19,6 @@ namespace Modules.Orders.Orders;
 
 public static class AddPaymentCommand
 {
-    // TODO: Test if FromRoute parameter is correct
     public record Request([FromRoute] Guid OrderId, decimal Amount, CreditCardDto? Card) : IRequest<ErrorOr<Success>>;
 
     public record CreditCardDto(string CardNumber, string ExpirationMonth, string ExpirationYear, string SecurityCode);

@@ -12,6 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 
     builder.Services.AddSwagger();
 
+    builder.Services.AddHttpLogging();
+
     builder.Services.AddGlobalErrorHandler();
 
     builder.Services.AddCommon();

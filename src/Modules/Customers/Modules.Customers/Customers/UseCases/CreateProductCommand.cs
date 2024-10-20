@@ -14,7 +14,9 @@ namespace Modules.Customers.Customers.UseCases;
 
 public static class RegisterCustomerCommand
 {
-    public record Request(string FirstName, string LastName, string Email) : IRequest<ErrorOr<Success>>;
+    public record Request(string FirstName, string LastName, string Email) : IRequest<ErrorOr<Response>>;
+
+    public record Response(Guid CustomerId);
 
     public class Endpoint : IEndpoint
     {
@@ -44,7 +46,7 @@ public static class RegisterCustomerCommand
         }
     }
 
-    internal class Handler : IRequestHandler<Request, ErrorOr<Success>>
+    internal class Handler : IRequestHandler<Request, ErrorOr<Response>>
     {
         private readonly CustomersDbContext _dbContext;
 
@@ -53,13 +55,13 @@ public static class RegisterCustomerCommand
             _dbContext = dbContext;
         }
 
-        public async Task<ErrorOr<Success>> Handle(Request request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Response>> Handle(Request request, CancellationToken cancellationToken)
         {
             var customer = Customer.Create(request.Email, request.FirstName, request.LastName);
             _dbContext.Customers.Add(customer);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            return Result.Success;
+            return new Response(customer.Id.Value);
         }
     }
 }

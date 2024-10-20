@@ -80,8 +80,6 @@ public static class CheckoutCartCommand
 
             _dbContext.Orders.Add(order);
 
-
-
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             return new Response(order.Id.Value);

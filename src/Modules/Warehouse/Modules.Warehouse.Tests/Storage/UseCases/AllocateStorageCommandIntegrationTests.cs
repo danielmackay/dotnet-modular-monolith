@@ -20,7 +20,7 @@ public class AllocateStorageCommandIntegrationTests(WarehouseDatabaseFixture fix
         await AddEntityAsync(product);
         var aisle = Aisle.Create("Name", 2, 2);
         await AddEntityAsync(aisle);
-        var request = new AllocateStorageCommand.Request(product.Id.Value);
+        var request = new AllocateStorageCommand.Request(product.Id.Value, 5);
 
         // Act
         var response = await client.PostAsJsonAsync("/api/aisles/allocate-storage", request);

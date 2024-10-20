@@ -65,3 +65,72 @@ public abstract class IntegrationTestBase<TDbContext> : IAsyncLifetime where TDb
         return Task.CompletedTask;
     }
 }
+
+public abstract class IntegrationTestBase : IAsyncLifetime
+{
+    private readonly IServiceScope _scope;
+
+    private readonly TestingDatabaseFixture _fixture;
+
+    protected IMediator Mediator { get; }
+
+    protected IntegrationTestBase(TestingDatabaseFixture fixture, ITestOutputHelper output)
+    {
+        _fixture = fixture;
+        _fixture.SetOutput(output);
+
+        _scope = _fixture.ScopeFactory.CreateScope();
+        Mediator = _scope.ServiceProvider.GetRequiredService<IMediator>();
+    }
+
+    // protected async Task AddEntitiesAsync<T>(IEnumerable<T> entities, CancellationToken cancellationToken = default) where T : class
+    // {
+    //     await Context.Set<T>().AddRangeAsync(entities, cancellationToken);
+    //     await Context.SaveChangesAsync(cancellationToken);
+    // }
+
+    /// <summary>
+    /// Gets called between each test to reset the state of the database
+    /// </summary>
+    public async Task InitializeAsync()
+    {
+        await _fixture.ResetState();
+    }
+
+    protected HttpClient GetAnonymousClient() => _fixture.Factory.AnonymousClient.Value;
+
+    public Task DisposeAsync()
+    {
+        _scope.Dispose();
+        return Task.CompletedTask;
+    }
+}
+
+public class DatabaseFacade<TDbContext> where TDbContext : DbContext
+{
+    private readonly TDbContext _dbContext;
+
+    public DatabaseFacade(TDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+
+    public IQueryable<TEntity> GetQueryable<TEntity>() where TEntity : class => _dbContext.Set<TEntity>().AsNoTracking();
+
+    protected async Task AddEntityAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
+    {
+        await _dbContext.Set<TEntity>().AddAsync(entity, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    protected async Task AddEntitiesAsync<TEntity>(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default) where TEntity : class
+    {
+        await _dbContext.Set<TEntity>().AddRangeAsync(entities, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    protected async Task SaveAsync(CancellationToken cancellationToken = default)
+    {
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+}
