@@ -1,4 +1,5 @@
 using Common.Tests.Common;
+using Microsoft.Extensions.DependencyInjection;
 using Modules.Catalog.Common.Persistence;
 using Xunit.Abstractions;
 
@@ -8,10 +9,18 @@ namespace Modules.Catalog.Tests.Common;
 public class CatalogDatabaseFixture : TestingDatabaseFixture;
 
 [Collection(CatalogFixtureCollection.Name)]
-public abstract class CatalogIntegrationTestBase(
-    CatalogDatabaseFixture fixture,
-    ITestOutputHelper output)
-    : IntegrationTestBase<CatalogDbContext>(fixture, output);
+public abstract class CatalogIntegrationTestBase : IntegrationTestBase
+{
+    protected DatabaseFacade<CatalogDbContext> Database;
+
+    protected CatalogIntegrationTestBase(CatalogDatabaseFixture fixture, ITestOutputHelper output)
+        : base(fixture, output)
+    {
+        var scope = fixture.ScopeFactory.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<CatalogDbContext>();
+        Database = new DatabaseFacade<CatalogDbContext>(dbContext);
+    }
+}
 
 [CollectionDefinition(Name)]
 public class CatalogFixtureCollection : ICollectionFixture<CatalogDatabaseFixture>

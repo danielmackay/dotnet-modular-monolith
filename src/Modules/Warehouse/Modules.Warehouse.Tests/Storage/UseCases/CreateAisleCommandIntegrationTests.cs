@@ -26,7 +26,7 @@ public class CreateAisleCommandIntegrationTests(WarehouseDatabaseFixture fixture
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Created);
-        var aisles = await GetQueryable<Aisle>().WithSpecification(new GetAllAislesSpec()).ToListAsync();
+        var aisles = await Database.GetQueryable<Aisle>().WithSpecification(new GetAllAislesSpec()).ToListAsync();
         aisles.Should().HaveCount(1);
 
         var aisle = aisles.First();

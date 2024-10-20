@@ -28,7 +28,7 @@ public class ProductIntegrationTests(WarehouseDatabaseFixture fixture, ITestOutp
 
         // Assert
         HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.OK);
-        var products = await GetQueryable<Product>().ToListAsync();
+        var products = await Database.GetQueryable<Product>().ToListAsync();
         products.Should().HaveCount(1);
 
         var product = products.First();

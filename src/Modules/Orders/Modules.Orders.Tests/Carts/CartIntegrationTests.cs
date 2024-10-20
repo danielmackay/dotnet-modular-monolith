@@ -21,8 +21,7 @@ public class CartIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHelp
         var product = new ProductBuilder()
             .WithPrice()
             .Build();
-        fixture.CatalogDbContext.Products.Add(product);
-        await fixture.CatalogDbContext.SaveChangesAsync();
+        await CatalogDb.AddEntityAsync(product);
         var client = GetAnonymousClient();
         var quantity = 1;
         var request = new AddProductToCartCommand.Request(null, product.Id.Value, quantity);
@@ -32,7 +31,7 @@ public class CartIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHelp
 
         // Assert
         HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.OK);
-        var carts = await GetQueryable<Cart>().Include(c => c.Items).ToListAsync();
+        var carts = await OrdersDb.GetQueryable<Cart>().Include(c => c.Items).ToListAsync();
         carts.Should().HaveCount(1);
 
         var cart = carts.First();
@@ -56,8 +55,7 @@ public class CartIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHelp
         var product = new ProductBuilder()
             .WithPrice()
             .Build();
-        fixture.CatalogDbContext.Products.Add(product);
-        await fixture.CatalogDbContext.SaveChangesAsync();
+        await CatalogDb.AddEntityAsync(product);
         var client = GetAnonymousClient();
         var quantity = 1;
         var request1 = new AddProductToCartCommand.Request(null, product.Id.Value, quantity);
@@ -70,7 +68,7 @@ public class CartIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHelp
 
         // Assert
         HttpContentExtensions.Should(response2).BeStatusCode(HttpStatusCode.OK);
-        var carts = await GetQueryable<Cart>().Include(c => c.Items).ToListAsync();
+        var carts = await OrdersDb.GetQueryable<Cart>().Include(c => c.Items).ToListAsync();
         carts.Should().HaveCount(1);
 
         var cart = carts.First();
@@ -111,8 +109,7 @@ public class CartIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHelp
         var product = new ProductBuilder()
             .WithPrice()
             .Build();
-        fixture.CatalogDbContext.Products.Add(product);
-        await fixture.CatalogDbContext.SaveChangesAsync();
+        await CatalogDb.AddEntityAsync(product);
         var client = GetAnonymousClient();
         var quantity = 2;
         var customerId = Uuid.Create();
@@ -126,7 +123,7 @@ public class CartIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHelp
 
         // Assert
         HttpContentExtensions.Should(response2).BeStatusCode(HttpStatusCode.OK);
-        var orders = await GetQueryable<Order>().Include(c => c.LineItems).ToListAsync();
+        var orders = await OrdersDb.GetQueryable<Order>().Include(c => c.LineItems).ToListAsync();
         orders.Should().HaveCount(1);
 
         var order = orders.First();

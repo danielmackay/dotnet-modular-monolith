@@ -28,7 +28,7 @@ public class CategoryIntegrationTests(CatalogDatabaseFixture fixture, ITestOutpu
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var categories = await GetQueryable<Category>().ToListAsync();
+        var categories = await Database.GetQueryable<Category>().ToListAsync();
         categories.Should().HaveCount(1);
 
         var category = categories.First();
@@ -52,7 +52,7 @@ public class CategoryIntegrationTests(CatalogDatabaseFixture fixture, ITestOutpu
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        var categories = await GetQueryable<Category>().ToListAsync();
+        var categories = await Database.GetQueryable<Category>().ToListAsync();
         categories.Should().HaveCount(0);
     }
 

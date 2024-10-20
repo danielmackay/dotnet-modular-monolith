@@ -26,7 +26,7 @@ public class CustomersIntegrationTests(CustomersDatabaseFixture fixture, ITestOu
 
         // Assert
         HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.OK);
-        var customers = await GetQueryable<Customer>().ToListAsync();
+        var customers = await Database.GetQueryable<Customer>().ToListAsync();
         customers.Should().HaveCount(1);
 
         var customer = customers.First();

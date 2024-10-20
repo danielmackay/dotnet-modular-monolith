@@ -15,14 +15,14 @@ public class BackOrderIntegrationTests(WarehouseDatabaseFixture fixture, ITestOu
     {
         // Arrange
         var product = new ProductBuilder().Build();
-        await AddEntityAsync(product);
+        await Database.AddEntityAsync(product);
         var evt = new LowStockEvent(product);
 
         // Act
         await Mediator.Publish(evt);
 
         // Assert
-        var backOrders = await GetQueryable<BackOrder>().ToListAsync();
+        var backOrders = await Database.GetQueryable<BackOrder>().ToListAsync();
         backOrders.Should().HaveCount(1);
 
         var backOrder = backOrders.First();
@@ -39,16 +39,16 @@ public class BackOrderIntegrationTests(WarehouseDatabaseFixture fixture, ITestOu
     {
         // Arrange
         var product = new ProductBuilder().Build();
-        await AddEntityAsync(product);
+        await Database.AddEntityAsync(product);
         var existingBackOrder = new BackOrderBuilder().WithProduct(product.Id).Build();
-        await AddEntityAsync(existingBackOrder);
+        await Database.AddEntityAsync(existingBackOrder);
         var evt = new LowStockEvent(product);
 
         // Act
         await Mediator.Publish(evt);
 
         // Assert
-        var backOrders = await GetQueryable<BackOrder>().ToListAsync();
+        var backOrders = await Database.GetQueryable<BackOrder>().ToListAsync();
         backOrders.Should().HaveCount(1);
 
         var backOrder = backOrders.First();

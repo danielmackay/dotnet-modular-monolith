@@ -16,11 +16,11 @@ public class GetItemLocationQueryIntegrationTests(WarehouseDatabaseFixture fixtu
         // Arrange
         var client = GetAnonymousClient();
         var product = Product.Create("Name", Sku.Create("12345678"));
-        await AddEntityAsync(product);
+        await Database.AddEntityAsync(product);
         var aisle = Aisle.Create("Name", 2, 2);
-        await AddEntityAsync(aisle);
+        await Database.AddEntityAsync(aisle);
         StorageAllocationService.AllocateStorage([aisle], product.Id);
-        await SaveAsync();
+        await Database.SaveAsync();
         // var request = new GetItemLocationQuery.Request(product.Id.Value);
 
         // Act

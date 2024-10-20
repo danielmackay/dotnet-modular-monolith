@@ -17,9 +17,9 @@ public class AllocateStorageCommandIntegrationTests(WarehouseDatabaseFixture fix
         // Arrange
         var client = GetAnonymousClient();
         var product = Product.Create("Name", Sku.Create("12345678"));
-        await AddEntityAsync(product);
+        await Database.AddEntityAsync(product);
         var aisle = Aisle.Create("Name", 2, 2);
-        await AddEntityAsync(aisle);
+        await Database.AddEntityAsync(aisle);
         var request = new AllocateStorageCommand.Request(product.Id.Value, 5);
 
         // Act
