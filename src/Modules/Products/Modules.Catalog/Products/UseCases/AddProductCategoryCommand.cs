@@ -27,7 +27,7 @@ public static class AddProductCategoryCommand
                     async ([AsParameters]Request request, ISender sender) =>
                     {
                         var response = await sender.Send(request);
-                        return response.IsError ? response.Problem() : TypedResults.Created();
+                        return response.Match(_ => TypedResults.Created(), ErrorOrExt.Problem);
                     })
                 .WithName("AddProductCategory")
                 .WithTags("Catalog")

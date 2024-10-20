@@ -30,7 +30,7 @@ public static class CheckoutCartCommand
                     async (Request request, ISender sender) =>
                     {
                         var response = await sender.Send(request);
-                        return response.IsError ? response.Problem() : TypedResults.Ok(response.Value);
+                        return response.Match(TypedResults.Ok, ErrorOrExt.Problem);
                     })
                 .WithName("CheckoutCart")
                 .WithTags("Orders")

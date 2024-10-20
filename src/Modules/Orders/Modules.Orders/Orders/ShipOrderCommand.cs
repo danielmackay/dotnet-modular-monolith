@@ -27,7 +27,7 @@ public static class ShipOrderCommand
                     async (Request request, ISender sender) =>
                     {
                         var response = await sender.Send(request);
-                        return response.IsError ? response.Problem() : TypedResults.Ok();
+                        return response.Match(TypedResults.Ok, ErrorOrExt.Problem);
                     })
                 .WithName("ShipOrder")
                 .WithTags("Orders")

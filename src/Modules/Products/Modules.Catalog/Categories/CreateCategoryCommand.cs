@@ -25,9 +25,7 @@ public static class CreateCategoryCommand
             app.MapPost("/api/categories", async (Request request, ISender sender) =>
                 {
                     var response = await sender.Send(request);
-                    // TODO: Test this
                     return response.Match(TypedResults.Ok, ErrorOrExt.Problem);
-                    // return response.IsError ? response.Problem() : TypedResults.Ok();
                 })
                 .WithName("CreateCategory")
                 .WithTags("Catalog")

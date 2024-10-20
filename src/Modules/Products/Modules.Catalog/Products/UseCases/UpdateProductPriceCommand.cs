@@ -32,7 +32,7 @@ public static class UpdateProductPriceCommand
                     {
                         request.ProductId = productId;
                         var response = await sender.Send(request);
-                        return response.IsError ? response.Problem() : TypedResults.NoContent();
+                        return response.Match(_ => TypedResults.NoContent(), ErrorOrExt.Problem);
                     })
                 .WithName("UpdateProductPrice")
                 .WithTags("Catalog")

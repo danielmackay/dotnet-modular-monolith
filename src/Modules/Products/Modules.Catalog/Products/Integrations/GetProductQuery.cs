@@ -17,12 +17,6 @@ namespace Modules.Catalog.Products.Integrations;
 
 public static class GetProductQuery
 {
-    // public record Request(Guid ProductId) : IRequest<ErrorOr<Response>>;
-    //
-    // public record Response(string Name, Guid Id, string Sku, decimal Price, List<CategoryDto> Categories);
-    //
-    // public record CategoryDto(Guid Id, string Name);
-
     public class Endpoint : IEndpoint
     {
         public void MapEndpoint(IEndpointRouteBuilder app)
@@ -32,7 +26,7 @@ public static class GetProductQuery
                     {
                         var request = new Request(productId);
                         var response = await sender.Send(request);
-                        return response.IsError ? response.Problem() : TypedResults.Ok(response.Value);
+                        return response.Match(TypedResults.Ok, ErrorOrExt.Problem);
                     })
                 .WithName("GetProduct")
                 .WithTags("Catalog")

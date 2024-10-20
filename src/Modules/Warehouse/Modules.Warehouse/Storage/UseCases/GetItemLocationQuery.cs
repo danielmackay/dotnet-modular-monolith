@@ -24,7 +24,7 @@ public static class GetItemLocationQuery
             app.MapGet("/api/aisles/products/{productId:guid}", async (Guid productId, ISender sender) =>
                 {
                     var response = await sender.Send(new Request(productId));
-                    return response.IsError ? response.Problem() : TypedResults.Ok(response.Value);
+                    return response.Match(TypedResults.Ok, ErrorOrExt.Problem);
                 })
                 .WithName("FindProductLocation")
                 .WithTags("Warehouse")

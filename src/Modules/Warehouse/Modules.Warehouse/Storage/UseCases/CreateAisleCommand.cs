@@ -20,7 +20,7 @@ public static class CreateAisleCommand
             app.MapPost("/api/aisles", async (Request request, ISender sender) =>
                 {
                     var response = await sender.Send(request);
-                    return response.IsError ? response.Problem() : TypedResults.Created();
+                    return response.Match(_ => TypedResults.Created(), ErrorOrExt.Problem);
                 })
                 .WithName("CreateAisle")
                 .WithTags("Warehouse")

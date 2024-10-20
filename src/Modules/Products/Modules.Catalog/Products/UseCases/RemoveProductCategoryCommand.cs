@@ -28,7 +28,7 @@ public static class RemoveProductCategoryCommand
                     {
                         var request = new Request(productId, categoryId);
                         var response = await sender.Send(request);
-                        return response.IsError ? response.Problem() : TypedResults.NoContent();
+                        return response.Match(_ => TypedResults.NoContent(), ErrorOrExt.Problem);
                     })
                 .WithName("RemoveProductCategory")
                 .WithTags("Catalog")
