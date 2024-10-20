@@ -25,7 +25,7 @@ public static class CreateProductCommand
             app.MapPost("/api/products", async (Request request, ISender sender) =>
                 {
                     var response = await sender.Send(request);
-                    return response.IsError ? response.Problem() : TypedResults.Created();
+                    return response.IsError ? response.Problem() : TypedResults.Ok(response.Value);
                 })
                 .WithName("Create Product")
                 .WithTags("Warehouse")

@@ -23,9 +23,11 @@ public class ProductIntegrationTests(WarehouseDatabaseFixture fixture, ITestOutp
 
         // Act
         var response = await client.PostAsJsonAsync("/api/products", request);
+        // TODO: Add more asserts for API response content
+        var content = await response.Content.ReadAsStringAsync();
 
         // Assert
-        HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.Created);
+        HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.OK);
         var products = await GetQueryable<Product>().ToListAsync();
         products.Should().HaveCount(1);
 

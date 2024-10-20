@@ -14,9 +14,24 @@ public static class ErrorOrExt
             return Problem(Error.Unexpected());
 
         if (error.Errors.All(e => e.Type == ErrorType.Validation))
-            return ValidationProblem(error);
+            return ValidationProblem(error.Errors);
 
         return Problem(error.Errors[0]);
+    }
+
+    public static IResult Problem(List<Error> errors)
+    {
+        if (errors.Count is 0)
+        {
+            return TypedResults.Problem();
+        }
+
+        if (errors.All(error => error.Type == ErrorType.Validation))
+        {
+            return ValidationProblem(errors);
+        }
+
+        return Problem(errors[0]);
     }
 
     private static ProblemHttpResult Problem(Error error)
@@ -32,17 +47,17 @@ public static class ErrorOrExt
         return TypedResults.Problem(statusCode: statusCode, title: error.Description);
     }
 
-    private static ValidationProblem ValidationProblem(IErrorOr error)
+    private static ValidationProblem ValidationProblem(List<Error> errors)
     {
-        var errors = new Dictionary<string, string[]>();
-        foreach (var e in error.Errors!)
+        var validationErrors = new Dictionary<string, string[]>();
+        foreach (var e in errors)
         {
-            if (errors.Remove(e.Code, out var value))
-                errors.Add(e.Code, [.. value, e.Description]);
+            if (validationErrors.Remove(e.Code, out var value))
+                validationErrors.Add(e.Code, [.. value, e.Description]);
             else
-                errors.Add(e.Code, [e.Description]);
+                validationErrors.Add(e.Code, [e.Description]);
         }
 
-        return TypedResults.ValidationProblem(errors, title: "One or more validation errors occurred.");
+        return TypedResults.ValidationProblem(validationErrors, title: "One or more validation errors occurred.");
     }
 }

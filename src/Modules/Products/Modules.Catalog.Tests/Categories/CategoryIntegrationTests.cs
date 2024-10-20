@@ -23,6 +23,9 @@ public class CategoryIntegrationTests(CatalogDatabaseFixture fixture, ITestOutpu
         // Act
         var response = await client.PostAsJsonAsync("/api/categories", request);
 
+        // TODO: Add more asserts for API response content
+        var content = await response.Content.ReadAsStringAsync();
+
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Created);
         var categories = await GetQueryable<Category>().ToListAsync();

@@ -35,9 +35,9 @@ public class WorkflowTests(WorkflowDatabaseFixture fixture, ITestOutputHelper ou
 
         // Warehouse - Create Product
         var createProductReq = new CreateProductCommand.Request("TestProduct", "12345678");
-        response = await client.PostAsJsonAsync("api/products", createProductReq);
-        response.EnsureSuccessStatusCode();
-        var createProductResp = await response.Content.ReadFromJsonAsync<CreateProductCommand.Response>();
+        var response2 = await client.PostAsJsonAsync("api/products", createProductReq);
+        response2.EnsureSuccessStatusCode();
+        var createProductResp = await response2.Content.ReadFromJsonAsync<CreateProductCommand.Response>();
         var productId = createProductResp!.ProductId;
 
         // Warehouse - Allocate Storage
