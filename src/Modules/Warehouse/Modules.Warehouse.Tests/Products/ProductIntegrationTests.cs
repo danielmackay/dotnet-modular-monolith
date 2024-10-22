@@ -1,3 +1,5 @@
+// using Common.Tests.Assertions;
+
 using Common.Tests.Assertions;
 using Microsoft.EntityFrameworkCore;
 using Modules.Warehouse.Products.Domain;
@@ -23,11 +25,9 @@ public class ProductIntegrationTests(WarehouseDatabaseFixture fixture, ITestOutp
 
         // Act
         var response = await client.PostAsJsonAsync("/api/products", request);
-        // TODO: Add more asserts for API response content
-        var content = await response.Content.ReadAsStringAsync();
 
         // Assert
-        HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.OK);
+        response.ShouldHave().StatusCode(HttpStatusCode.OK);
         var products = await Database.GetQueryable<Product>().ToListAsync();
         products.Should().HaveCount(1);
 
@@ -55,7 +55,7 @@ public class ProductIntegrationTests(WarehouseDatabaseFixture fixture, ITestOutp
         var response = await client.PostAsJsonAsync("/api/products", request);
 
         // Assert
-        HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.BadRequest);
+        response.ShouldHave().StatusCode(HttpStatusCode.BadRequest);
         var content = await response.Content.ReadAsStringAsync();
         _output.WriteLine(content);
     }

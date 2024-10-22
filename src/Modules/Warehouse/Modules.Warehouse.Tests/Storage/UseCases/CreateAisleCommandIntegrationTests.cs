@@ -1,4 +1,5 @@
 using Ardalis.Specification.EntityFrameworkCore;
+using Common.Tests.Assertions;
 using Microsoft.EntityFrameworkCore;
 using Modules.Warehouse.Storage.Domain;
 using Modules.Warehouse.Storage.UseCases;
@@ -25,7 +26,7 @@ public class CreateAisleCommandIntegrationTests(WarehouseDatabaseFixture fixture
         var response = await client.PostAsJsonAsync("/api/aisles", request);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Created);
+        response.ShouldHave().StatusCode(HttpStatusCode.Created);
         var aisles = await Database.GetQueryable<Aisle>().WithSpecification(new GetAllAislesSpec()).ToListAsync();
         aisles.Should().HaveCount(1);
 
@@ -56,7 +57,7 @@ public class CreateAisleCommandIntegrationTests(WarehouseDatabaseFixture fixture
         var response = await client.PostAsJsonAsync("/api/aisles", request);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        response.ShouldHave().StatusCode(HttpStatusCode.BadRequest);
         var content = await response.Content.ReadAsStringAsync();
         _output.WriteLine(content);
     }

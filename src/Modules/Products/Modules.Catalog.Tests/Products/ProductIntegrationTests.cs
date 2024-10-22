@@ -30,8 +30,7 @@ public class ProductIntegrationTests(CatalogDatabaseFixture fixture, ITestOutput
         var response = await client.PostAsync($"/api/products/{product.Id.Value}/categories/{category.Id.Value}", null);
 
         // Assert
-        HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.Created);
-        response.StatusCode.Should().Be(HttpStatusCode.Created);
+        response.ShouldHave().StatusCode(HttpStatusCode.Created);
         var updatedProduct = Database.GetQueryable<Product>()
             .WithSpecification(new ProductByIdSpec(new ProductId(product.Id.Value))).FirstOrDefault();
         updatedProduct.Should().NotBeNull();
@@ -55,7 +54,7 @@ public class ProductIntegrationTests(CatalogDatabaseFixture fixture, ITestOutput
         var response = await client.DeleteAsync($"/api/products/{product.Id.Value}/categories/{category.Id.Value}");
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+        response.ShouldHave().StatusCode(HttpStatusCode.NoContent);
         var updatedProduct = Database.GetQueryable<Product>()
             .WithSpecification(new ProductByIdSpec(new ProductId(product.Id.Value))).FirstOrDefault();
         updatedProduct.Should().NotBeNull();
@@ -78,7 +77,7 @@ public class ProductIntegrationTests(CatalogDatabaseFixture fixture, ITestOutput
         var response = await client.GetAsync($"/api/products/{product.Id.Value}");
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.ShouldHave().StatusCode(HttpStatusCode.OK);
         var json = await response.Content.ReadFromJsonAsync<GetProductQuery.Response>();
         json.Should().NotBeNull();
         json!.Name.Should().Be(product.Name);
@@ -98,7 +97,7 @@ public class ProductIntegrationTests(CatalogDatabaseFixture fixture, ITestOutput
         var response = await client.GetAsync($"/api/products/{Uuid.Create()}");
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        response.ShouldHave().StatusCode(HttpStatusCode.NotFound);
     }
 
     [Fact]
@@ -115,7 +114,7 @@ public class ProductIntegrationTests(CatalogDatabaseFixture fixture, ITestOutput
         var response = await client.PutAsJsonAsync($"/api/products/{product.Id.Value}/price", request);
 
         // Assert
-        HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.NoContent);
+        response.ShouldHave().StatusCode(HttpStatusCode.NoContent);
         var updatedProduct = Database.GetQueryable<Product>()
             .WithSpecification(new ProductByIdSpec(new ProductId(product.Id.Value))).FirstOrDefault();
         updatedProduct.Should().NotBeNull();

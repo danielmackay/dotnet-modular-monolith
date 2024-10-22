@@ -1,3 +1,4 @@
+using Common.Tests.Assertions;
 using Modules.Warehouse.Products.Domain;
 using Modules.Warehouse.Storage.Domain;
 using Modules.Warehouse.Storage.UseCases;
@@ -26,6 +27,6 @@ public class AllocateStorageCommandIntegrationTests(WarehouseDatabaseFixture fix
         var response = await client.PostAsJsonAsync("/api/aisles/allocate-storage", request);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.ShouldHave().StatusCode(HttpStatusCode.OK);
     }
 }

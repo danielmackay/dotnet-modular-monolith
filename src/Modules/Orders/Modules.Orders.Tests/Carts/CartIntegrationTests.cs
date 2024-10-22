@@ -30,7 +30,7 @@ public class CartIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHelp
         var response = await client.PostAsJsonAsync("/api/carts", request);
 
         // Assert
-        HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.OK);
+        response.ShouldHave().StatusCode(HttpStatusCode.OK);
         var carts = await OrdersDb.GetQueryable<Cart>().Include(c => c.Items).ToListAsync();
         carts.Should().HaveCount(1);
 
@@ -67,7 +67,7 @@ public class CartIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHelp
         var response2 = await client.PostAsJsonAsync("/api/carts", request2);
 
         // Assert
-        HttpContentExtensions.Should(response2).BeStatusCode(HttpStatusCode.OK);
+        response2.ShouldHave().StatusCode(HttpStatusCode.OK);
         var carts = await OrdersDb.GetQueryable<Cart>().Include(c => c.Items).ToListAsync();
         carts.Should().HaveCount(1);
 
@@ -99,7 +99,7 @@ public class CartIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHelp
         var response = await client.PostAsJsonAsync("/api/carts", request);
 
         // Assert
-        HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.BadRequest);
+        response.ShouldHave().StatusCode(HttpStatusCode.BadRequest);
     }
 
     [Fact]
@@ -122,7 +122,7 @@ public class CartIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHelp
         var response2 = await client.PostAsJsonAsync("/api/carts/checkout", request2);
 
         // Assert
-        HttpContentExtensions.Should(response2).BeStatusCode(HttpStatusCode.OK);
+        response2.ShouldHave().StatusCode(HttpStatusCode.OK);
         var orders = await OrdersDb.GetQueryable<Order>().Include(c => c.LineItems).ToListAsync();
         orders.Should().HaveCount(1);
 

@@ -11,8 +11,7 @@ public class HttpResponseMessageAssertions : ReferenceTypeAssertions<HttpRespons
 
     protected override string Identifier => "HttpResponseMessage";
 
-    // TODO: Update other tests to use this extension
-    public AndConstraint<HttpResponseMessageAssertions> BeStatusCode(HttpStatusCode statusCode, string because = "", params object[] becauseArgs)
+    public AndConstraint<HttpResponseMessageAssertions> StatusCode(HttpStatusCode statusCode, string because = "", params object[] becauseArgs)
     {
         Execute.Assertion
             .BecauseOf(because, becauseArgs)
@@ -37,5 +36,6 @@ public class HttpResponseMessageAssertions : ReferenceTypeAssertions<HttpRespons
 
 public static class HttpContentExtensions
 {
-    public static HttpResponseMessageAssertions Should(this HttpResponseMessage instance) => new(instance);
+    // Normally this would be 'Should' but there is a clash with an existing extension on HttpResponseMessage
+    public static HttpResponseMessageAssertions ShouldHave(this HttpResponseMessage instance) => new(instance);
 }

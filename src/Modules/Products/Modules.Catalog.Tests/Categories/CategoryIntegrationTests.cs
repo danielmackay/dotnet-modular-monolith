@@ -1,3 +1,4 @@
+using Common.Tests.Assertions;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Modules.Catalog.Categories;
@@ -23,11 +24,8 @@ public class CategoryIntegrationTests(CatalogDatabaseFixture fixture, ITestOutpu
         // Act
         var response = await client.PostAsJsonAsync("/api/categories", request);
 
-        // TODO: Add more asserts for API response content
-        var content = await response.Content.ReadAsStringAsync();
-
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.ShouldHave().StatusCode(HttpStatusCode.OK);
         var categories = await Database.GetQueryable<Category>().ToListAsync();
         categories.Should().HaveCount(1);
 
@@ -51,7 +49,7 @@ public class CategoryIntegrationTests(CatalogDatabaseFixture fixture, ITestOutpu
         var response = await client.PostAsJsonAsync("/api/categories", request);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        response.ShouldHave().StatusCode(HttpStatusCode.BadRequest);
         var categories = await Database.GetQueryable<Category>().ToListAsync();
         categories.Should().HaveCount(0);
     }
@@ -65,10 +63,10 @@ public class CategoryIntegrationTests(CatalogDatabaseFixture fixture, ITestOutpu
 
         // Act
         var response = await client.PostAsJsonAsync("/api/categories", request);
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.ShouldHave().StatusCode(HttpStatusCode.OK);
         var response2 = await client.PostAsJsonAsync("/api/categories", request);
 
         // Assert
-        response2.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        response2.ShouldHave().StatusCode(HttpStatusCode.BadRequest);
     }
 }

@@ -25,7 +25,7 @@ public class CustomersIntegrationTests(CustomersDatabaseFixture fixture, ITestOu
         var response = await client.PostAsJsonAsync("/api/customers", request);
 
         // Assert
-        HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.OK);
+        response.ShouldHave().StatusCode(HttpStatusCode.OK);
         var customers = await Database.GetQueryable<Customer>().ToListAsync();
         customers.Should().HaveCount(1);
 
@@ -58,7 +58,7 @@ public class CustomersIntegrationTests(CustomersDatabaseFixture fixture, ITestOu
         var response = await client.PostAsJsonAsync("/api/customers", request);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        response.ShouldHave().StatusCode(HttpStatusCode.BadRequest);
         var content = await response.Content.ReadAsStringAsync();
         _output.WriteLine(content);
     }

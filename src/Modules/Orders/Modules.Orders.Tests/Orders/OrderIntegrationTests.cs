@@ -31,7 +31,7 @@ public class OrderIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHel
         var response = await client.PostAsJsonAsync($"api/orders/{order.Id.Value}/payment", request);
 
         // Assert
-        HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.OK);
+        response.ShouldHave().StatusCode(HttpStatusCode.OK);
         var paidOrder = await OrdersDb.GetQueryable<Order>()
             .Include(i => i.LineItems)
             .Include(i => i.Payment)
@@ -60,7 +60,7 @@ public class OrderIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHel
         var response = await client.PostAsJsonAsync($"api/orders/{order.Id.Value}/payment", request);
 
         // Assert
-        HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.OK);
+        response.ShouldHave().StatusCode(HttpStatusCode.OK);
         var paidOrder = await OrdersDb.GetQueryable<Order>()
             .Include(i => i.LineItems)
             .Include(i => i.Payment)
@@ -86,7 +86,7 @@ public class OrderIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHel
         var response = await client.PostAsJsonAsync($"api/orders/{orderId}/payment", request);
 
         // Assert
-        HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.NotFound);
+        response.ShouldHave().StatusCode(HttpStatusCode.NotFound);
     }
 
     [Theory]
@@ -116,7 +116,7 @@ public class OrderIntegrationTests(OrdersDatabaseFixture fixture, ITestOutputHel
         var response = await client.PostAsJsonAsync($"api/orders/{request.OrderId}/payment", request);
 
         // Assert
-        HttpContentExtensions.Should(response).BeStatusCode(HttpStatusCode.BadRequest);
+        response.ShouldHave().StatusCode(HttpStatusCode.BadRequest);
 
     }
 

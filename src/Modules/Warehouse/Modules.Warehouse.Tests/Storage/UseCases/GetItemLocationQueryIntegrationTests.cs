@@ -25,8 +25,6 @@ public class GetItemLocationQueryIntegrationTests(WarehouseDatabaseFixture fixtu
 
         // Act
         var response = await client.GetFromJsonAsync<GetItemLocationQuery.Response>($"/api/aisles/products/{product.Id.Value}");
-        // var response = await client.GetAsync($"/api/aisles/products/{product.Id.Value}");
-        // var content = response.Content.ReadAsStringAsync();
 
         // Assert
         response.Should().NotBeNull();
