@@ -1,4 +1,3 @@
-using ErrorOr;
 using Modules.Orders.Orders.Domain.LineItems;
 using Modules.Orders.Orders.Domain.Orders;
 
@@ -154,6 +153,6 @@ public class LineItemTests
 
         // Assert
         result.IsError.Should().BeTrue();
-        result.FirstError.Type.Should().Be(ErrorType.Conflict);
+        result.FirstError.Should().Be(LineItemErrors.CantRemoveAllUnits);
     }
 }

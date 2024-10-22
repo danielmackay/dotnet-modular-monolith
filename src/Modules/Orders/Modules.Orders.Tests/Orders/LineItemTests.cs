@@ -99,9 +99,9 @@ public class LineItemTests
         var quantity = 2;
         var lineItem = LineItem.Create(orderId, productId, price, quantity);
         var removeQuantity = 3;
-        Action act = () => lineItem.RemoveQuantity(removeQuantity);
+        var result = lineItem.RemoveQuantity(removeQuantity);
 
         // Act & Assert
-        act.Should().Throw<ArgumentException>();
+        result.FirstError.Should().Be(LineItemErrors.CantRemoveAllUnits);
     }
 }

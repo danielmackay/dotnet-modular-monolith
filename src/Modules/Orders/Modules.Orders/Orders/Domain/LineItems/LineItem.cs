@@ -49,7 +49,7 @@ internal class LineItem : Entity<LineItemId>
     internal ErrorOr<Success> RemoveQuantity(int quantity)
     {
         if (Quantity - quantity <= 0)
-            return Error.Conflict("111", "Can't remove all units.  Remove the entire item instead");
+            return LineItemErrors.CantRemoveAllUnits;
 
         Quantity -= quantity;
 
