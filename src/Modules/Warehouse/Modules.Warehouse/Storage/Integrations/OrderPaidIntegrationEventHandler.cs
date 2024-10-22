@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Modules.Warehouse.Common.Persistence;
 using Orders.Messages;
-using Throw;
 
 namespace Modules.Warehouse.Storage.Integrations;
 
@@ -26,7 +25,7 @@ internal static class OrderPaidIntegrationEventHandler
             foreach (var shelf in shelves)
             {
                 var result = shelf.PickProduct();
-                result.Throw().IfTrue(e => e.IsError);
+                ThrowIfEqual(result.IsError, true);
             }
 
             await _dbContext.SaveChangesAsync(cancellationToken);

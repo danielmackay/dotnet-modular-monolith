@@ -1,5 +1,4 @@
 ﻿using Common.SharedKernel.Domain.Interfaces;
-using Throw;
 
 namespace Common.SharedKernel.Domain.Entities;
 
@@ -55,5 +54,5 @@ public record Money(Currency Currency, decimal Amount) : IValueObject
         return left with { Amount = left.Amount * right.Amount };
     }
 
-    private static void AssertValidCurrencies(Money left, Money right) => left.Currency.Throw().IfNotEquals(right.Currency);
+    private static void AssertValidCurrencies(Money left, Money right) => ThrowIfNotEqual(left.Currency, right.Currency);
 }

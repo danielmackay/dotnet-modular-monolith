@@ -1,14 +1,6 @@
 ﻿using ErrorOr;
-using Throw;
 
 namespace Modules.Warehouse.Products.Domain;
-
-// internal record ProductId(Guid Value) : IStronglyTypedId<Guid>
-// {
-//     internal ProductId() : this(Uuid.Create())
-//     {
-//     }
-// }
 
 internal class Product : AggregateRoot<ProductId>
 {
@@ -28,7 +20,7 @@ internal class Product : AggregateRoot<ProductId>
     public static Product Create(string name, Sku sku)
     {
         // TODO: Check for SKU uniqueness in Application
-        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        ThrowIfNullOrWhiteSpace(name);
 
         var product = new Product
         {
@@ -46,7 +38,7 @@ internal class Product : AggregateRoot<ProductId>
 
     private void UpdateName(string name)
     {
-        name.Throw().IfEmpty();
+        ThrowIfNullOrWhiteSpace(name);
         Name = name;
     }
 
@@ -57,7 +49,7 @@ internal class Product : AggregateRoot<ProductId>
 
     public ErrorOr<Success> RemoveStock(int quantity)
     {
-        quantity.Throw().IfNegativeOrZero();
+        ThrowIfNegativeOrZero(quantity);
 
         if (StockOnHand - quantity < 0)
             return ProductErrors.CantRemoveMoreStockThanExists;
@@ -72,7 +64,7 @@ internal class Product : AggregateRoot<ProductId>
 
     public void AddStock(int quantity)
     {
-        quantity.Throw().IfNegativeOrZero();
+        ThrowIfNegativeOrZero(quantity);
         StockOnHand += quantity;
     }
 }

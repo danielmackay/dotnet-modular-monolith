@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Modules.Warehouse.Common.Persistence;
 using Orders.Messages;
-using Throw;
 
 namespace Modules.Warehouse.Products.Integrations;
 
@@ -36,7 +35,7 @@ public static class OrderShippedIntegrationEventHandler
             foreach (var tuple in tuples)
             {
                 var result = tuple.product.RemoveStock(tuple.lineItem.Quantity);
-                result.Throw().IfTrue(result.IsError);
+                ThrowIfEqual(result.IsError, true);
             }
 
             await _dbContext.SaveChangesAsync(cancellationToken);

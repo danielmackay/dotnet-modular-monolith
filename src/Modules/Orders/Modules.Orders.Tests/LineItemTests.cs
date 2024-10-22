@@ -1,3 +1,4 @@
+using ErrorOr;
 using Modules.Orders.Orders.Domain.LineItems;
 using Modules.Orders.Orders.Domain.Orders;
 
@@ -149,9 +150,10 @@ public class LineItemTests
         var lineItem = LineItem.Create(orderId, productId, price, quantity);
 
         // Act
-        var act = () => lineItem.RemoveQuantity(3);
+        var result = lineItem.RemoveQuantity(3);
 
         // Assert
-        act.Should().Throw<ArgumentException>();
+        result.IsError.Should().BeTrue();
+        result.FirstError.Type.Should().Be(ErrorType.Conflict);
     }
 }

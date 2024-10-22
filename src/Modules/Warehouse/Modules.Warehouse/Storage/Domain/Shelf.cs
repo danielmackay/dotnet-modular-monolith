@@ -1,7 +1,5 @@
 using Common.SharedKernel.Domain.Interfaces;
 using ErrorOr;
-using Modules.Warehouse.Products.Domain;
-using Success = OneOf.Types.Success;
 
 namespace Modules.Warehouse.Storage.Domain;
 
@@ -22,7 +20,7 @@ internal class Shelf : AggregateRoot<ShelfId>
 
     public static Shelf Create(string name)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        ThrowIfNullOrWhiteSpace(name);
 
         return new Shelf
         {

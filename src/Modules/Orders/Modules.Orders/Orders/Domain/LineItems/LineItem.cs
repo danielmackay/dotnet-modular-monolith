@@ -1,6 +1,6 @@
 ﻿using Common.SharedKernel.Domain.Ids;
+using ErrorOr;
 using Modules.Orders.Orders.Domain.Orders;
-using Throw;
 
 namespace Modules.Orders.Orders.Domain.LineItems;
 
@@ -29,8 +29,8 @@ internal class LineItem : Entity<LineItemId>
     // Internal so that only the Order can create a LineItem
     internal static LineItem Create(OrderId orderId, ProductId productId, Money price, int quantity)
     {
-        price.Amount.Throw().IfNegativeOrZero();
-        quantity.Throw().IfNegativeOrZero();
+        ThrowIfNegativeOrZero(price.Amount);
+        ThrowIfNegativeOrZero(quantity);
 
         var lineItem = new LineItem()
         {
@@ -46,9 +46,13 @@ internal class LineItem : Entity<LineItemId>
 
     internal void AddQuantity(int quantity) => Quantity += quantity;
 
-    internal void RemoveQuantity(int quantity)
+    internal ErrorOr<Success> RemoveQuantity(int quantity)
     {
-        quantity.Throw("Can't remove all units.  Remove the entire item instead").IfTrue(Quantity - quantity <= 0);
+        if (Quantity - quantity <= 0)
+            return Error.Conflict("111", "Can't remove all units.  Remove the entire item instead");
+
         Quantity -= quantity;
+
+        return new Success();
     }
 }
