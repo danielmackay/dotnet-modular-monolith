@@ -1,14 +1,8 @@
-using Common.Tests.Extensions;
 using Meziantou.Extensions.Logging.Xunit;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Modules.Catalog.Common.Persistence;
-using Modules.Customers.Common.Persistence;
-using Modules.Orders.Common.Persistence;
-using Modules.Warehouse.Common.Persistence;
 using WebApi;
 using Xunit.Abstractions;
 
@@ -35,13 +29,9 @@ public class WebApiTestFactory : WebApplicationFactory<IWebApiMarker>
             x.Services.AddSingleton<ILoggerProvider>(new XUnitLoggerProvider(Output!));
         });
 
-        // Override default DB registration to use out Test Container instead
-        builder.ConfigureTestServices(services =>
-        {
-            services.ReplaceDbContext<WarehouseDbContext>(Database);
-            services.ReplaceDbContext<CatalogDbContext>(Database);
-            services.ReplaceDbContext<CustomersDbContext>(Database);
-            services.ReplaceDbContext<OrdersDbContext>(Database);
-        });
+        builder.UseSetting("ConnectionStrings:customers", Database.ConnectionString);
+        builder.UseSetting("ConnectionStrings:warehouse", Database.ConnectionString);
+        builder.UseSetting("ConnectionStrings:catalog", Database.ConnectionString);
+        builder.UseSetting("ConnectionStrings:orders", Database.ConnectionString);
     }
 }
